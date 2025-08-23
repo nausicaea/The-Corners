@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.client.impl.mixin.model;
+package net.ludocrypt.specialmodels.impl.mixin.model;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +11,8 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
-import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.client.impl.access.BakedModelAccess;
+import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.impl.access.BakedModelAccess;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BasicBakedModel;

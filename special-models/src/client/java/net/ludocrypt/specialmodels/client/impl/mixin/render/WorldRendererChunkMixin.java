@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.client.impl.mixin.render;
+package net.ludocrypt.specialmodels.impl.mixin.render;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -24,25 +24,25 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilderStorage;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBuiltChunkStorage;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkData;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkInfo;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.RenderableChunks;
+import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilderStorage;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialBuiltChunkStorage;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.ChunkData;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.ChunkInfo;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.RenderableChunks;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.ChunkUpdatesPrioritization;
 import net.minecraft.client.render.Camera;
+import net.minecraft.client.render.ChunkBuilderMode;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.RenderLayers;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.chunk.ChunkRenderRegionCache;
+import net.minecraft.client.render.chunk.ChunkRendererRegionBuilder;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.server.world.ThreadedChunkManager;
+import net.minecraft.server.world.ThreadedAnvilChunkStorage;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkSectionPos;
@@ -236,7 +236,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 			this.needsFullSpecialBuiltChunkUpdate = true;
 			this.recentlyCompiledSpecialChunks.clear();
 			RenderLayers.setFancyGraphicsOrBetter(MinecraftClient.isFancyGraphicsOrBetter());
-			this.viewDistance = this.client.options.getEffectiveViewDistance();
+			this.viewDistance = this.client.options.getClampedViewDistance();
 
 			if (this.specialChunks != null) {
 				this.specialChunks.clear();
@@ -244,7 +244,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 			this.specialChunkBuilder.reset();
 			this.specialChunks = new SpecialBuiltChunkStorage(this.specialChunkBuilder, this.world,
-				this.client.options.getEffectiveViewDistance(), ((WorldRenderer) (Object) this));
+				this.client.options.getClampedViewDistance(), ((WorldRenderer) (Object) this));
 
 			if (this.lastFullSpecialBuiltChunkUpdate != null) {
 
@@ -272,7 +272,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	public void setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator) {
 		Vec3d vec3d = camera.getPos();
 
-		if (this.client.options.getEffectiveViewDistance() != this.viewDistance) {
+		if (this.client.options.getClampedViewDistance() != this.viewDistance) {
 			this.reloadSpecial();
 		}
 
@@ -370,7 +370,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 			if (this.needsSpecialFrustumUpdate
 				.compareAndSet(true, false) || m != this.lastSpecialCameraPitch || n != this.lastSpecialCameraYaw) {
-				this.applySpecialFrustum(new Frustum(frustum).offsetToIncludeCamera(8));
+				this.applySpecialFrustum(new Frustum(frustum).coverBoxAroundSetPosition(8));
 				this.lastSpecialCameraPitch = m;
 				this.lastSpecialCameraYaw = n;
 			}
@@ -432,8 +432,8 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 		BlockPos blockPos2 = blockPos.add(8, 8, 8);
 		Entity
 			.setRenderDistanceMultiplier(MathHelper
-				.clamp((double) this.client.options.getEffectiveViewDistance() / 8.0, 1.0,
-					2.5) * this.client.options.getEntityDistanceScaling().get());
+				.clamp((double) this.client.options.getClampedViewDistance() / 8.0, 1.0,
+					2.5) * this.client.options.getEntityDistanceScaling().getValue());
 
 		while (!chunksToBuild.isEmpty()) {
 			ChunkInfo chunkInfo = chunksToBuild.poll();
@@ -555,7 +555,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 							}
 
 							SpecialChunkBuilder.BuiltChunk builtChunk3 = this.specialChunks
-								.getRenderedChunk(BlockPos.create(vec3d.x, vec3d.y, vec3d.z));
+								.getRenderedChunk(BlockPos.ofFloored(vec3d.x, vec3d.y, vec3d.z));
 
 							if (builtChunk3 == null || builtChunkMap.getInfo(builtChunk3) == null) {
 								bl3 = false;
@@ -620,7 +620,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 		BlockPos blockPos2 = builtChunk.getOrigin();
 		int k = ChunkSectionPos.getSectionCoord(blockPos2.getX());
 		int l = ChunkSectionPos.getSectionCoord(blockPos2.getZ());
-		return !ThreadedChunkManager.isWithinDistance(k, l, i, j, this.viewDistance - 2);
+		return !ThreadedAnvilChunkStorage.isWithinDistance(k, l, i, j, this.viewDistance - 2);
 	}
 
 	@Override
@@ -650,7 +650,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	public void findSpecialChunksToRebuild(Camera camera) {
 		this.client.getProfiler().push("populate_chunks_to_compile");
 		LightingProvider lightingProvider = this.world.getLightingProvider();
-		ChunkRenderRegionCache chunkRenderRegionCache = new ChunkRenderRegionCache();
+		ChunkRendererRegionBuilder chunkRenderRegionCache = new ChunkRendererRegionBuilder();
 		BlockPos blockPos = camera.getBlockPos();
 		List<SpecialChunkBuilder.BuiltChunk> list = Lists.<SpecialChunkBuilder.BuiltChunk>newArrayList();
 
@@ -661,12 +661,12 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 			if (builtChunk.needsRebuild() && lightingProvider.isLightingEnabled(chunkSectionPos)) {
 				boolean bl = false;
 
-				if (this.client.options.getPrioritizeChunkUpdates().get() == ChunkUpdatesPrioritization.NEARBY) {
+				if (this.client.options.getChunkBuilderMode().getValue() == ChunkBuilderMode.NEARBY) {
 					BlockPos blockPos2 = builtChunk.getOrigin().add(8, 8, 8);
 					bl = blockPos2.getSquaredDistance(blockPos) < 768.0 || builtChunk.needsImportantRebuild();
 				} else if (this.client.options
-					.getPrioritizeChunkUpdates()
-					.get() == ChunkUpdatesPrioritization.PLAYER_AFFECTED) {
+					.getChunkBuilderMode()
+					.getValue() == ChunkBuilderMode.PLAYER_AFFECTED) {
 					bl = builtChunk.needsImportantRebuild();
 				}
 
