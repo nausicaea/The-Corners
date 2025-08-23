@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.api.effects.sky;
+package net.ludocrypt.limlib.client.api.effects.sky;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import net.minecraft.client.render.DimensionEffects;
