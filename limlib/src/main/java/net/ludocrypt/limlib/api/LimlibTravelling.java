@@ -31,9 +31,9 @@ public class LimlibTravelling {
 	public static <E extends Entity> E travelTo(E teleported, ServerWorld destination, TeleportTarget target,
 			SoundEvent sound, float volume, float pitch) {
 
-		if (destination.equals(teleported.getWorld())) {
+		if (destination.equals(teleported.method_48926())) {
 
-			BlockPos blockPos = BlockPos.create(target.position.x, target.position.y, target.position.z);
+			BlockPos blockPos = BlockPos.ofFloored(target.position.x, target.position.y, target.position.z);
 
 			if (!World.isValid(blockPos)) {
 				throw new UnsupportedOperationException("Position " + blockPos.toString() + " is out of this world!");
@@ -63,7 +63,7 @@ public class LimlibTravelling {
 
 			teleported.setVelocity(target.velocity);
 			teleported
-				.getWorld()
+				.method_48926()
 				.playSound(null, teleported.getX(), teleported.getY(), teleported.getZ(), sound, SoundCategory.AMBIENT,
 					volume, pitch);
 

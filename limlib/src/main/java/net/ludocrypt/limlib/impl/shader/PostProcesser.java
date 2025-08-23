@@ -8,14 +8,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.ludocrypt.limlib.impl.Limlib;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.ShaderEffect;
+import net.minecraft.client.gl.PostEffectProcessor;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 public class PostProcesser {
 
 	private final Identifier location;
-	protected ShaderEffect shader;
+	protected PostEffectProcessor shader;
 	private boolean loaded;
 
 	public PostProcesser(Identifier location) {
@@ -36,9 +36,9 @@ public class PostProcesser {
 
 	}
 
-	protected ShaderEffect parseShader(ResourceManager resourceManager, MinecraftClient mc, Identifier location)
+	protected PostEffectProcessor parseShader(ResourceManager resourceManager, MinecraftClient mc, Identifier location)
 			throws IOException {
-		return new ShaderEffect(mc.getTextureManager(), resourceManager, mc.getFramebuffer(), location);
+		return new PostEffectProcessor(mc.getTextureManager(), resourceManager, mc.getFramebuffer(), location);
 	}
 
 	public void release() {
@@ -59,7 +59,7 @@ public class PostProcesser {
 	}
 
 	public void render(float tickDelta) {
-		ShaderEffect shader = this.getShaderEffect();
+		PostEffectProcessor shader = this.getShaderEffect();
 
 		if (shader != null) {
 			RenderSystem.disableBlend();
@@ -86,7 +86,7 @@ public class PostProcesser {
 		return this.shader != null;
 	}
 
-	public ShaderEffect getShaderEffect() {
+	public PostEffectProcessor getShaderEffect() {
 
 		if (!this.isInitialized() && !this.isLoaded()) {
 			this.init(MinecraftClient.getInstance().getResourceManager());

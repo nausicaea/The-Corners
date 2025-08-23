@@ -27,8 +27,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.StructureBlockBlockEntity;
 import net.minecraft.block.enums.StructureBlockMode;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Holder;
 import net.minecraft.registry.RegistryOps;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.server.world.ChunkHolder.Unloaded;
@@ -40,23 +40,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.gen.RandomState;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.noise.NoiseConfig;
 
 public class DebugNbtChunkGenerator extends AbstractNbtChunkGenerator {
 
 	public static final Codec<DebugNbtChunkGenerator> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance
-			.group(RegistryOps.retrieveElement(Biomes.THE_VOID))
+			.group(RegistryOps.getEntryCodec(BiomeKeys.THE_VOID))
 			.apply(instance, instance.stable(DebugNbtChunkGenerator::new));
 	});
 	BidirectionalMap<Identifier, BlockPos> positions = new BidirectionalMap<Identifier, BlockPos>();
 
-	public DebugNbtChunkGenerator(Holder.Reference<Biome> reference) {
+	public DebugNbtChunkGenerator(RegistryEntry.Reference<Biome> reference) {
 		super(new FixedBiomeSource(reference), new DebugNbtGroup());
 	}
 
@@ -150,7 +150,7 @@ public class DebugNbtChunkGenerator extends AbstractNbtChunkGenerator {
 								this.structures.eval(id, resourceManager).sizeY,
 								this.structures.eval(id, resourceManager).sizeZ));
 						blockEntity
-							.setStructureName(
+							.setTemplateName(
 								id.toString().substring(0, id.toString().length() - 4).replaceFirst("structures/", ""));
 						blockEntity.setOffset(new BlockPos(1, 1, 1));
 						blockEntity.setIgnoreEntities(false);
@@ -182,7 +182,7 @@ public class DebugNbtChunkGenerator extends AbstractNbtChunkGenerator {
 	}
 
 	@Override
-	public void method_40450(List<String> list, RandomState randomState, BlockPos pos) {
+	public void getDebugHudText(List<String> list, NoiseConfig randomState, BlockPos pos) {
 	}
 
 	public static class DebugNbtGroup extends NbtGroup {

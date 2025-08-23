@@ -12,7 +12,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerLightingProvider;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.StructureManager;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
@@ -23,10 +22,11 @@ import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.gen.GenerationStep.Carver;
-import net.minecraft.world.gen.RandomState;
+import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.Blender;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
+import net.minecraft.world.gen.noise.NoiseConfig;
 
 public abstract class LiminalChunkGenerator extends ChunkGenerator {
 
@@ -35,12 +35,12 @@ public abstract class LiminalChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public void carve(ChunkRegion chunkRegion, long seed, RandomState randomState, BiomeAccess biomeAccess,
-			StructureManager structureManager, Chunk chunk, Carver generationStep) {
+	public void carve(ChunkRegion chunkRegion, long seed, NoiseConfig randomState, BiomeAccess biomeAccess,
+			StructureAccessor structureManager, Chunk chunk, Carver generationStep) {
 	}
 
 	@Override
-	public void buildSurface(ChunkRegion region, StructureManager structureManager, RandomState randomState, Chunk chunk) {
+	public void buildSurface(ChunkRegion region, StructureAccessor structureManager, NoiseConfig randomState, Chunk chunk) {
 	}
 
 	@Override
@@ -48,8 +48,8 @@ public abstract class LiminalChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public CompletableFuture<Chunk> populateNoise(Executor executor, Blender blender, RandomState randomState,
-			StructureManager structureManager, Chunk chunk) {
+	public CompletableFuture<Chunk> populateNoise(Executor executor, Blender blender, NoiseConfig randomState,
+			StructureAccessor structureManager, Chunk chunk) {
 		throw new UnsupportedOperationException("Vanilla populateNoise should never be called in LiminalChunkGenerator");
 	}
 
@@ -83,12 +83,12 @@ public abstract class LiminalChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public int getHeight(int x, int z, Type heightmap, HeightLimitView world, RandomState randomState) {
+	public int getHeight(int x, int z, Type heightmap, HeightLimitView world, NoiseConfig randomState) {
 		return this.getWorldHeight();
 	}
 
 	@Override
-	public VerticalBlockSample getColumnSample(int x, int y, HeightLimitView world, RandomState random) {
+	public VerticalBlockSample getColumnSample(int x, int y, HeightLimitView world, NoiseConfig random) {
 		BlockState[] states = new BlockState[world.getHeight()];
 
 		for (int i = 0; i < states.length; i++) {

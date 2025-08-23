@@ -78,7 +78,7 @@ public class NbtPlacerUtil {
 			palette
 				.put(i,
 					NbtHelper
-						.toBlockState(Registries.BLOCK.asLookup(), paletteCompoundList.get(i))
+						.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), paletteCompoundList.get(i))
 						.rotate(manipulation.getRotation())
 						.mirror(manipulation.getMirror()));
 		}
@@ -139,7 +139,7 @@ public class NbtPlacerUtil {
 					.toList();
 
 				for (int i = 0; i < paletteCompoundList.size(); i++) {
-					palette.put(i, NbtHelper.toBlockState(Registries.BLOCK.asLookup(), paletteCompoundList.get(i)));
+					palette.put(i, NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), paletteCompoundList.get(i)));
 				}
 
 				NbtList sizeList = nbt.getList("size", 3);
@@ -197,7 +197,7 @@ public class NbtPlacerUtil {
 	}
 
 	public static NbtCompound readStructure(Resource resource) throws IOException {
-		InputStream stream = resource.open();
+		InputStream stream = resource.getInputStream();
 		NbtCompound nbt = NbtIo.readCompressed(stream);
 		stream.close();
 		return nbt;
