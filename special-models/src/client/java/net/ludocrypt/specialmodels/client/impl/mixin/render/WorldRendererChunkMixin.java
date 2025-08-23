@@ -104,12 +104,12 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 	@Inject(method = "setWorld", at = @At("TAIL"))
 	private void specialModels$setWorld(ClientWorld world, CallbackInfo ci) {
-		this.setWorldSpecial(world);
+		this.specialmodels$setWorldSpecial(world);
 	}
 
 	@Inject(method = "Lnet/minecraft/client/render/WorldRenderer;reload()V", at = @At("HEAD"))
 	private void specialModels$reload(CallbackInfo ci) {
-		this.reloadSpecial();
+		this.specialmodels$reloadSpecial();
 	}
 
 	@Inject(method = "updateBlock", at = @At("TAIL"))
@@ -204,7 +204,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public void setWorldSpecial(ClientWorld world) {
+	public void specialmodels$setWorldSpecial(ClientWorld world) {
 
 		if (world == null) {
 
@@ -221,13 +221,13 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 			this.renderableSpecialChunks.set(null);
 			this.specialChunkInfoList.clear();
 		} else {
-			this.reloadSpecial();
+			this.specialmodels$reloadSpecial();
 		}
 
 	}
 
 	@Override
-	public void reloadSpecial() {
+	public void specialmodels$reloadSpecial() {
 
 		if (this.world != null) {
 
@@ -274,11 +274,11 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public void setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator) {
+	public void specialmodels$setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator) {
 		Vec3d vec3d = camera.getPos();
 
 		if (this.client.options.getClampedViewDistance() != this.viewDistance) {
-			this.reloadSpecial();
+			this.specialmodels$reloadSpecial();
 		}
 
 		this.world.getProfiler().push("camera");
@@ -333,11 +333,11 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 				boolean bl2 = bl;
 				this.lastFullSpecialBuiltChunkUpdate = Util.getMainWorkerExecutor().submit(() -> {
 					Queue<SpecialChunkBuilder.ChunkInfo> queue = Queues.<SpecialChunkBuilder.ChunkInfo>newArrayDeque();
-					this.addSpecialChunksToBuild(camera, queue);
+					this.specialmodels$addSpecialChunksToBuild(camera, queue);
 					SpecialChunkBuilder.RenderableChunks renderableChunksx = new SpecialChunkBuilder.RenderableChunks(
 						this.specialChunks.chunks.length);
 					this
-						.updateSpecialBuiltChunks(renderableChunksx.builtChunks, renderableChunksx.builtChunkMap, vec3d,
+						.specialmodels$updateSpecialBuiltChunks(renderableChunksx.builtChunks, renderableChunksx.builtChunkMap, vec3d,
 							queue, bl2);
 					this.renderableSpecialChunks.set(renderableChunksx);
 					this.needsSpecialFrustumUpdate.set(true);
@@ -364,7 +364,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 				}
 
 				this
-					.updateSpecialBuiltChunks(renderableChunks.builtChunks, renderableChunks.builtChunkMap, vec3d, queue,
+					.specialmodels$updateSpecialBuiltChunks(renderableChunks.builtChunks, renderableChunks.builtChunkMap, vec3d, queue,
 						bl);
 				this.needsSpecialFrustumUpdate.set(true);
 				this.client.getProfiler().pop();
@@ -375,7 +375,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 			if (this.needsSpecialFrustumUpdate
 				.compareAndSet(true, false) || m != this.lastSpecialCameraPitch || n != this.lastSpecialCameraYaw) {
-				this.applySpecialFrustum(new Frustum(frustum).coverBoxAroundSetPosition(8));
+				this.specialmodels$applySpecialFrustum(new Frustum(frustum).coverBoxAroundSetPosition(8));
 				this.lastSpecialCameraPitch = m;
 				this.lastSpecialCameraYaw = n;
 			}
@@ -386,7 +386,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public void addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue) {
+	public void specialmodels$addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue) {
 		Vec3d vec3d = camera.getPos();
 		BlockPos blockPos = camera.getBlockPos();
 		SpecialChunkBuilder.BuiltChunk builtChunk = this.specialChunks.getRenderedChunk(blockPos);
@@ -424,14 +424,14 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public void addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk) {
+	public void specialmodels$addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk) {
 		this.recentlyCompiledSpecialChunks.add(builtChunk);
 	}
 
 	@Override
-	public void updateSpecialBuiltChunks(LinkedHashSet<ChunkInfo> builtChunks,
-			SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos, Queue<ChunkInfo> chunksToBuild,
-			boolean chunkCullingEnabled) {
+	public void specialmodels$updateSpecialBuiltChunks(LinkedHashSet<ChunkInfo> builtChunks,
+													   SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos, Queue<ChunkInfo> chunksToBuild,
+													   boolean chunkCullingEnabled) {
 		BlockPos blockPos = new BlockPos(MathHelper.floor(cameraPos.x / 16.0) * 16,
 			MathHelper.floor(cameraPos.y / 16.0) * 16, MathHelper.floor(cameraPos.z / 16.0) * 16);
 		BlockPos blockPos2 = blockPos.add(8, 8, 8);
@@ -450,7 +450,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 			Direction[] DIRECTIONS = Direction.values();
 
 			for (Direction direction : DIRECTIONS) {
-				SpecialChunkBuilder.BuiltChunk builtChunk2 = this.getAdjacentSpecialChunk(blockPos, builtChunk, direction);
+				SpecialChunkBuilder.BuiltChunk builtChunk2 = this.specialmodels$getAdjacentSpecialChunk(blockPos, builtChunk, direction);
 
 				if (builtChunk2 != null && (!chunkCullingEnabled || !chunkInfo.canCull(direction.getOpposite()))) {
 
@@ -581,7 +581,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 						chunkInfo2.addDirection(direction);
 					} else if (!builtChunk2.shouldBuild()) {
 
-						if (!this.isSpecialChunkNearMaxViewDistance(blockPos, builtChunk)) {
+						if (!this.specialmodels$isSpecialChunkNearMaxViewDistance(blockPos, builtChunk)) {
 							this.nextFullSpecialUpdateMilliseconds.set(System.currentTimeMillis() + 500L);
 						}
 
@@ -602,8 +602,8 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 	@Nullable
 	@Override
-	public SpecialChunkBuilder.BuiltChunk getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
-			Direction direction) {
+	public SpecialChunkBuilder.BuiltChunk specialmodels$getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
+																				Direction direction) {
 		BlockPos blockPos = chunk.getNeighborPosition(direction);
 
 		if (MathHelper.abs(pos.getX() - blockPos.getX()) > this.viewDistance * 16) {
@@ -619,7 +619,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public boolean isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk) {
+	public boolean specialmodels$isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk) {
 		int i = ChunkSectionPos.getSectionCoord(blockPos.getX());
 		int j = ChunkSectionPos.getSectionCoord(blockPos.getZ());
 		BlockPos blockPos2 = builtChunk.getOrigin();
@@ -629,7 +629,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public void applySpecialFrustum(Frustum frustum) {
+	public void specialmodels$applySpecialFrustum(Frustum frustum) {
 
 		if (!MinecraftClient.getInstance().isOnThread()) {
 			throw new IllegalStateException("applyFrustum called from wrong thread: " + Thread.currentThread().getName());
@@ -652,7 +652,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public void findSpecialChunksToRebuild(Camera camera) {
+	public void specialmodels$findSpecialChunksToRebuild(Camera camera) {
 		this.client.getProfiler().push("populate_chunks_to_compile");
 		LightingProvider lightingProvider = this.world.getLightingProvider();
 		ChunkRendererRegionBuilder chunkRenderRegionCache = new ChunkRendererRegionBuilder();
@@ -701,52 +701,52 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	}
 
 	@Override
-	public SpecialChunkBuilder getSpecialChunkBuilder() {
+	public SpecialChunkBuilder specialmodels$getSpecialChunkBuilder() {
 		return specialChunkBuilder;
 	}
 
 	@Override
-	public Future<?> getLastFullSpecialBuiltChunkUpdate() {
+	public Future<?> specialmodels$getLastFullSpecialBuiltChunkUpdate() {
 		return lastFullSpecialBuiltChunkUpdate;
 	}
 
 	@Override
-	public BlockingQueue<BuiltChunk> getRecentlyCompiledSpecialChunks() {
+	public BlockingQueue<BuiltChunk> specialmodels$getRecentlyCompiledSpecialChunks() {
 		return recentlyCompiledSpecialChunks;
 	}
 
 	@Override
-	public AtomicReference<RenderableChunks> getRenderableSpecialChunks() {
+	public AtomicReference<RenderableChunks> specialmodels$getRenderableSpecialChunks() {
 		return renderableSpecialChunks;
 	}
 
 	@Override
-	public ObjectArrayList<ChunkInfo> getSpecialChunkInfoList() {
+	public ObjectArrayList<ChunkInfo> specialmodels$getSpecialChunkInfoList() {
 		return specialChunkInfoList;
 	}
 
 	@Override
-	public SpecialBuiltChunkStorage getSpecialChunks() {
+	public SpecialBuiltChunkStorage specialmodels$getSpecialChunks() {
 		return specialChunks;
 	}
 
 	@Override
-	public SpecialBufferBuilderStorage getSpecialBufferBuilderStorage() {
+	public SpecialBufferBuilderStorage specialmodels$getSpecialBufferBuilderStorage() {
 		return specialBufferBuilderStorage;
 	}
 
 	@Override
-	public boolean shouldNeedsFullSpecialBuiltChunkUpdate() {
+	public boolean specialmodels$shouldNeedsFullSpecialBuiltChunkUpdate() {
 		return needsFullSpecialBuiltChunkUpdate;
 	}
 
 	@Override
-	public AtomicBoolean shouldNeedsSpecialFrustumUpdate() {
+	public AtomicBoolean specialmodels$shouldNeedsSpecialFrustumUpdate() {
 		return needsSpecialFrustumUpdate;
 	}
 
 	@Override
-	public AtomicLong getNextFullSpecialUpdateMilliseconds() {
+	public AtomicLong specialmodels$getNextFullSpecialUpdateMilliseconds() {
 		return nextFullSpecialUpdateMilliseconds;
 	}
 

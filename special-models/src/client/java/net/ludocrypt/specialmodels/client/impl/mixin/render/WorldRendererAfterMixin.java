@@ -65,9 +65,9 @@ public abstract class WorldRendererAfterMixin implements WorldRendererAccess, Wo
 					this.shouldCaptureFrustum = false;
 				}
 
-				this.setupSpecialTerrain(camera, frustum, this.capturedFrustum != null, this.client.player.isSpectator());
-				this.findSpecialChunksToRebuild(camera);
-				this.render(matrices, positionMatrix, tickDelta, camera, true);
+				this.specialmodels$setupSpecialTerrain(camera, frustum, this.capturedFrustum != null, this.client.player.isSpectator());
+				this.specialmodels$findSpecialChunksToRebuild(camera);
+				this.specialmodels$render(matrices, positionMatrix, tickDelta, camera, true);
 			}
 
 		}

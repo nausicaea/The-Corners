@@ -578,7 +578,7 @@ public class SpecialChunkBuilder {
 								BuiltChunk.this.cancelledInitialBuilds.set(0);
 
 								((WorldChunkBuilderAccess) (SpecialChunkBuilder.this.worldRenderer))
-									.addSpecialBuiltChunk(BuiltChunk.this);
+									.specialmodels$addSpecialBuiltChunk(BuiltChunk.this);
 
 								return Result.SUCCESSFUL;
 							}
@@ -620,7 +620,7 @@ public class SpecialChunkBuilder {
 							matrixStack
 								.translate((float) (pos.getX() & 15), (float) (pos.getY() & 15), (float) (pos.getZ() & 15));
 							List<Pair<SpecialModelRenderer, BakedModel>> models = ((BakedModelAccess) blockRenderManager
-								.getModel(state)).getModels(state);
+								.getModel(state)).specialmodels$getModels(state);
 
 							BakedModel forward = blockRenderManager.getModel(state);
 
@@ -628,7 +628,7 @@ public class SpecialChunkBuilder {
 
 								if (((ForwardingBakedModel) forward).getWrappedModel() != null) {
 									models = ((BakedModelAccess) ((ForwardingBakedModel) forward).getWrappedModel())
-										.getModels(state);
+										.specialmodels$getModels(state);
 									forward = ((ForwardingBakedModel) forward).getWrappedModel();
 								}
 

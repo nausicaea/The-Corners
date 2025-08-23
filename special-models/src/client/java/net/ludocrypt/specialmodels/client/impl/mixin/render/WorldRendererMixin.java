@@ -47,11 +47,11 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 	private double lastSpecialSortZ;
 
 	@Override
-	public void render(MatrixStack matrices, Matrix4f positionMatrix, float tickDelta, Camera camera, boolean outside) {
+	public void specialmodels$render(MatrixStack matrices, Matrix4f positionMatrix, float tickDelta, Camera camera, boolean outside) {
 
 		ObjectListIterator<ChunkInfo> chunkInfos = this
-			.getSpecialChunkInfoList()
-			.listIterator(this.getSpecialChunkInfoList().size());
+			.specialmodels$getSpecialChunkInfoList()
+			.listIterator(this.specialmodels$getSpecialChunkInfoList().size());
 
 		while (chunkInfos.hasPrevious()) {
 			ChunkInfo chunkInfo = chunkInfos.previous();
@@ -97,10 +97,10 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 				this.lastSpecialSortZ = camera.getPos().getZ();
 				int l = 0;
 
-				for (ChunkInfo chunkInfo : this.getSpecialChunkInfoList()) {
+				for (ChunkInfo chunkInfo : this.specialmodels$getSpecialChunkInfoList()) {
 
 					if (l < 15 && (bl || chunkInfo.isAxisAlignedWith(i, j, k)) && chunkInfo.chunk
-						.scheduleSort(modelRenderer, this.getSpecialChunkBuilder())) {
+						.scheduleSort(modelRenderer, this.specialmodels$getSpecialChunkBuilder())) {
 						++l;
 					}
 

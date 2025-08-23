@@ -12,8 +12,8 @@ import net.minecraft.client.render.model.BakedModel;
 
 public interface BakedModelAccess {
 
-	public List<Pair<SpecialModelRenderer, BakedModel>> getModels(@Nullable BlockState state);
+	List<Pair<SpecialModelRenderer, BakedModel>> specialmodels$getModels(@Nullable BlockState state);
 
-	public void addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model);
+	void specialmodels$addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model);
 
 }

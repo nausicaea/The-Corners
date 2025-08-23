@@ -17,12 +17,12 @@ import net.minecraft.client.render.model.BakedModel;
 public interface BakedModelMixin extends BakedModelAccess {
 
 	@Override
-	default List<Pair<SpecialModelRenderer, BakedModel>> getModels(@Nullable BlockState state) {
+	default List<Pair<SpecialModelRenderer, BakedModel>> specialmodels$getModels(@Nullable BlockState state) {
 		return Lists.newArrayList();
 	}
 
 	@Override
-	default void addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model) {
+	default void specialmodels$addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model) {
 	}
 
 }
