@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl;
+package net.ludocrypt.limlib.client.impl;
 
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;

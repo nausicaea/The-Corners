@@ -15,7 +15,9 @@
   "icon": "assets/limlib/icon.png",
   "entrypoints": {
     "main": ["net.ludocrypt.limlib.impl.Limlib"],
-    "client": ["net.ludocrypt.limlib.impl.LimlibClient"],
+    "client": [
+      "net.ludocrypt.limlib.client.impl.LimlibClient"
+    ],
     "limlib:registrar": ["net.ludocrypt.limlib.impl.debug.DebugWorld"]
   },
   "mixins": [
