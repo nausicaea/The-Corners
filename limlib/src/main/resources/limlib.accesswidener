@@ -1,3 +1,4 @@
 accessWidener v2 named
-accessible class net/minecraft/registry/Registries$RegistryBootstrap
-accessible class net/minecraft/registry/DynamicRegistrySync$SyncEntry
+accessible class net/minecraft/world/gen/WorldPresets$Registrar
+accessible class net/minecraft/registry/Registries$Initializer
+accessible class net/minecraft/registry/SerializableRegistries$Info
