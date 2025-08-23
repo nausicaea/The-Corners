@@ -14,17 +14,7 @@
 		"WorldDimensionsMixin",
 		"WorldSaveStorageMixin"
 	],
-	"client": [
-		"client.BackgroundRendererMixin",
-		"client.ClientWorldMixin",
-		"client.DimensionVisualEffectsMixin",
-		"client.GameRendererMixin",
-		"client.MinecraftClientMixin",
-		"client.SoundSystemMixin",
-		"client.SourceAccessor",
-		"client.WorldRendererAfterMixin",
-		"client.WorldRendererBeforeMixin"
-	],
+	"client": [],
 	"injectors": {
 		"defaultRequire": 1
 	}
