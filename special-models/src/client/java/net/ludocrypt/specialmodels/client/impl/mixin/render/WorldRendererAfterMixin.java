@@ -75,6 +75,6 @@ public abstract class WorldRendererAfterMixin implements WorldRendererAccess, Wo
 	}
 
 	@Shadow
-	abstract void captureFrustum(Matrix4f matrix4f, Matrix4f matrix4f2, double d, double e, double f, Frustum frustum);
+	protected abstract void captureFrustum(Matrix4f matrix4f, Matrix4f matrix4f2, double d, double e, double f, Frustum frustum);
 
 }
