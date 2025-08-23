@@ -21,6 +21,14 @@ repositories {
 
 loom {
 	accessWidenerPath = file("src/main/resources/limlib.accesswidener")
+	splitEnvironmentSourceSets()
+
+	mods {
+		"limlib" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
 }
 
 dependencies {
