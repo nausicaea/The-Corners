@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.mixin.render;
+package net.ludocrypt.specialmodels.client.impl.mixin.render;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3d;

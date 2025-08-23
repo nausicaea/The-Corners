@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.render;
+package net.ludocrypt.specialmodels.client.impl.render;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.render.VertexFormat;

@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.chunk;
+package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
