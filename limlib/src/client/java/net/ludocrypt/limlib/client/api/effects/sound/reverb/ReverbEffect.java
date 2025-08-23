@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.api.effects.sound.reverb;
+package net.ludocrypt.limlib.client.api.effects.sound.reverb;
 
 import java.util.function.Function;
 
@@ -29,7 +29,7 @@ public abstract class ReverbEffect {
 
 	/**
 	 * Whether or not a Sound Event should be ignored
-	 * 
+	 *
 	 * @param identifier the Identifier of the Sound Event
 	 */
 	public abstract boolean shouldIgnore(Identifier identifier);
