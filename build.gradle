@@ -12,6 +12,9 @@ loom {
 }
 
 repositories {
+    maven {
+        url = 'https://maven.quiltmc.org/repository/release'
+    }
 	maven {
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
     }
