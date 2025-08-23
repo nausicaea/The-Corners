@@ -1,13 +1,14 @@
 package net.ludocrypt.specialmodels.impl.bridge;
 
+import net.fabricmc.loader.api.FabricLoader;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.quiltmc.loader.api.QuiltLoader;
 
 public class IrisBridge {
 
-	public static final boolean IRIS_LOADED = QuiltLoader.isModLoaded("iris");
+	public static final boolean IRIS_LOADED = FabricLoader.getInstance().isModLoaded("iris");
 
 	public static boolean areShadersInUse() {
 
