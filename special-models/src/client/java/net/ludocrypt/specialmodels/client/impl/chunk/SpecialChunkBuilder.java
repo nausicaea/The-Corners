@@ -71,7 +71,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.util.thread.TaskExecutor;
 import net.minecraft.world.chunk.ChunkStatus;
 
-@ClientOnly
 public class SpecialChunkBuilder {
 
 	private static final Logger LOGGER = LogUtils.getLogger();
