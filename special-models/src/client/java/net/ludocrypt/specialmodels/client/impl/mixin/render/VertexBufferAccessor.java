@@ -51,10 +51,10 @@ public interface VertexBufferAccessor {
 	void setVertexFormat(VertexFormat vertexFormat);
 
 	@Accessor
-	ShapeIndexBuffer getIndexBuffer();
+	ShapeIndexBuffer getSharedSequentialIndexBuffer();
 
 	@Accessor
-	void setIndexBuffer(ShapeIndexBuffer indexBuffer);
+	void setSharedSequentialIndexBuffer(ShapeIndexBuffer indexBuffer);
 
 	@Accessor
 	IndexType getIndexType();
