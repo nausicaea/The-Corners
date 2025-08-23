@@ -4,20 +4,20 @@ import org.joml.Matrix4f;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferRenderer;
-import com.mojang.blaze3d.vertex.Tessellator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormats;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Axis;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
 public class TexturedSkybox extends Skybox {
@@ -47,46 +47,46 @@ public class TexturedSkybox extends Skybox {
 		int g = (int) Math.floor(color.y);
 		int b = (int) Math.floor(color.z);
 		int a = 255;
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		RenderSystem.setShader(GameRenderer::getPositionTexColorProgram);
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		BufferBuilder bufferBuilder = Tessellator.getInstance().getBufferBuilder();
+		BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
 
 		for (int i = 0; i < 6; ++i) {
 			matrices.push();
 
 			if (i == 0) {
-				matrices.multiply(Axis.Z_POSITIVE.rotationDegrees(180.0F));
-				matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(180.0F));
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
+				matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
 			}
 
 			if (i == 1) {
-				matrices.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0F));
 			}
 
 			if (i == 2) {
-				matrices.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
-				matrices.multiply(Axis.Z_POSITIVE.rotationDegrees(90.0F));
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0F));
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90.0F));
 			}
 
 			if (i == 3) {
-				matrices.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
-				matrices.multiply(Axis.Z_POSITIVE.rotationDegrees(180.0F));
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0F));
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
 			}
 
 			if (i == 4) {
-				matrices.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
-				matrices.multiply(Axis.Z_POSITIVE.rotationDegrees(-90.0F));
+				matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90.0F));
+				matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-90.0F));
 			}
 
-			Matrix4f matrix4f = matrices.peek().getModel();
+			Matrix4f matrix4f = matrices.peek().getPositionMatrix();
 
 			RenderSystem.setShaderTexture(0, new Identifier(identifier.toString() + "_" + i + ".png"));
 			bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(r, g, b, a).next();
-			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(r, g, b, a).next();
-			bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(r, g, b, a).next();
-			bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(r, g, b, a).next();
-			BufferRenderer.drawWithShader(bufferBuilder.end());
+			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).texture(0.0F, 0.0F).color(r, g, b, a).next();
+			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).texture(0.0F, 1.0F).color(r, g, b, a).next();
+			bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).texture(1.0F, 1.0F).color(r, g, b, a).next();
+			bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).texture(1.0F, 0.0F).color(r, g, b, a).next();
+			BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
 			matrices.pop();
 		}
 

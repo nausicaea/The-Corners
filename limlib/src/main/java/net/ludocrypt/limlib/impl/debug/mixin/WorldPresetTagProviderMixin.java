@@ -8,26 +8,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.ludocrypt.limlib.impl.debug.DebugWorld;
-import net.minecraft.client.world.GeneratorType;
-import net.minecraft.data.DataPackOutput;
-import net.minecraft.data.server.tag.AbstractTagProvider;
-import net.minecraft.data.server.tag.WorldPresetTagProvider;
-import net.minecraft.registry.HolderLookup;
-import net.minecraft.registry.HolderLookup.Provider;
+import net.minecraft.data.DataOutput;
+import net.minecraft.data.server.tag.TagProvider;
+import net.minecraft.data.server.tag.vanilla.VanillaWorldPresetTagProvider;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.registry.tag.WorldPresetTags;
+import net.minecraft.world.gen.WorldPreset;
 
-@Mixin(WorldPresetTagProvider.class)
-public abstract class WorldPresetTagProviderMixin extends AbstractTagProvider<GeneratorType> {
+@Mixin(VanillaWorldPresetTagProvider.class)
+public abstract class WorldPresetTagProviderMixin extends TagProvider<WorldPreset> {
 
-	protected WorldPresetTagProviderMixin(DataPackOutput output, RegistryKey<? extends Registry<GeneratorType>> key,
-			CompletableFuture<Provider> lookupProvider) {
+	protected WorldPresetTagProviderMixin(DataOutput output, RegistryKey<? extends Registry<WorldPreset>> key,
+			CompletableFuture<WrapperLookup> lookupProvider) {
 		super(output, key, lookupProvider);
 	}
 
 	@Inject(method = "configure", at = @At("TAIL"))
-	protected void limlib$configure(HolderLookup.Provider lookup, CallbackInfo ci) {
+	protected void limlib$configure(RegistryWrapper.WrapperLookup lookup, CallbackInfo ci) {
 		this.getOrCreateTagBuilder(WorldPresetTags.EXTENDED).add(DebugWorld.DEBUG_KEY);
 	}
 

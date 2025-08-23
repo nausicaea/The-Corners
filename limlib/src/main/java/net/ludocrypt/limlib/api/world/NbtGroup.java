@@ -11,7 +11,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.util.Identifier;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 
 public class NbtGroup {
 
@@ -35,7 +35,7 @@ public class NbtGroup {
 			"structures/nbt/" + this.id.getPath() + "/" + group + "/" + nbt + ".nbt");
 	}
 
-	public Identifier pick(String key, RandomGenerator random) {
+	public Identifier pick(String key, Random random) {
 
 		if (!groups.containsKey(key)) {
 			throw new NullPointerException();
@@ -45,7 +45,7 @@ public class NbtGroup {
 		return nbtId(key, group.get(random.nextInt(group.size())));
 	}
 
-	public String chooseGroup(RandomGenerator random, String... keys) {
+	public String chooseGroup(Random random, String... keys) {
 		int[] sizes = new int[keys.length];
 
 		for (int i = 0; i < keys.length; i++) {

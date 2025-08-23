@@ -9,14 +9,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.mojang.blaze3d.glfw.Window;
-
 import net.ludocrypt.limlib.api.effects.LookupGrabber;
 import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
 import net.ludocrypt.limlib.impl.shader.PostProcesserManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.util.Window;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.MusicSound;
@@ -39,7 +37,7 @@ public class MinecraftClientMixin {
 
 		if (this.player != null) {
 			Optional<SoundEffects> soundEffects = LookupGrabber
-				.snatch(world.getRegistryManager().getLookup(SoundEffects.SOUND_EFFECTS_KEY).get(),
+				.snatch(world.getRegistryManager().getOptionalWrapper(SoundEffects.SOUND_EFFECTS_KEY).get(),
 					RegistryKey.of(SoundEffects.SOUND_EFFECTS_KEY, world.getRegistryKey().getValue()));
 
 			if (soundEffects.isPresent()) {

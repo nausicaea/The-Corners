@@ -5,7 +5,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 
 public enum Manipulation implements StringIdentifiable {
 
@@ -42,7 +42,7 @@ public enum Manipulation implements StringIdentifiable {
 		return id;
 	}
 
-	public static Manipulation random(RandomGenerator random) {
+	public static Manipulation random(Random random) {
 		return Manipulation.values()[random.nextInt(8)];
 	}
 

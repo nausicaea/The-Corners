@@ -20,7 +20,7 @@ public abstract class BackgroundRendererMixin {
 		MinecraftClient client = MinecraftClient.getInstance();
 
 		Optional<DimensionEffects> dimensionEffects = LookupGrabber
-			.snatch(client.world.getRegistryManager().getLookup(DimensionEffects.DIMENSION_EFFECTS_KEY).get(),
+			.snatch(client.world.getRegistryManager().getOptionalWrapper(DimensionEffects.DIMENSION_EFFECTS_KEY).get(),
 				RegistryKey.of(DimensionEffects.DIMENSION_EFFECTS_KEY, client.world.getRegistryKey().getValue()));
 
 		if (dimensionEffects.isPresent()) {

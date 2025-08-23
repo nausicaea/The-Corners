@@ -17,14 +17,14 @@ import net.ludocrypt.limlib.api.LimlibWorld.RegistryProvider;
 import net.ludocrypt.limlib.impl.SaveStorageSupplier;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.HolderProvider;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryOps;
 import net.minecraft.world.dimension.DimensionOptions;
-import net.minecraft.world.storage.WorldSaveStorage;
+import net.minecraft.world.level.storage.LevelStorage;
 
-@Mixin(WorldSaveStorage.class)
+@Mixin(LevelStorage.class)
 public class WorldSaveStorageMixin {
 
 	@ModifyVariable(method = "readGeneratorProperties(Lcom/mojang/serialization/Dynamic;Lcom/mojang/datafixers/DataFixer;I)Lcom/mojang/serialization/DataResult;", at = @At(value = "STORE"), ordinal = 1)
@@ -32,7 +32,7 @@ public class WorldSaveStorageMixin {
 			DataFixer dataFixer, int version) {
 		Dynamic<T> dynamic = in;
 
-		for (Entry<RegistryKey<LimlibWorld>, LimlibWorld> entry : LimlibWorld.LIMLIB_WORLD.getEntries()) {
+		for (Entry<RegistryKey<LimlibWorld>, LimlibWorld> entry : LimlibWorld.LIMLIB_WORLD.getEntrySet()) {
 			dynamic = limlib$addDimension(entry.getKey(), entry.getValue(), dynamic);
 		}
 
@@ -53,12 +53,12 @@ public class WorldSaveStorageMixin {
 				.put(dimensions.createString(key.getValue().toString()),
 					new Dynamic<T>(dimensions.getOps(),
 						(T) DimensionOptions.CODEC
-							.encodeStart(RegistryOps.create(NbtOps.INSTANCE, registryManager),
+							.encodeStart(RegistryOps.of(NbtOps.INSTANCE, registryManager),
 								world.getDimensionOptionsSupplier().apply(new RegistryProvider() {
 
 									@Override
-									public <Q> HolderProvider<Q> get(RegistryKey<Registry<Q>> key) {
-										return registryManager.getLookup(key).get();
+									public <Q> RegistryEntryLookup<Q> get(RegistryKey<Registry<Q>> key) {
+										return registryManager.getOptionalWrapper(key).get();
 									}
 
 								}))

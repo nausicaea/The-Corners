@@ -18,10 +18,10 @@ import net.minecraft.server.world.ServerLightingProvider;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.world.ChunkRegion;
+import net.minecraft.world.chunk.BelowZeroRetrogen;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.ProtoChunk;
-import net.minecraft.world.gen.BelowZeroRetrogen;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
 @Mixin(ChunkStatus.class)
@@ -48,8 +48,8 @@ public class ChunkStatusMixin {
 							if (belowZeroRetrogen != null) {
 								BelowZeroRetrogen.replaceOldBedrock(protoChunk);
 
-								if (belowZeroRetrogen.hasBedrockHoles()) {
-									belowZeroRetrogen.applyBedrockMask(protoChunk);
+								if (belowZeroRetrogen.hasMissingBedrock()) {
+									belowZeroRetrogen.fillColumnsWithAirIfMissingBedrock(protoChunk);
 								}
 
 							}

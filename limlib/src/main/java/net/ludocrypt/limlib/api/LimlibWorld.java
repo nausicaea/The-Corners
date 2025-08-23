@@ -6,8 +6,8 @@ import com.google.common.base.Suppliers;
 
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
-import net.minecraft.registry.HolderProvider;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
@@ -42,7 +42,7 @@ public class LimlibWorld {
 
 	public static interface RegistryProvider {
 
-		public <T> HolderProvider<T> get(RegistryKey<Registry<T>> key);
+		public <T> RegistryEntryLookup<T> get(RegistryKey<Registry<T>> key);
 
 	}
 

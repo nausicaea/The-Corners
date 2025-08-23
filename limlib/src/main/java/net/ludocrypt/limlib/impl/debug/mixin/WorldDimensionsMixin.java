@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.ludocrypt.limlib.impl.debug.DebugNbtChunkGenerator;
-import net.minecraft.world.dimension.WorldDimensions;
+import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
-@Mixin(WorldDimensions.class)
+@Mixin(DimensionOptionsRegistryHolder.class)
 public abstract class WorldDimensionsMixin {
 
 	@Inject(method = "isDebug", at = @At("HEAD"), cancellable = true)

@@ -6,6 +6,6 @@ import net.minecraft.registry.DynamicRegistryManager;
 
 public class SaveStorageSupplier {
 
-	public static final AtomicReference<DynamicRegistryManager.Frozen> LOADED_REGISTRY = new AtomicReference<DynamicRegistryManager.Frozen>();
+	public static final AtomicReference<DynamicRegistryManager.Immutable> LOADED_REGISTRY = new AtomicReference<DynamicRegistryManager.Immutable>();
 
 }

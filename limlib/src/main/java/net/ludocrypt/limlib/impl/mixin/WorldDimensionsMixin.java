@@ -17,9 +17,9 @@ import net.ludocrypt.limlib.api.LimlibWorld;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.dimension.DimensionOptions;
-import net.minecraft.world.dimension.WorldDimensions;
+import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
 
-@Mixin(WorldDimensions.class)
+@Mixin(DimensionOptionsRegistryHolder.class)
 public class WorldDimensionsMixin {
 
 	@Shadow
@@ -32,7 +32,7 @@ public class WorldDimensionsMixin {
 		Set<RegistryKey<DimensionOptions>> dimensions = Sets.newHashSet();
 		dimensions.addAll(VANILLA_DIMENSION_KEYS);
 		LimlibWorld.LIMLIB_WORLD
-			.getEntries()
+			.getEntrySet()
 			.forEach((entry) -> dimensions.add(RegistryKey.of(RegistryKeys.DIMENSION, entry.getKey().getValue())));
 		VANILLA_DIMENSION_KEYS = dimensions;
 	}
