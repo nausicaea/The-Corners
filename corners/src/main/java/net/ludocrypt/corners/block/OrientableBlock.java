@@ -41,11 +41,11 @@ public class OrientableBlock extends Block {
 		Direction direction2;
 
 		if (ctx.getSide().getAxis() == Direction.Axis.Y) {
-			direction = ctx.getPlayerFacing().getOpposite();
+			direction = ctx.getHorizontalPlayerFacing().getOpposite();
 			direction2 = Direction.UP;
 		} else {
 			direction = Direction.UP;
-			direction2 = ctx.getPlayerFacing().getOpposite();
+			direction2 = ctx.getHorizontalPlayerFacing().getOpposite();
 		}
 
 		JigsawOrientation ore = JigsawOrientation.byDirections(direction, direction2);

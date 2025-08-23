@@ -1,37 +1,37 @@
 package net.ludocrypt.corners.client.entity.corvus;
 
-import net.minecraft.client.render.animation.Animation;
-import net.minecraft.client.render.animation.AnimationKeyframe;
-import net.minecraft.client.render.animation.Animator;
-import net.minecraft.client.render.animation.PartAnimation;
+import net.minecraft.client.render.entity.animation.Animation;
+import net.minecraft.client.render.entity.animation.AnimationHelper;
+import net.minecraft.client.render.entity.animation.Keyframe;
+import net.minecraft.client.render.entity.animation.Transformation;
 
 public class CorvusAnimations {
 
-	public static final AnimationKeyframe ROTATE_ORIGIN = new AnimationKeyframe(0.0F, Animator.rotate(0.0F, 0.0F, 0.0F),
-		PartAnimation.Interpolations.SPLINE);
+	public static final Keyframe ROTATE_ORIGIN = new Keyframe(0.0F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F),
+		Transformation.Interpolations.CUBIC);
 
-	public static Animation.Builder tuckWings(Animation.Builder curr, AnimationKeyframe leftWing,
-			AnimationKeyframe leftWing2, AnimationKeyframe leftWingMid, AnimationKeyframe rightWing,
-			AnimationKeyframe rightWing2, AnimationKeyframe rightWingMid, float time) {
+	public static Animation.Builder tuckWings(Animation.Builder curr, Keyframe leftWing,
+			Keyframe leftWing2, Keyframe leftWingMid, Keyframe rightWing,
+			Keyframe rightWing2, Keyframe rightWingMid, float time) {
 		return curr
-			.addPartAnimation("left_wing",
-				new PartAnimation(PartAnimation.AnimationTargets.ROTATE, leftWing,
-					new AnimationKeyframe(time, Animator.rotate(0.0F, 0.0F, 90.0F), PartAnimation.Interpolations.SPLINE)))
-			.addPartAnimation("left_wing_2",
-				new PartAnimation(PartAnimation.AnimationTargets.ROTATE, leftWing2,
-					new AnimationKeyframe(time, Animator.rotate(20.0F, -90.0F, -30.0F),
-						PartAnimation.Interpolations.SPLINE)))
-			.addPartAnimation("left_wing_mid_r1",
-				new PartAnimation(PartAnimation.AnimationTargets.ROTATE, leftWingMid,
-					new AnimationKeyframe(time, Animator.rotate(0.0F, 90.0F, 0.0F), PartAnimation.Interpolations.SPLINE)))
-			.addPartAnimation("right_wing",
-				new PartAnimation(PartAnimation.AnimationTargets.ROTATE, rightWing,
-					new AnimationKeyframe(time, Animator.rotate(0.0F, 0.0F, -90.0F), PartAnimation.Interpolations.SPLINE)))
-			.addPartAnimation("right_wing_2",
-				new PartAnimation(PartAnimation.AnimationTargets.ROTATE, rightWing2,
-					new AnimationKeyframe(time, Animator.rotate(20.0F, 90.0F, 30.0F), PartAnimation.Interpolations.SPLINE)))
-			.addPartAnimation("right_wing_mid_r1", new PartAnimation(PartAnimation.AnimationTargets.ROTATE, rightWingMid,
-				new AnimationKeyframe(time, Animator.rotate(0.0F, -90.0F, 0.0F), PartAnimation.Interpolations.SPLINE)));
+			.addBoneAnimation("left_wing",
+				new Transformation(Transformation.Targets.ROTATE, leftWing,
+					new Keyframe(time, AnimationHelper.createRotationalVector(0.0F, 0.0F, 90.0F), Transformation.Interpolations.CUBIC)))
+			.addBoneAnimation("left_wing_2",
+				new Transformation(Transformation.Targets.ROTATE, leftWing2,
+					new Keyframe(time, AnimationHelper.createRotationalVector(20.0F, -90.0F, -30.0F),
+						Transformation.Interpolations.CUBIC)))
+			.addBoneAnimation("left_wing_mid_r1",
+				new Transformation(Transformation.Targets.ROTATE, leftWingMid,
+					new Keyframe(time, AnimationHelper.createRotationalVector(0.0F, 90.0F, 0.0F), Transformation.Interpolations.CUBIC)))
+			.addBoneAnimation("right_wing",
+				new Transformation(Transformation.Targets.ROTATE, rightWing,
+					new Keyframe(time, AnimationHelper.createRotationalVector(0.0F, 0.0F, -90.0F), Transformation.Interpolations.CUBIC)))
+			.addBoneAnimation("right_wing_2",
+				new Transformation(Transformation.Targets.ROTATE, rightWing2,
+					new Keyframe(time, AnimationHelper.createRotationalVector(20.0F, 90.0F, 30.0F), Transformation.Interpolations.CUBIC)))
+			.addBoneAnimation("right_wing_mid_r1", new Transformation(Transformation.Targets.ROTATE, rightWingMid,
+				new Keyframe(time, AnimationHelper.createRotationalVector(0.0F, -90.0F, 0.0F), Transformation.Interpolations.CUBIC)));
 	}
 
 }

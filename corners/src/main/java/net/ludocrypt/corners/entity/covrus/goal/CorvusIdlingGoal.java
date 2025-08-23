@@ -36,7 +36,7 @@ public class CorvusIdlingGoal extends Goal {
 	}
 
 	@Override
-	public boolean requiresUpdateEveryTick() {
+	public boolean shouldRunEveryTick() {
 		return true;
 	}
 

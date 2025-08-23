@@ -8,7 +8,7 @@ public final class CornerBoatDispensorBehavior extends BoatDispenserBehavior {
 	private final CornerBoatEntity.CornerBoat boatData;
 
 	public CornerBoatDispensorBehavior(CornerBoatEntity.CornerBoat boatData, boolean chest) {
-		super(BoatEntity.Variant.OAK, chest);
+		super(BoatEntity.Type.OAK, chest);
 		this.boatData = boatData;
 	}
 

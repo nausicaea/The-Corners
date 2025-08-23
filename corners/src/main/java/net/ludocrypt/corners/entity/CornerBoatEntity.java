@@ -1,5 +1,6 @@
 package net.ludocrypt.corners.entity;
 
+import Z;
 import java.util.function.Supplier;
 
 import net.ludocrypt.corners.TheCorners;
@@ -28,12 +29,12 @@ public class CornerBoatEntity extends BoatEntity {
 	}
 
 	@Override
-	public BoatEntity.Variant getVariant() {
-		return BoatEntity.Variant.OAK;
+	public BoatEntity.Type getVariant() {
+		return BoatEntity.Type.OAK;
 	}
 
 	@Override
-	public void setVariant(BoatEntity.Variant type) {
+	public void setVariant(BoatEntity.Type type) {
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class CornerBoatEntity extends BoatEntity {
 
 	public static BoatEntity copy(BoatEntity original, CornerBoat boatData) {
 		var chest = original instanceof ChestBoatEntity;
-		var boat = boatData.factory(chest).create(boatData.entityType(chest), original.getWorld());
+		var boat = boatData.factory(chest).create(boatData.entityType(chest), original.method_48926());
 		boat.updatePosition(original.getX(), original.getY(), original.getZ());
 		return boat;
 	}
@@ -60,7 +61,7 @@ public class CornerBoatEntity extends BoatEntity {
 		private final Supplier<ItemConvertible> chestBoat;
 		private final Supplier<EntityType<BoatEntity>> entityType;
 		private final Supplier<EntityType<BoatEntity>> chestEntityType;
-		public static final StringIdentifiable.EnumCodec<CornerBoat> CODEC = StringIdentifiable
+		public static final StringIdentifiable.Codec<CornerBoat> CODEC = StringIdentifiable
 			.createCodec(CornerBoatEntity.CornerBoat::values);
 
 		CornerBoat(String name, Supplier<ItemConvertible> planks, Supplier<ItemConvertible> boat,
@@ -91,7 +92,7 @@ public class CornerBoatEntity extends BoatEntity {
 		}
 
 		public static CornerBoat getType(String name) {
-			return CODEC.getOrElse(name, GAIA);
+			return CODEC.byId(name, GAIA);
 		}
 
 		public EntityType.EntityFactory<BoatEntity> factory(boolean chest) {
