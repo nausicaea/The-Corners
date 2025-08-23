@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.collect.Maps;
 
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.impl.access.BakedModelAccess;
-import net.ludocrypt.specialmodels.impl.access.UnbakedModelAccess;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.impl.access.BakedModelAccess;
+import net.ludocrypt.specialmodels.client.impl.access.UnbakedModelAccess;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.Baker;
 import net.minecraft.client.render.model.ModelBakeSettings;
