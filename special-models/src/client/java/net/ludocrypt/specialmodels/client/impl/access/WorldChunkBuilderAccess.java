@@ -23,48 +23,48 @@ import net.minecraft.util.math.Vec3d;
 
 public interface WorldChunkBuilderAccess {
 
-	SpecialChunkBuilder getSpecialChunkBuilder();
+	SpecialChunkBuilder specialmodels$getSpecialChunkBuilder();
 
-	Future<?> getLastFullSpecialBuiltChunkUpdate();
+	Future<?> specialmodels$getLastFullSpecialBuiltChunkUpdate();
 
-	BlockingQueue<SpecialChunkBuilder.BuiltChunk> getRecentlyCompiledSpecialChunks();
+	BlockingQueue<SpecialChunkBuilder.BuiltChunk> specialmodels$getRecentlyCompiledSpecialChunks();
 
-	AtomicReference<SpecialChunkBuilder.RenderableChunks> getRenderableSpecialChunks();
+	AtomicReference<SpecialChunkBuilder.RenderableChunks> specialmodels$getRenderableSpecialChunks();
 
-	ObjectArrayList<SpecialChunkBuilder.ChunkInfo> getSpecialChunkInfoList();
+	ObjectArrayList<SpecialChunkBuilder.ChunkInfo> specialmodels$getSpecialChunkInfoList();
 
-	SpecialBuiltChunkStorage getSpecialChunks();
+	SpecialBuiltChunkStorage specialmodels$getSpecialChunks();
 
-	SpecialBufferBuilderStorage getSpecialBufferBuilderStorage();
+	SpecialBufferBuilderStorage specialmodels$getSpecialBufferBuilderStorage();
 
-	boolean shouldNeedsFullSpecialBuiltChunkUpdate();
+	boolean specialmodels$shouldNeedsFullSpecialBuiltChunkUpdate();
 
-	AtomicBoolean shouldNeedsSpecialFrustumUpdate();
+	AtomicBoolean specialmodels$shouldNeedsSpecialFrustumUpdate();
 
-	AtomicLong getNextFullSpecialUpdateMilliseconds();
+	AtomicLong specialmodels$getNextFullSpecialUpdateMilliseconds();
 
-	void setWorldSpecial(ClientWorld world);
+	void specialmodels$setWorldSpecial(ClientWorld world);
 
-	void reloadSpecial();
+	void specialmodels$reloadSpecial();
 
-	void setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator);
+	void specialmodels$setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator);
 
-	void addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue);
+	void specialmodels$addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue);
 
-	void addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk);
+	void specialmodels$addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk);
 
-	void updateSpecialBuiltChunks(LinkedHashSet<SpecialChunkBuilder.ChunkInfo> builtChunks,
-								  SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
-								  Queue<SpecialChunkBuilder.ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
+	void specialmodels$updateSpecialBuiltChunks(LinkedHashSet<SpecialChunkBuilder.ChunkInfo> builtChunks,
+												SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
+												Queue<SpecialChunkBuilder.ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
 
 	@Nullable
-	SpecialChunkBuilder.BuiltChunk getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
-														   Direction direction);
+	SpecialChunkBuilder.BuiltChunk specialmodels$getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
+																		 Direction direction);
 
-	boolean isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk);
+	boolean specialmodels$isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk);
 
-	void applySpecialFrustum(Frustum frustum);
+	void specialmodels$applySpecialFrustum(Frustum frustum);
 
-	void findSpecialChunksToRebuild(Camera camera);
+	void specialmodels$findSpecialChunksToRebuild(Camera camera);
 
 }

@@ -29,12 +29,12 @@ public class GeneralBakedModelMixin implements BakedModelAccess {
 	private List<Pair<SpecialModelRenderer, BakedModel>> defaultModels = Lists.newArrayList();
 
 	@Override
-	public List<Pair<SpecialModelRenderer, BakedModel>> getModels(@Nullable BlockState state) {
+	public List<Pair<SpecialModelRenderer, BakedModel>> specialmodels$getModels(@Nullable BlockState state) {
 		return modelsMap.getOrDefault(state, defaultModels);
 	}
 
 	@Override
-	public void addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model) {
+	public void specialmodels$addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model) {
 
 		if (state == null) {
 			defaultModels.add(Pair.of(modelRenderer, model));

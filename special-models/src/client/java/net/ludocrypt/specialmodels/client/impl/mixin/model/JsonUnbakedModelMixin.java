@@ -38,13 +38,13 @@ public abstract class JsonUnbakedModelMixin implements UnbakedModelAccess {
 	@Inject(method = "bake(Lnet/minecraft/client/render/model/Baker;Lnet/minecraft/client/render/model/json/JsonUnbakedModel;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;Z)Lnet/minecraft/client/render/model/BakedModel;", at = @At("RETURN"))
 	private void specialModels$bake(Baker loader, JsonUnbakedModel parent, Function<SpriteIdentifier, Sprite> textureGetter,
 			ModelBakeSettings settings, Identifier id, boolean hasDepth, CallbackInfoReturnable<BakedModel> ci) {
-		this.getSubModels().forEach((modelRenderer, modelId) -> {
+		this.specialmodels$getSubModels().forEach((modelRenderer, modelId) -> {
 
 			if (!modelId.equals(id)) {
 				UnbakedModel model = loader.getOrLoadModel(modelId);
 				model.setParents(loader::getOrLoadModel);
 				BakedModel bakedModel = model.bake(loader, textureGetter, settings, modelId);
-				((BakedModelAccess) ci.getReturnValue()).addModel(modelRenderer, null, bakedModel);
+				((BakedModelAccess) ci.getReturnValue()).specialmodels$addModel(modelRenderer, null, bakedModel);
 			} else {
 				LOGGER.warn("Model '{}' caught in chain! Renderer '{}' caught model '{}'", id, modelRenderer, modelId);
 			}
@@ -53,7 +53,7 @@ public abstract class JsonUnbakedModelMixin implements UnbakedModelAccess {
 	}
 
 	@Override
-	public Map<SpecialModelRenderer, Identifier> getSubModels() {
+	public Map<SpecialModelRenderer, Identifier> specialmodels$getSubModels() {
 		return subModels;
 	}
 
