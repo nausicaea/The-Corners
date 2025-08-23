@@ -155,7 +155,7 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 	}
 
 	@Shadow
-	abstract void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta,
-			MatrixStack matrices, VertexConsumerProvider vertexConsumers);
+	protected abstract void renderEntity(Entity entity, double cameraX, double cameraY, double cameraZ, float tickDelta,
+										 MatrixStack matrices, VertexConsumerProvider vertexConsumers);
 
 }
