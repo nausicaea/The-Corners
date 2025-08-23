@@ -1,0 +1,4 @@
+[upstream]
+	objectId = b527557add31deabcc05d3b9856db14530d843c2
+	revision = 11.0.0
+	url = https://github.com/LudoCrypt/Liminal-Library.git
