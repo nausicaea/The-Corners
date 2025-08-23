@@ -12,9 +12,9 @@ import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.ShaderProgram;
-import net.minecraft.client.render.chunk.ChunkRenderRegion;
+import net.minecraft.client.render.chunk.ChunkRendererRegion;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -39,34 +39,34 @@ public class DeepBookshelfRenderer extends SpecialModelRenderer {
 		MatrixStack matrixStack = new MatrixStack();
 		((GameRendererAccessor) client.gameRenderer).callBobViewWhenHurt(matrixStack, tickDelta);
 
-		if (client.options.getBobView().get()) {
+		if (client.options.getBobView().getValue()) {
 			((GameRendererAccessor) client.gameRenderer).callBobView(matrixStack, tickDelta);
 		}
 
 		MatrixStack basicStack = new MatrixStack();
 		basicStack
-			.multiplyMatrix(client.gameRenderer
+			.multiplyPositionMatrix(client.gameRenderer
 				.getBasicProjectionMatrix(((GameRendererAccessor) client.gameRenderer).callGetFov(camera, tickDelta, true)));
 
 		if (shader.getUniform("BasicMat") != null) {
-			shader.getUniform("BasicMat").setMat4x4(basicStack.peek().getModel());
+			shader.getUniform("BasicMat").set(basicStack.peek().getPositionMatrix());
 		}
 
 		if (shader.getUniform("BobMat") != null) {
-			shader.getUniform("BobMat").setMat4x4(matrixStack.peek().getModel());
+			shader.getUniform("BobMat").set(matrixStack.peek().getPositionMatrix());
 		}
 
 		if (shader.getUniform("cameraPos") != null) {
 			shader
 				.getUniform("cameraPos")
-				.setVec3((float) camera.getPos().getX(), (float) camera.getPos().getY(), (float) camera.getPos().getZ());
+				.set((float) camera.getPos().getX(), (float) camera.getPos().getY(), (float) camera.getPos().getZ());
 		}
 
 	}
 
 	@Override
 	@ClientOnly
-	public Vec4b appendState(ChunkRenderRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
+	public Vec4b appendState(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			long modelSeed) {
 
 		if (state.isOf(CornerBlocks.DEEP_BOOKSHELF)) {

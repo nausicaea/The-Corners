@@ -104,7 +104,7 @@ public class RadioBlock extends HorizontalFacingBlock {
 					world.setBlockState(pos, of(state, empty));
 				}
 
-				world.playSound(pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+				world.playSoundAtBlockCenter(pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 				return ActionResult.SUCCESS;
 			} else if (CORES.containsKey(player.getStackInHand(hand).getItem())) {
 
@@ -117,7 +117,7 @@ public class RadioBlock extends HorizontalFacingBlock {
 
 				}
 
-				world.playSound(pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 0.5F, false);
+				world.playSoundAtBlockCenter(pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 0.5F, false);
 				return ActionResult.SUCCESS;
 			}
 
@@ -172,7 +172,7 @@ public class RadioBlock extends HorizontalFacingBlock {
 			sendOut(ctx.getWorld(), ctx.getBlockPos(), true);
 		}
 
-		return super.getPlacementState(ctx).with(POWERED, power).with(FACING, ctx.getPlayerFacing().getOpposite());
+		return super.getPlacementState(ctx).with(POWERED, power).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
 	}
 
 	@Override

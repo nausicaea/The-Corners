@@ -12,15 +12,15 @@ import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.ShaderProgram;
-import net.minecraft.client.render.chunk.ChunkRenderRegion;
+import net.minecraft.client.render.chunk.ChunkRendererRegion;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Axis;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec2f;
 
 public class ChristmasRenderer extends SpecialModelRenderer {
@@ -44,7 +44,7 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 		if (CornerConfig.get().christmas.isChristmas()) {
 
 			if (shader.getUniform("christmas") != null) {
-				shader.getUniform("christmas").setInt(1);
+				shader.getUniform("christmas").set(1);
 			}
 
 			for (int i = 0; i < 6; i++) {
@@ -54,7 +54,7 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 				if (shader.getUniform("leftTint" + i) != null) {
 					shader
 						.getUniform("leftTint" + i)
-						.setVec4(new Vector4f(hexToRGBA(CornerConfig.get().christmas.leftColors
+						.set(new Vector4f(hexToRGBA(CornerConfig.get().christmas.leftColors
 							.get((((int) Math.floor(RenderSystem.getShaderGameTime() * 1000)) + i) % CornerConfig
 								.get().christmas.leftColors.size()))));
 				}
@@ -62,7 +62,7 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 				if (shader.getUniform("rightTint" + i) != null) {
 					shader
 						.getUniform("rightTint" + i)
-						.setVec4(new Vector4f(hexToRGBA(CornerConfig.get().christmas.rightColors
+						.set(new Vector4f(hexToRGBA(CornerConfig.get().christmas.rightColors
 							.get((((int) Math.floor(RenderSystem.getShaderGameTime() * 1000)) + i) % CornerConfig
 								.get().christmas.rightColors.size()))));
 				}
@@ -72,7 +72,7 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 		} else {
 
 			if (shader.getUniform("christmas") != null) {
-				shader.getUniform("christmas").setInt(0);
+				shader.getUniform("christmas").set(0);
 			}
 
 		}
@@ -85,14 +85,14 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 		}
 
 		if (shader.getUniform("GameTime") != null) {
-			shader.getUniform("GameTime").setFloat(RenderSystem.getShaderGameTime());
+			shader.getUniform("GameTime").set(RenderSystem.getShaderGameTime());
 		}
 
 		MinecraftClient client = MinecraftClient.getInstance();
 		Camera camera = client.gameRenderer.getCamera();
-		Matrix4f matrix = new MatrixStack().peek().getModel();
-		matrix.rotate(Axis.X_POSITIVE.rotationDegrees(camera.getPitch()));
-		matrix.rotate(Axis.Y_POSITIVE.rotationDegrees(camera.getYaw() + 180.0F));
+		Matrix4f matrix = new MatrixStack().peek().getPositionMatrix();
+		matrix.rotate(RotationAxis.POSITIVE_X.rotationDegrees(camera.getPitch()));
+		matrix.rotate(RotationAxis.POSITIVE_Y.rotationDegrees(camera.getYaw() + 180.0F));
 		double gazeAngle = Math.max(Math.toRadians(camera.getPitch() % 360) / Math.PI * -2, 0);
 
 		if (gazeAngle > 0.4) {
@@ -110,18 +110,18 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 		gazeTimer = MathHelper.clamp(gazeTimer, 0, 1);
 
 		if (shader.getUniform("gaze") != null) {
-			shader.getUniform("gaze").setFloat((float) gazeTimer);
+			shader.getUniform("gaze").set((float) gazeTimer);
 		}
 
 		if (shader.getUniform("RotMat") != null) {
-			shader.getUniform("RotMat").setMat4x4(matrix);
+			shader.getUniform("RotMat").set(matrix);
 		}
 
 	}
 
 	@Override
 	@ClientOnly
-	public MutableQuad modifyQuad(ChunkRenderRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
+	public MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
 		quad.getV1().setUv(new Vec2f(0.0F, 0.0F));
 		quad.getV2().setUv(new Vec2f(0.0F, 1.0F));

@@ -24,7 +24,7 @@ public abstract class EntityMixin {
 	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	private void corners$interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> ci) {
 
-		if (!player.getWorld().isClient) {
+		if (!player.method_48926().isClient) {
 
 			if (((Entity) (Object) this) instanceof PaintingEntity painting) {
 
@@ -34,11 +34,11 @@ public abstract class EntityMixin {
 
 						if (player.getStackInHand(hand).getItem().equals(Items.FLINT_AND_STEEL)) {
 							DimensionalPaintingEntity dimensional = DimensionalPaintingEntity
-								.create(painting.getWorld(), painting.getDecorationBlockPos(),
+								.create(painting.method_48926(), painting.getDecorationBlockPos(),
 									painting.getHorizontalFacing(), painting.getVariant().value());
-							painting.getWorld().spawnEntity(dimensional);
+							painting.method_48926().spawnEntity(dimensional);
 							painting
-								.getWorld()
+								.method_48926()
 								.playSound(null, painting.getBlockPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE,
 									SoundCategory.BLOCKS, 1.0F, 1.0F);
 							player

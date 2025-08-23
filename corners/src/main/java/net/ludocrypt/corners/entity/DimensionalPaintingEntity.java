@@ -38,7 +38,7 @@ public class DimensionalPaintingEntity extends PaintingEntity {
 			DimensionalPaintingEntity entity = create(world, pos);
 			((PaintingEntityAccessor) entity)
 				.callSetVariant(
-					Registries.PAINTING_VARIANT.getHolder(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
+					Registries.PAINTING_VARIANT.getEntry(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
 			entity.setFacing(direction);
 			return entity;
 		}
@@ -51,7 +51,7 @@ public class DimensionalPaintingEntity extends PaintingEntity {
 		PaintingEntity entity = new PaintingEntity(EntityType.PAINTING, world);
 		entity.setPosition(pos.getX(), pos.getY(), pos.getZ());
 		((PaintingEntityAccessor) entity)
-			.callSetVariant(Registries.PAINTING_VARIANT.getHolder(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
+			.callSetVariant(Registries.PAINTING_VARIANT.getEntry(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
 		((AbstractDecorationEntityAccessor) entity).callSetFacing(direction);
 		return entity;
 	}
@@ -78,7 +78,7 @@ public class DimensionalPaintingEntity extends PaintingEntity {
 
 				if (player.getVelocity().length() > 0.05) {
 
-					if (this.getWorld() instanceof ServerWorld && player instanceof ServerPlayerEntity spe) {
+					if (this.method_48926() instanceof ServerWorld && player instanceof ServerPlayerEntity spe) {
 						ServerWorld world = player.getServer().getWorld(variant.dimension.apply(spe, this));
 						TeleportTarget teleportTarget = variant.teleportTarget.apply(spe, this);
 						LimlibTravelling

@@ -13,13 +13,13 @@ public class CornerBoatItem extends BoatItem {
 	private final boolean chest;
 
 	public CornerBoatItem(boolean chest, CornerBoatEntity.CornerBoat boatData, Item.Settings settings) {
-		super(chest, BoatEntity.Variant.OAK, settings);
+		super(chest, BoatEntity.Type.OAK, settings);
 		this.chest = chest;
 		this.boatData = boatData;
 	}
 
 	@Override
-	protected BoatEntity createBoatEntity(World world, HitResult hitResult) {
+	protected BoatEntity createEntity(World world, HitResult hitResult) {
 		var entity = boatData.factory(chest).create(boatData.entityType(chest), world);
 		entity.updatePosition(hitResult.getPos().x, hitResult.getPos().y, hitResult.getPos().z);
 		return entity;

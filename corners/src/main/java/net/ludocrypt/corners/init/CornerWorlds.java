@@ -28,13 +28,13 @@ import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
 import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffect;
 import net.ludocrypt.limlib.api.skybox.Skybox;
 import net.ludocrypt.limlib.api.skybox.TexturedSkybox;
-import net.minecraft.registry.HolderProvider;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.MusicSound;
-import net.minecraft.util.math.int_provider.ConstantIntProvider;
-import net.minecraft.util.math.int_provider.UniformIntProvider;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.dimension.DimensionOptions;
@@ -108,11 +108,11 @@ public class CornerWorlds implements LimlibRegistrar {
 				(registry) -> new DimensionOptions(
 					registry
 						.get(RegistryKeys.DIMENSION_TYPE)
-						.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, TheCorners.id(YEARNING_CANAL)))
+						.getOptional(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, TheCorners.id(YEARNING_CANAL)))
 						.get(),
 					new YearningCanalChunkGenerator(
 						new FixedBiomeSource(
-							registry.get(RegistryKeys.BIOME).getHolder(CornerBiomes.YEARNING_CANAL_BIOME).get()),
+							registry.get(RegistryKeys.BIOME).getOptional(CornerBiomes.YEARNING_CANAL_BIOME).get()),
 						YearningCanalChunkGenerator.createGroup()))));
 		get(COMMUNAL_CORRIDORS,
 			new LimlibWorld(
@@ -122,11 +122,11 @@ public class CornerWorlds implements LimlibRegistrar {
 				(registry) -> new DimensionOptions(
 					registry
 						.get(RegistryKeys.DIMENSION_TYPE)
-						.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, TheCorners.id(COMMUNAL_CORRIDORS)))
+						.getOptional(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, TheCorners.id(COMMUNAL_CORRIDORS)))
 						.get(),
 					new CommunalCorridorsChunkGenerator(
 						new FixedBiomeSource(
-							registry.get(RegistryKeys.BIOME).getHolder(CornerBiomes.COMMUNAL_CORRIDORS_BIOME).get()),
+							registry.get(RegistryKeys.BIOME).getOptional(CornerBiomes.COMMUNAL_CORRIDORS_BIOME).get()),
 						CommunalCorridorsChunkGenerator.createGroup(), 16, 16, 8, 0))));
 		get(HOARY_CROSSROADS,
 			new LimlibWorld(
@@ -136,53 +136,53 @@ public class CornerWorlds implements LimlibRegistrar {
 				(registry) -> new DimensionOptions(
 					registry
 						.get(RegistryKeys.DIMENSION_TYPE)
-						.getHolder(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, TheCorners.id(HOARY_CROSSROADS)))
+						.getOptional(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, TheCorners.id(HOARY_CROSSROADS)))
 						.get(),
 					new HoaryCrossroadsChunkGenerator(
 						new FixedBiomeSource(
-							registry.get(RegistryKeys.BIOME).getHolder(CornerBiomes.HOARY_CROSSROADS_BIOME).get()),
+							registry.get(RegistryKeys.BIOME).getOptional(CornerBiomes.HOARY_CROSSROADS_BIOME).get()),
 						HoaryCrossroadsChunkGenerator.createGroup(), 16, 16, 4, 0))));
 
 		// Registries
-		WORLDS.forEach((pair) -> LimlibWorld.LIMLIB_WORLD.register(pair.getFirst(), pair.getSecond(), Lifecycle.stable()));
+		WORLDS.forEach((pair) -> LimlibWorld.LIMLIB_WORLD.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable()));
 		LimlibRegistryHooks
 			.hook(SoundEffects.SOUND_EFFECTS_KEY, (infoLookup, registryKey, registry) -> SOUND_EFFECTS
-				.forEach((pair) -> registry.register(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
+				.forEach((pair) -> registry.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
 		LimlibRegistryHooks
 			.hook(Skybox.SKYBOX_KEY, (infoLookup, registryKey, registry) -> SKYBOXES
-				.forEach((pair) -> registry.register(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
+				.forEach((pair) -> registry.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
 		LimlibRegistryHooks
 			.hook(DimensionEffects.DIMENSION_EFFECTS_KEY, (infoLookup, registryKey, registry) -> DIMENSION_EFFECTS
-				.forEach((pair) -> registry.register(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
+				.forEach((pair) -> registry.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
 		LimlibRegistryHooks
 			.hook(PostEffect.POST_EFFECT_KEY, (infoLookup, registryKey, registry) -> POST_EFFECTS
-				.forEach((pair) -> registry.register(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
+				.forEach((pair) -> registry.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
 		LimlibRegistryHooks.hook(RegistryKeys.BIOME, (infoLookup, registryKey, registry) -> {
-			HolderProvider<PlacedFeature> features = infoLookup.lookup(RegistryKeys.PLACED_FEATURE).get().getter();
-			HolderProvider<ConfiguredCarver<?>> carvers = infoLookup.lookup(RegistryKeys.CONFIGURED_CARVER).get().getter();
+			RegistryEntryLookup<PlacedFeature> features = infoLookup.getRegistryInfo(RegistryKeys.PLACED_FEATURE).get().entryLookup();
+			RegistryEntryLookup<ConfiguredCarver<?>> carvers = infoLookup.getRegistryInfo(RegistryKeys.CONFIGURED_CARVER).get().entryLookup();
 			registry
-				.register(CornerBiomes.YEARNING_CANAL_BIOME, YearningCanalBiome.create(features, carvers),
+				.add(CornerBiomes.YEARNING_CANAL_BIOME, YearningCanalBiome.create(features, carvers),
 					Lifecycle.stable());
 			registry
-				.register(CornerBiomes.COMMUNAL_CORRIDORS_BIOME, CommunalCorridorsBiome.create(features, carvers),
+				.add(CornerBiomes.COMMUNAL_CORRIDORS_BIOME, CommunalCorridorsBiome.create(features, carvers),
 					Lifecycle.stable());
 			registry
-				.register(CornerBiomes.HOARY_CROSSROADS_BIOME, HoaryCrossroadsBiome.create(features, carvers),
+				.add(CornerBiomes.HOARY_CROSSROADS_BIOME, HoaryCrossroadsBiome.create(features, carvers),
 					Lifecycle.stable());
 		});
 		LimlibRegistryHooks.hook(RegistryKeys.FEATURE, (infoLookup, registryKey, registry) -> {
 			registry
-				.register(CornerBiomes.GAIA_TREE_FEATURE, new GaiaTreeFeature(DefaultFeatureConfig.CODEC),
+				.add(CornerBiomes.GAIA_TREE_FEATURE, new GaiaTreeFeature(DefaultFeatureConfig.CODEC),
 					Lifecycle.stable());
 		});
 		LimlibRegistryHooks.hook(RegistryKeys.CONFIGURED_FEATURE, (infoLookup, registryKey, registry) -> {
 			registry
-				.register(CornerBiomes.CONFIGURED_GAIA_TREE_FEATURE,
+				.add(CornerBiomes.CONFIGURED_GAIA_TREE_FEATURE,
 					new ConfiguredFeature<DefaultFeatureConfig, GaiaTreeFeature>(
 						new GaiaTreeFeature(DefaultFeatureConfig.CODEC), DefaultFeatureConfig.INSTANCE),
 					Lifecycle.stable());
 			registry
-				.register(CornerBiomes.CONFIGURED_SAPLING_GAIA_TREE_FEATURE,
+				.add(CornerBiomes.CONFIGURED_SAPLING_GAIA_TREE_FEATURE,
 					new ConfiguredFeature(Feature.TREE,
 						new TreeFeatureConfig.Builder(BlockStateProvider.of(CornerBlocks.GAIA_LOG),
 							new GiantTrunkPlacer(10, 5, 5), BlockStateProvider.of(CornerBlocks.GAIA_LEAVES),

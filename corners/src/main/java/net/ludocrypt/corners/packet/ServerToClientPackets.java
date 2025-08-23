@@ -19,7 +19,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 
 public class ServerToClientPackets {
 
@@ -61,7 +61,7 @@ public class ServerToClientPackets {
 
 						LoopingPositionedSoundInstance
 							.play(client.world, pos, soundEvent, SoundCategory.RECORDS, 1.0F, 1.0F,
-								RandomGenerator.createLegacy(), pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);
+								Random.create(), pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);
 					}
 
 				});
