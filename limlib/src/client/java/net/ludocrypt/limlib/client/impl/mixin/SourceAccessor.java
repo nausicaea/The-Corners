@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.mixin.client;
+package net.ludocrypt.limlib.client.impl.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.mixin.client;
+package net.ludocrypt.limlib.client.impl.mixin;
 
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public abstract class WorldRendererAfterMixin {
 				MinecraftClient client = MinecraftClient.getInstance();
 
 				Optional<Skybox> sky = LookupGrabber
-					.snatch(client.world.getRegistryManager().getOptionalWrapper(Skybox.SKYBOX_KEY).get(),
+					.snatch(client.world.getRegistryManager().getLookup(Skybox.SKYBOX_KEY).get(),
 						RegistryKey.of(Skybox.SKYBOX_KEY, client.world.getRegistryKey().getValue()));
 
 				if (sky.isPresent()) {

@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.mixin.client;
+package net.ludocrypt.limlib.client.impl.mixin;
 
 import java.util.Optional;
 
