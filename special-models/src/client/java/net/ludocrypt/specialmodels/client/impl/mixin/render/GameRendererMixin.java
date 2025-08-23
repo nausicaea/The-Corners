@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.ludocrypt.specialmodels.client.impl.SpecialModelsClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,9 +27,9 @@ import net.minecraft.resource.ResourceFactory;
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
 
-	@Inject(method = "loadPrograms", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 58, shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
-	private void specialModels$loadShaders(ResourceFactory manager, CallbackInfo ci, List<ShaderStage> list,
-			List<Pair<ShaderProgram, Consumer<ShaderProgram>>> list2) {
+	@Inject(method = "loadPrograms", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 58, shift = Shift.AFTER))
+	private void specialModels$loadShaders(ResourceFactory manager, CallbackInfo ci,
+										   @Local(ordinal = 1) List<Pair<ShaderProgram, Consumer<ShaderProgram>>> list2) {
 		SpecialModelsClient.LOADED_SHADERS.clear();
 		SpecialModelRenderer.SPECIAL_MODEL_RENDERER
 			.getEntrySet()
