@@ -560,7 +560,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 					((VertexBufferAccessor) buffer)
 						.setVertexFormat(this.uploadAndBindFormat(buffer, params, this.getVertexBuffer()));
 					((VertexBufferAccessor) buffer)
-						.setIndexBuffer(this.uploadIndexBuffer(buffer, params, this.getIndexBuffer()));
+						.setSharedSequentialIndexBuffer(this.uploadIndexBuffer(buffer, params, this.getIndexBuffer()));
 					((VertexBufferAccessor) buffer).setIndexCount(params.getIndexCount());
 					((VertexBufferAccessor) buffer).setIndexType(params.getIndexType());
 					((VertexBufferAccessor) buffer).setDrawMode(params.getMode());
