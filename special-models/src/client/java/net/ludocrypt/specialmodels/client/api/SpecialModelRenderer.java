@@ -1,7 +1,6 @@
 package net.ludocrypt.specialmodels.client.api;
 
 import org.joml.Matrix4f;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.serialization.Lifecycle;
 
