@@ -13,3 +13,6 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+
+rootProject.name = 'the-corners'
+include('corners')
