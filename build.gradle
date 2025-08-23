@@ -1,6 +1,6 @@
 plugins {
+	id 'fabric-loom' version "1.11.7"
 	id 'maven-publish'
-	alias(libs.plugins.quilt.loom)
 }
 
 archivesBaseName = project.archives_base_name
