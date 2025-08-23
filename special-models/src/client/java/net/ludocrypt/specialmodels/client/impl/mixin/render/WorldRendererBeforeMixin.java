@@ -70,9 +70,9 @@ public abstract class WorldRendererBeforeMixin implements WorldRendererAccess, W
 			this.shouldCaptureFrustum = false;
 		}
 
-		this.setupSpecialTerrain(camera, frustum, this.capturedFrustum != null, this.client.player.isSpectator());
-		this.findSpecialChunksToRebuild(camera);
-		this.render(matrices, positionMatrix, tickDelta, camera, true);
+		this.specialmodels$setupSpecialTerrain(camera, frustum, this.capturedFrustum != null, this.client.player.isSpectator());
+		this.specialmodels$findSpecialChunksToRebuild(camera);
+		this.specialmodels$render(matrices, positionMatrix, tickDelta, camera, true);
 	}
 
 	@Inject(method = "Lnet/minecraft/client/render/WorldRenderer;render(Lnet/minecraft/client/util/math/MatrixStack;FJZLnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/GameRenderer;Lnet/minecraft/client/render/LightmapTextureManager;Lorg/joml/Matrix4f;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/VertexConsumerProvider$Immediate;draw(Lnet/minecraft/client/render/RenderLayer;)V", ordinal = 0, shift = Shift.BEFORE))
@@ -98,9 +98,9 @@ public abstract class WorldRendererBeforeMixin implements WorldRendererAccess, W
 			this.shouldCaptureFrustum = false;
 		}
 
-		this.setupSpecialTerrain(camera, frustum, this.capturedFrustum != null, this.client.player.isSpectator());
-		this.findSpecialChunksToRebuild(camera);
-		this.render(matrices, positionMatrix, tickDelta, camera, false);
+		this.specialmodels$setupSpecialTerrain(camera, frustum, this.capturedFrustum != null, this.client.player.isSpectator());
+		this.specialmodels$findSpecialChunksToRebuild(camera);
+		this.specialmodels$render(matrices, positionMatrix, tickDelta, camera, false);
 	}
 
 	@Shadow

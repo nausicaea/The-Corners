@@ -31,7 +31,7 @@ public class MultipartBakedModelMixin implements BakedModelAccess {
 	private final Map<BlockState, List<Pair<SpecialModelRenderer, BakedModel>>> subModelCache = new Reference2ReferenceOpenHashMap<>();
 
 	@Override
-	public List<Pair<SpecialModelRenderer, BakedModel>> getModels(@Nullable BlockState state) {
+	public List<Pair<SpecialModelRenderer, BakedModel>> specialmodels$getModels(@Nullable BlockState state) {
 
 		if (state == null) {
 			return Lists.newArrayList();
@@ -48,7 +48,7 @@ public class MultipartBakedModelMixin implements BakedModelAccess {
 				for (org.apache.commons.lang3.tuple.Pair<Predicate<BlockState>, BakedModel> pair : this.components) {
 
 					if ((pair.getLeft()).test(state)) {
-						models.addAll(((BakedModelAccess) pair.getRight()).getModels(state));
+						models.addAll(((BakedModelAccess) pair.getRight()).specialmodels$getModels(state));
 					}
 
 				}
@@ -62,7 +62,7 @@ public class MultipartBakedModelMixin implements BakedModelAccess {
 	}
 
 	@Override
-	public void addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model) {
+	public void specialmodels$addModel(SpecialModelRenderer modelRenderer, @Nullable BlockState state, BakedModel model) {
 	}
 
 }
