@@ -5,15 +5,15 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [],
 	"client": [
-		"client.BackgroundRendererMixin",
-		"client.ClientWorldMixin",
-		"client.DimensionVisualEffectsMixin",
-		"client.GameRendererMixin",
-		"client.MinecraftClientMixin",
-		"client.SoundSystemMixin",
-		"client.SourceAccessor",
-		"client.WorldRendererAfterMixin",
-		"client.WorldRendererBeforeMixin"
+		"BackgroundRendererMixin",
+		"ClientWorldMixin",
+		"DimensionVisualEffectsMixin",
+		"GameRendererMixin",
+		"MinecraftClientMixin",
+		"SoundSystemMixin",
+		"SourceAccessor",
+		"WorldRendererAfterMixin",
+		"WorldRendererBeforeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
