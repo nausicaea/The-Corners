@@ -18,11 +18,14 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BasicBakedModel;
 import net.minecraft.client.render.model.BuiltinBakedModel;
 import net.minecraft.client.render.model.WeightedBakedModel;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(value = { BasicBakedModel.class, BuiltinBakedModel.class, WeightedBakedModel.class, ForwardingBakedModel.class })
 public class GeneralBakedModelMixin implements BakedModelAccess {
 
+	@Unique
 	private final Map<BlockState, List<Pair<SpecialModelRenderer, BakedModel>>> modelsMap = Maps.newHashMap();
+	@Unique
 	private List<Pair<SpecialModelRenderer, BakedModel>> defaultModels = Lists.newArrayList();
 
 	@Override
