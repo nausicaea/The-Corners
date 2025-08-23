@@ -24,14 +24,14 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilderStorage;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialBuiltChunkStorage;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.ChunkData;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.ChunkInfo;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.RenderableChunks;
+import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilderStorage;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBuiltChunkStorage;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkData;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkInfo;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.RenderableChunks;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -64,7 +64,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	private int viewDistance;
 	@Shadow
 	@Final
-	private static double CEIL_CUBEROOT_3_TIMES_16;
+	private static double field_34814;
 	@Unique
 	private SpecialChunkBuilder specialChunkBuilder;
 	@Unique
@@ -544,7 +544,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 						BlockPos blockPos4 = blockPos3.add(var10001, var10002, var10003);
 						Vec3d vec3d = new Vec3d((double) blockPos4.getX(), (double) blockPos4.getY(),
 							(double) blockPos4.getZ());
-						Vec3d vec3d2 = cameraPos.subtract(vec3d).normalize().multiply(CEIL_CUBEROOT_3_TIMES_16);
+						Vec3d vec3d2 = cameraPos.subtract(vec3d).normalize().multiply(field_34814);
 						boolean bl3 = true;
 
 						while (cameraPos.subtract(vec3d).lengthSquared() > 3600.0) {
