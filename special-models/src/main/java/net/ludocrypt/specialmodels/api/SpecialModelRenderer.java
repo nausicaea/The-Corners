@@ -5,7 +5,6 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.serialization.Lifecycle;
 
-import net.ludocrypt.specialmodels.impl.SpecialModels;
 import net.ludocrypt.specialmodels.impl.mixin.registry.RegistriesAccessor;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
@@ -66,7 +65,7 @@ public abstract class SpecialModelRenderer {
 
 	@ClientOnly
 	public ShaderProgram getShaderProgram(MatrixStack matrices, float tickDelta) {
-		return SpecialModels.LOADED_SHADERS.get(this);
+		return SpecialModelsClient.LOADED_SHADERS.get(this);
 	}
 
 }

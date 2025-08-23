@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.mixin.render;
+package net.ludocrypt.specialmodels.client.impl.mixin.render;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +29,7 @@ public class GameRendererMixin {
 	@Inject(method = "loadShaders", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 58, shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
 	private void specialModels$loadShaders(ResourceFactory manager, CallbackInfo ci, List<ShaderStage> list,
 			List<Pair<ShaderProgram, Consumer<ShaderProgram>>> list2) {
-		SpecialModels.LOADED_SHADERS.clear();
+		SpecialModelsClient.LOADED_SHADERS.clear();
 		SpecialModelRenderer.SPECIAL_MODEL_RENDERER
 			.getEntries()
 			.stream()
@@ -48,7 +48,7 @@ public class GameRendererMixin {
 						.add(Pair
 							.of(new ShaderProgram(manager, "rendertype_" + id.getNamespace() + "_" + id.getPath(),
 								SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE),
-								(shader) -> SpecialModels.LOADED_SHADERS.put(renderer, shader)));
+								(shader) -> SpecialModelsClient.LOADED_SHADERS.put(renderer, shader)));
 				} catch (IOException e) {
 					SpecialModels.LOGGER.error("Could not reload shader: {}", id);
 					e.printStackTrace();
@@ -58,7 +58,7 @@ public class GameRendererMixin {
 							.add(Pair
 								.of(new ShaderProgram(manager, "rendertype_specialmodels_textured",
 									SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE),
-									(shader) -> SpecialModels.LOADED_SHADERS.put(renderer, shader)));
+									(shader) -> SpecialModelsClient.LOADED_SHADERS.put(renderer, shader)));
 					} catch (IOException e2) {
 						list2.forEach((pair) -> pair.getFirst().close());
 						e2.printStackTrace();
