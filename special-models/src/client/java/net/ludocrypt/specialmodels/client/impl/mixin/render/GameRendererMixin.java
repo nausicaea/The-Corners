@@ -15,9 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import com.mojang.blaze3d.shader.ShaderStage;
 import com.mojang.datafixers.util.Pair;
 
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.SpecialModels;
-import net.ludocrypt.specialmodels.impl.render.SpecialVertexFormats;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.registry.RegistryKey;

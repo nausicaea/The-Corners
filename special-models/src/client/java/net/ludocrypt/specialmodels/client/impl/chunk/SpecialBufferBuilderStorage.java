@@ -1,18 +1,18 @@
-package net.ludocrypt.specialmodels.impl.chunk;
+package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.minecraft.client.render.RenderLayer;
 
 public class SpecialBufferBuilderStorage {
 
 	private final Map<SpecialModelRenderer, SpecialBufferBuilder> specialModelBuffers = SpecialModelRenderer.SPECIAL_MODEL_RENDERER
-		.getEntries()
+		.getEntrySet()
 		.stream()
 		.collect(Collectors
-			.toMap(entry -> entry.getValue(),
+			.toMap(Map.Entry::getValue,
 				entry -> new SpecialBufferBuilder(RenderLayer.getSolid().getExpectedBufferSize())));
 
 	public SpecialBufferBuilder get(SpecialModelRenderer renderer) {

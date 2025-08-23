@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.render;
+package net.ludocrypt.specialmodels.client.impl.mixin.render;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.VertexFormat;
