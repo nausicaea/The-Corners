@@ -32,3 +32,4 @@ bin/
 
 run/
 lines.txt
+*.hprof
