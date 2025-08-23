@@ -138,6 +138,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 		this.needsFullSpecialBuiltChunkUpdate = true;
 	}
 
+	@Unique
 	private void scheduleSpecialSectionRender(BlockPos pos, boolean important) {
 
 		for (int i = pos.getZ() - 1; i <= pos.getZ() + 1; ++i) {
@@ -156,6 +157,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 	}
 
+	@Unique
 	public void scheduleSpecialBlockRenders(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
 
 		for (int i = minZ - 1; i <= maxZ + 1; ++i) {
@@ -174,6 +176,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 	}
 
+	@Unique
 	public void scheduleSpecialBlockRenders(int x, int y, int z) {
 
 		for (int i = z - 1; i <= z + 1; ++i) {
@@ -190,10 +193,12 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 
 	}
 
+	@Unique
 	public void scheduleSpecialBlockRender(int x, int y, int z) {
 		this.scheduleSpecialChunkRender(x, y, z, false);
 	}
 
+	@Unique
 	private void scheduleSpecialChunkRender(int x, int y, int z, boolean important) {
 		this.specialChunks.scheduleRebuild(x, y, z, important);
 	}
