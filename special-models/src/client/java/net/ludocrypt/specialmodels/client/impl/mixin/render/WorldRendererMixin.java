@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.client.impl.mixin.render;
+package net.ludocrypt.specialmodels.impl.mixin.render;
 
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
@@ -8,18 +8,17 @@ import org.spongepowered.asm.mixin.Unique;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.VertexBuffer;
-
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.client.impl.access.WorldRendererAccess;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkInfo;
+import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.impl.access.WorldRendererAccess;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk;
+import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.ChunkInfo;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilderStorage;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.ShaderProgram;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -115,14 +114,14 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 			RenderSystem.enableBlend();
 			RenderSystem.enableDepthTest();
 			RenderSystem
-				.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-					GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+				.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA,
+					GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
 			RenderSystem.polygonOffset(3.0F, 3.0F);
 			RenderSystem.enablePolygonOffset();
 			RenderSystem.setShader(() -> shader);
 			client.gameRenderer.getLightmapTextureManager().enable();
 			vertexBuffer.bind();
-			Matrix4f viewMatrix = modelRenderer.viewMatrix(new Matrix4f(matrices.peek().getModel()));
+			Matrix4f viewMatrix = modelRenderer.viewMatrix(new Matrix4f(matrices.peek().getPositionMatrix()));
 			Matrix4f projectionMatrix = modelRenderer.positionMatrix(new Matrix4f(positionMatrix));
 			modelRenderer
 				.setup(matrices, new Matrix4f(viewMatrix), new Matrix4f(projectionMatrix), tickDelta, shader, origin);
@@ -134,7 +133,7 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 					float vx = (float) (blockPos.getX() - camera.getPos().getX());
 					float vy = (float) (blockPos.getY() - camera.getPos().getY());
 					float vz = (float) (blockPos.getZ() - camera.getPos().getZ());
-					shader.chunkOffset.setVec3(vx, vy, vz);
+					shader.chunkOffset.set(vx, vy, vz);
 				}
 
 			}
@@ -142,7 +141,7 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 			vertexBuffer.draw(viewMatrix, projectionMatrix, shader);
 
 			if (shader.chunkOffset != null) {
-				shader.chunkOffset.setVec3(0.0F, 0.0F, 0.0F);
+				shader.chunkOffset.set(0.0F, 0.0F, 0.0F);
 			}
 
 			VertexBuffer.unbind();

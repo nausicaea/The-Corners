@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.client.impl.mixin.render;
+package net.ludocrypt.specialmodels.impl.mixin.render;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3d;
@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.client.impl.access.WorldRendererAccess;
+import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.impl.access.WorldRendererAccess;
 import net.ludocrypt.specialmodels.impl.bridge.IrisBridge;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
@@ -57,7 +57,7 @@ public abstract class WorldRendererAfterMixin implements WorldRendererAccess, Wo
 				}
 
 				if (this.shouldCaptureFrustum) {
-					Matrix4f matrix4f2 = matrices.peek().getModel();
+					Matrix4f matrix4f2 = matrices.peek().getPositionMatrix();
 					Vec3d vec3d = camera.getPos();
 					this
 						.captureFrustum(matrix4f2, positionMatrix, vec3d.x, vec3d.y, vec3d.z,
