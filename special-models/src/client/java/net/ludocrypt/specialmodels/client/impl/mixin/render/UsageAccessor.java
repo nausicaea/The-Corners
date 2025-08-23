@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.mixin.render;
+package net.ludocrypt.specialmodels.client.impl.mixin.render;
 
 import com.mojang.blaze3d.vertex.VertexBuffer;
 import org.spongepowered.asm.mixin.Mixin;
