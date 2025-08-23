@@ -1,38 +1,36 @@
-package net.ludocrypt.specialmodels.client.impl.chunk;
+package net.ludocrypt.specialmodels.impl.chunk;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.function.Supplier;
 
-import net.ludocrypt.specialmodels.client.impl.mixin.render.UsageAccessor;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.system.MemoryUtil;
 import org.slf4j.Logger;
-
-import com.mojang.blaze3d.AllocationUtil;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferVertexConsumer;
-import com.mojang.blaze3d.vertex.FixedColorVertexConsumer;
-import com.mojang.blaze3d.vertex.VertexBuffer;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat.DrawMode;
-import com.mojang.blaze3d.vertex.VertexFormat.IndexType;
-import com.mojang.blaze3d.vertex.VertexFormatElement;
-import com.mojang.blaze3d.vertex.VertexFormats;
-import com.mojang.blaze3d.vertex.VertexSorting;
+import com.mojang.blaze3d.systems.VertexSorter;
 import com.mojang.logging.LogUtils;
 
 import it.unimi.dsi.fastutil.ints.IntConsumer;
 import net.ludocrypt.specialmodels.impl.mixin.render.UsageAccessor;
 import net.ludocrypt.specialmodels.impl.mixin.render.VertexBufferAccessor;
-import net.ludocrypt.specialmodels.client.impl.mixin.render.SpecialVertexFormats;
+import net.ludocrypt.specialmodels.impl.render.SpecialVertexFormats;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
+import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.render.BufferVertexConsumer;
+import net.minecraft.client.render.FixedColorVertexConsumer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormat.DrawMode;
+import net.minecraft.client.render.VertexFormat.IndexType;
+import net.minecraft.client.render.VertexFormatElement;
+import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.util.math.MathHelper;
 
 public class SpecialBufferBuilder extends FixedColorVertexConsumer implements BufferVertexConsumer {
@@ -64,7 +62,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	private Vector3f[] sortingPoints;
 
 	@Nullable
-	private VertexSorting quadSorting;
+	private VertexSorter quadSorting;
 
 	private boolean indexOnly;
 
@@ -72,11 +70,11 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	private Supplier<Vec4b> state;
 
 	public SpecialBufferBuilder(int initialCapacity) {
-		this.buffer = AllocationUtil.allocateByteBuffer(initialCapacity * 6);
+		this.buffer = GlAllocationUtils.allocateByteBuffer(initialCapacity * 6);
 	}
 
 	private void grow() {
-		this.grow(this.format.getVertexSize());
+		this.grow(this.format.getVertexSizeByte());
 	}
 
 	private void grow(int size) {
@@ -85,7 +83,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			int oldSize = this.buffer.capacity();
 			int newSize = oldSize + roundBufferSize(size);
 			LOGGER.debug("Needed to grow BufferBuilder buffer: Old size {} bytes, new size {} bytes.", oldSize, newSize);
-			ByteBuffer byteBuffer = AllocationUtil.resizeByteBuffer(this.buffer, newSize);
+			ByteBuffer byteBuffer = GlAllocationUtils.resizeByteBuffer(this.buffer, newSize);
 			byteBuffer.rewind();
 			this.buffer = byteBuffer;
 		}
@@ -109,7 +107,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 
 	}
 
-	public void setQuadSorting(VertexSorting sorting) {
+	public void setQuadSorting(VertexSorter sorting) {
 
 		if (this.drawMode == VertexFormat.DrawMode.QUADS) {
 			this.quadSorting = sorting;
@@ -176,9 +174,9 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	private Vector3f[] createSortingPoints() {
 		FloatBuffer floatBuffer = this.buffer.asFloatBuffer();
 		int pointer = this.renderedBufferPointer / 4;
-		int formatSize = this.format.getIntegerSize();
-		int drawSize = formatSize * this.drawMode.primitiveStride;
-		int expected = this.vertexCount / this.drawMode.primitiveStride;
+		int formatSize = this.format.getVertexSizeInteger();
+		int drawSize = formatSize * this.drawMode.additionalVertexCount;
+		int expected = this.vertexCount / this.drawMode.additionalVertexCount;
 		Vector3f[] sort = new Vector3f[expected];
 
 		for (int i = 0; i < expected; ++i) {
@@ -204,12 +202,12 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			IntConsumer consumer = this.createConsumer(this.elementOffset, indexType);
 
 			for (int i : sorted) {
-				consumer.accept(i * this.drawMode.primitiveStride + 0);
-				consumer.accept(i * this.drawMode.primitiveStride + 1);
-				consumer.accept(i * this.drawMode.primitiveStride + 2);
-				consumer.accept(i * this.drawMode.primitiveStride + 2);
-				consumer.accept(i * this.drawMode.primitiveStride + 3);
-				consumer.accept(i * this.drawMode.primitiveStride + 0);
+				consumer.accept(i * this.drawMode.additionalVertexCount + 0);
+				consumer.accept(i * this.drawMode.additionalVertexCount + 1);
+				consumer.accept(i * this.drawMode.additionalVertexCount + 2);
+				consumer.accept(i * this.drawMode.additionalVertexCount + 2);
+				consumer.accept(i * this.drawMode.additionalVertexCount + 3);
+				consumer.accept(i * this.drawMode.additionalVertexCount + 0);
 			}
 
 		} else {
@@ -253,14 +251,14 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	}
 
 	private RenderedBuffer buildBatchParameters() {
-		int drawCount = this.drawMode.indexCount(this.vertexCount);
-		int vertexSize = !this.indexOnly ? this.vertexCount * this.format.getVertexSize() : 0;
-		IndexType type = IndexType.getSmallestIndexType(drawCount);
+		int drawCount = this.drawMode.getIndexCount(this.vertexCount);
+		int vertexSize = !this.indexOnly ? this.vertexCount * this.format.getVertexSizeByte() : 0;
+		IndexType type = IndexType.smallestFor(drawCount);
 		boolean textured = true;
 		int offset = vertexSize;
 
 		if (this.sortingPoints != null) {
-			int growth = MathHelper.roundUpToMultiple(drawCount * type.bytes, 4);
+			int growth = MathHelper.roundUpToMultiple(drawCount * type.size, 4);
 			this.grow(growth);
 			this.putSortedIndices(type);
 			this.elementOffset += growth;
@@ -314,7 +312,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			this.grow();
 
 			if (this.drawMode == VertexFormat.DrawMode.LINES || this.drawMode == VertexFormat.DrawMode.LINE_STRIP) {
-				int size = this.format.getVertexSize();
+				int size = this.format.getVertexSizeByte();
 				this.buffer.put(this.elementOffset, this.buffer, this.elementOffset - size, size);
 				this.elementOffset += size;
 				this.vertexCount++;
@@ -457,7 +455,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			IndexType indexType, boolean indexOnly, boolean textured) {
 
 		public int getVertexBufferSize() {
-			return this.vertexCount * this.vertexFormat.getVertexSize();
+			return this.vertexCount * this.vertexFormat.getVertexSizeByte();
 		}
 
 		public int getVertexBufferEnd() {
@@ -473,7 +471,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 		}
 
 		private int getIndexBufferSize() {
-			return this.textured ? 0 : this.indexCount * this.indexType.bytes;
+			return this.textured ? 0 : this.indexCount * this.indexType.size;
 		}
 
 		public int getTotalBufferSize() {
@@ -554,7 +552,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 
 		public void upload(VertexBuffer buffer) {
 
-			if (!buffer.invalid()) {
+			if (!buffer.isClosed()) {
 				RenderSystem.assertOnRenderThread();
 
 				try {
@@ -580,11 +578,11 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			if (!parameters.getVertexFormat().equals(((VertexBufferAccessor) buffer).getVertexFormat())) {
 
 				if (((VertexBufferAccessor) buffer).getVertexFormat() != null) {
-					((VertexBufferAccessor) buffer).getVertexFormat().clearAttribState();
+					((VertexBufferAccessor) buffer).getVertexFormat().clearState();
 				}
 
 				GlStateManager._glBindBuffer(GL15.GL_ARRAY_BUFFER, ((VertexBufferAccessor) buffer).getVertexBufferId());
-				parameters.getVertexFormat().setupAttribState();
+				parameters.getVertexFormat().setupState();
 				rebind = true;
 			}
 
@@ -603,7 +601,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 		}
 
 		@Nullable
-		private RenderSystem.IndexBuffer uploadIndexBuffer(VertexBuffer buffer, DrawArrayParameters parameters,
+		private RenderSystem.ShapeIndexBuffer uploadIndexBuffer(VertexBuffer buffer, DrawArrayParameters parameters,
 				ByteBuffer bytes) {
 
 			if (!parameters.isTextured()) {
@@ -614,11 +612,11 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 						((UsageAccessor) (Object) ((VertexBufferAccessor) buffer).getUsage()).getId());
 				return null;
 			} else {
-				RenderSystem.IndexBuffer indexBuffer = RenderSystem.getSequentialBuffer(parameters.getMode());
+				RenderSystem.ShapeIndexBuffer indexBuffer = RenderSystem.getSequentialBuffer(parameters.getMode());
 
 				if (indexBuffer != ((VertexBufferAccessor) buffer).getIndexBuffer() || !indexBuffer
-					.hasSize(parameters.getIndexCount())) {
-					indexBuffer.bindWithSize(parameters.getIndexCount());
+					.isLargeEnough(parameters.getIndexCount())) {
+					indexBuffer.bindAndGrow(parameters.getIndexCount());
 				}
 
 				return indexBuffer;
@@ -629,7 +627,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	}
 
 	public static record SortState(DrawMode drawMode, int vertexCount, @Nullable Vector3f[] sortingPoints,
-			@Nullable VertexSorting quadSorting) {
+			@Nullable VertexSorter quadSorting) {
 
 	}
 

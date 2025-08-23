@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.client.impl.mixin.model;
+package net.ludocrypt.specialmodels.impl.mixin.model;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -14,8 +14,8 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.client.impl.access.UnbakedModelAccess;
+import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.impl.access.UnbakedModelAccess;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
