@@ -17,9 +17,9 @@ import com.mojang.blaze3d.systems.VertexSorter;
 import com.mojang.logging.LogUtils;
 
 import it.unimi.dsi.fastutil.ints.IntConsumer;
-import net.ludocrypt.specialmodels.impl.mixin.render.UsageAccessor;
-import net.ludocrypt.specialmodels.impl.mixin.render.VertexBufferAccessor;
-import net.ludocrypt.specialmodels.impl.render.SpecialVertexFormats;
+import net.ludocrypt.specialmodels.client.impl.mixin.render.UsageAccessor;
+import net.ludocrypt.specialmodels.client.impl.mixin.render.VertexBufferAccessor;
+import net.ludocrypt.specialmodels.client.impl.render.SpecialVertexFormats;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferVertexConsumer;
@@ -614,7 +614,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			} else {
 				RenderSystem.ShapeIndexBuffer indexBuffer = RenderSystem.getSequentialBuffer(parameters.getMode());
 
-				if (indexBuffer != ((VertexBufferAccessor) buffer).getIndexBuffer() || !indexBuffer
+				if (indexBuffer != ((VertexBufferAccessor) buffer).getSharedSequentialIndexBuffer() || !indexBuffer
 					.isLargeEnough(parameters.getIndexCount())) {
 					indexBuffer.bindAndGrow(parameters.getIndexCount());
 				}
