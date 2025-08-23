@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.access;
+package net.ludocrypt.specialmodels.client.impl.access;
 
 import java.util.Map;
 

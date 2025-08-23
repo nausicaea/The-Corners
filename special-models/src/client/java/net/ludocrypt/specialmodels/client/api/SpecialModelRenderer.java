@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.api;
+package net.ludocrypt.specialmodels.client.api;
 
 import org.joml.Matrix4f;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
@@ -25,7 +25,7 @@ public abstract class SpecialModelRenderer {
 	public static final RegistryKey<Registry<SpecialModelRenderer>> SPECIAL_MODEL_RENDERER_KEY = RegistryKey
 		.ofRegistry(new Identifier("limlib/special_model_renderer"));
 	public static final Registry<SpecialModelRenderer> SPECIAL_MODEL_RENDERER = RegistriesAccessor
-		.callRegisterSimple(SPECIAL_MODEL_RENDERER_KEY, Lifecycle.stable(),
+		.callCreate(SPECIAL_MODEL_RENDERER_KEY, Lifecycle.stable(),
 			registry -> TexturedSpecialModelRenderer.TEXTURED);
 
 	public final boolean performOutside;

@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.chunk;
+package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import org.jetbrains.annotations.Nullable;
 import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk;
