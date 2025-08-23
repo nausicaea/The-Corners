@@ -23,7 +23,7 @@ import net.minecraft.util.Identifier;
 @Mixin(JsonUnbakedModel.Deserializer.class)
 public abstract class JsonUnbakedModelDeserializerMixin {
 
-	@Inject(method = "Lnet/minecraft/client/render/model/json/JsonUnbakedModel$Deserializer;deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;", at = @At("RETURN"), cancellable = true)
+	@Inject(method = "Lnet/minecraft/client/render/model/json/JsonUnbakedModel$Deserializer;deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;", at = @At("RETURN"))
 	private void specialModels$deserialize(JsonElement jsonElement, Type type,
 			JsonDeserializationContext jsonDeserializationContext, CallbackInfoReturnable<JsonUnbakedModel> ci) {
 		Map<SpecialModelRenderer, Identifier> map = Maps.newHashMap();
