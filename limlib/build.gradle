@@ -1,22 +1,13 @@
 plugins {
-	id 'fabric-loom' version "1.11.7"
+	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
-version = "$project.version+${libs.versions.minecraft.get()}"
+version = "${project.version}+${project.minecraft_version}"
 group = project.maven_group
 
 base {
 	archivesName = project.archives_base_name
-}
-
-repositories {
-    maven {
-        url = 'https://maven.quiltmc.org/repository/release'
-    }
-	maven {
-		url 'https://ladysnake.jfrog.io/artifactory/mods'
-    }
 }
 
 loom {
@@ -32,10 +23,10 @@ loom {
 }
 
 dependencies {
-	minecraft libs.minecraft
-	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
-	modImplementation libs.quilt.loader
-	modImplementation libs.quilted.fabric.api
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
 processResources {
