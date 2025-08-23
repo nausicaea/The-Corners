@@ -1,6 +1,6 @@
 plugins {
+	id 'fabric-loom' version "1.11.7"
 	id 'maven-publish'
-	alias libs.plugins.quilt.loom
 }
 
 base.archivesName = project.archives_base_name
@@ -12,6 +12,9 @@ loom {
 }
 
 repositories {
+    maven {
+        url = 'https://maven.quiltmc.org/repository/release'
+    }
 	maven {
 		url 'https://ladysnake.jfrog.io/artifactory/mods'
     }
