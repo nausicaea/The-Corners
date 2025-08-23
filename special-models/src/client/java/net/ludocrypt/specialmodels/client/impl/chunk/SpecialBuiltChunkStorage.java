@@ -1,7 +1,7 @@
 package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import org.jetbrains.annotations.Nullable;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.util.math.BlockPos;
