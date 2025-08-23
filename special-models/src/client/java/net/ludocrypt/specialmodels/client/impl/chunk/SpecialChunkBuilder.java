@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.MemoryStack;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.slf4j.Logger;
 
 import com.google.common.collect.Lists;
@@ -30,15 +29,15 @@ import com.mojang.logging.LogUtils;
 
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.impl.access.BakedModelAccess;
-import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilder.RenderedBuffer;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilder.SortState;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk.Task;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.impl.access.BakedModelAccess;
+import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilder.RenderedBuffer;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilder.SortState;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk.Task;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.ludocrypt.specialmodels.impl.render.MutableVertice;
-import net.ludocrypt.specialmodels.impl.render.SpecialVertexFormats;
+import net.ludocrypt.specialmodels.client.impl.render.SpecialVertexFormats;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
