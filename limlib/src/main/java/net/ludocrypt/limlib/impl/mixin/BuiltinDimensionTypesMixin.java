@@ -6,19 +6,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.ludocrypt.limlib.api.LimlibWorld;
+import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.world.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.BootstrapContext;
+import net.minecraft.world.dimension.DimensionTypeRegistrar;
 
-@Mixin(BuiltinDimensionTypes.class)
+@Mixin(DimensionTypeRegistrar.class)
 public class BuiltinDimensionTypesMixin {
 
 	@Inject(method = "bootstrap(Lnet/minecraft/world/gen/BootstrapContext;)V", at = @At("RETURN"))
-	private static void limlib$initAndGetDefault(BootstrapContext<DimensionType> bootstrapContext, CallbackInfo ci) {
+	private static void limlib$initAndGetDefault(Registerable<DimensionType> bootstrapContext, CallbackInfo ci) {
 		LimlibWorld.LIMLIB_WORLD
-			.getEntries()
+			.getEntrySet()
 			.forEach((entry) -> bootstrapContext
 				.register(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, entry.getKey().getValue()),
 					entry.getValue().getDimensionTypeSupplier().get()));

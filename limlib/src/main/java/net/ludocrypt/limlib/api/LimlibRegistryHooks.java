@@ -13,7 +13,7 @@ import net.minecraft.registry.MutableRegistry;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryOps;
-import net.minecraft.registry.RegistryOps.RegistryInfoLookup;
+import net.minecraft.registry.RegistryOps.RegistryInfoGetter;
 
 public class LimlibRegistryHooks {
 
@@ -42,7 +42,7 @@ public class LimlibRegistryHooks {
 		 * @param registryKey The RegistryKey of the registry.
 		 * @param registry    The MutableRegistry where to register.
 		 */
-		void register(RegistryInfoLookup infoLookup, RegistryKey<? extends Registry<O>> registryKey,
+		void register(RegistryInfoGetter infoLookup, RegistryKey<? extends Registry<O>> registryKey,
 				MutableRegistry<O> registry);
 
 	}
@@ -56,7 +56,7 @@ public class LimlibRegistryHooks {
 		 * @param registry    The MutableRegistry where to register.
 		 * @param jsonElement The jsonElement to modify before being read by a CODEC.
 		 */
-		void register(RegistryInfoLookup infoLookup, RegistryKey<? extends Registry<O>> registryKey,
+		void register(RegistryInfoGetter infoLookup, RegistryKey<? extends Registry<O>> registryKey,
 				RegistryOps<JsonElement> registryOps, JsonElement jsonElement);
 
 	}

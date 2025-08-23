@@ -1,13 +1,11 @@
 package net.ludocrypt.limlib.api.effects.sky;
 
 import java.util.Optional;
-
+import net.minecraft.client.render.DimensionEffects;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.client.render.DimensionVisualEffects;
 
 /**
  * A Sky effects controller
@@ -84,7 +82,7 @@ public class StaticDimensionEffects extends DimensionEffects {
 
 	@Override
 	@ClientOnly
-	public DimensionVisualEffects getDimensionEffects() {
+	public DimensionEffects getDimensionEffects() {
 		return SkyPropertiesCreator
 			.create(getCloudHeight(), hasAlternateSkyColor(), getSkyType(), shouldBrightenLighting(), isDarkened(),
 				hasThickFog());
