@@ -8,7 +8,7 @@ import net.minecraft.client.sound.TickableSoundInstance;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class LoopingPositionedSoundInstance extends PositionedSoundInstance implements TickableSoundInstance {
@@ -18,14 +18,14 @@ public class LoopingPositionedSoundInstance extends PositionedSoundInstance impl
 	private boolean isDone = false;
 
 	public LoopingPositionedSoundInstance(World world, BlockPos pos, SoundEvent sound, SoundCategory category, float volume,
-			float pitch, RandomGenerator random, double x, double y, double z) {
+			float pitch, Random random, double x, double y, double z) {
 		super(sound, category, volume, pitch, random, x, y, z);
 		this.world = world;
 		this.pos = pos;
 	}
 
 	public static void play(World world, BlockPos pos, SoundEvent sound, SoundCategory category, float volume, float pitch,
-			RandomGenerator random, double x, double y, double z) {
+			Random random, double x, double y, double z) {
 		MinecraftClient client = MinecraftClient.getInstance();
 		LoopingPositionedSoundInstance soundInstance = new LoopingPositionedSoundInstance(world, pos, sound, category,
 			volume, pitch, random, x, y, z);

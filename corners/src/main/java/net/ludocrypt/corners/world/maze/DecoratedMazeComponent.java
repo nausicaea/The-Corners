@@ -7,13 +7,13 @@ import com.google.common.collect.Maps;
 import net.ludocrypt.limlib.api.world.maze.MazeComponent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 
 public class DecoratedMazeComponent extends MazeComponent {
 
-	RandomGenerator random;
+	Random random;
 
-	public DecoratedMazeComponent(int width, int height, RandomGenerator random) {
+	public DecoratedMazeComponent(int width, int height, Random random) {
 		super(width, height);
 		this.random = random;
 	}

@@ -22,12 +22,12 @@ public final class CornerChestBoatEntity extends ChestBoatEntity implements Corn
 	}
 
 	@Override
-	public BoatEntity.Variant getVariant() {
-		return BoatEntity.Variant.OAK;
+	public BoatEntity.Type getVariant() {
+		return BoatEntity.Type.OAK;
 	}
 
 	@Override
-	public void setVariant(BoatEntity.Variant type) {
+	public void setVariant(BoatEntity.Type type) {
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class CornerPaintings {
 			if (pos != null) {
 				ServerWorld serverWorld = player.getServer().getOverworld();
 				return PlayerEntity
-					.findRespawnPosition(serverWorld, pos, player.getSpawnAngle(), player.isSpawnPointSet(), true)
+					.findRespawnPosition(serverWorld, pos, player.getSpawnAngle(), player.isSpawnForced(), true)
 					.orElse(Vec3d.ofCenter(player.getServer().getOverworld().getSpawnPos()));
 			}
 

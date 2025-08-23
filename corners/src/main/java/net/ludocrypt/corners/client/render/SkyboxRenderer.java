@@ -11,14 +11,14 @@ import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.ShaderProgram;
-import net.minecraft.client.render.chunk.ChunkRenderRegion;
+import net.minecraft.client.render.chunk.ChunkRendererRegion;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Axis;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec2f;
 
 public class SkyboxRenderer extends SpecialModelRenderer {
@@ -40,30 +40,30 @@ public class SkyboxRenderer extends SpecialModelRenderer {
 
 		MinecraftClient client = MinecraftClient.getInstance();
 		Camera camera = client.gameRenderer.getCamera();
-		Matrix4f matrix = new MatrixStack().peek().getModel();
-		matrix.rotate(Axis.X_POSITIVE.rotationDegrees(camera.getPitch()));
-		matrix.rotate(Axis.Y_POSITIVE.rotationDegrees(camera.getYaw() + 180.0F));
+		Matrix4f matrix = new MatrixStack().peek().getPositionMatrix();
+		matrix.rotate(RotationAxis.POSITIVE_X.rotationDegrees(camera.getPitch()));
+		matrix.rotate(RotationAxis.POSITIVE_Y.rotationDegrees(camera.getYaw() + 180.0F));
 
 		if (shader.getUniform("RotMat") != null) {
-			shader.getUniform("RotMat").setMat4x4(matrix);
+			shader.getUniform("RotMat").set(matrix);
 		}
 
 		MatrixStack matrixStack = new MatrixStack();
 		((GameRendererAccessor) client.gameRenderer).callBobViewWhenHurt(matrixStack, tickDelta);
 
-		if (client.options.getBobView().get()) {
+		if (client.options.getBobView().getValue()) {
 			((GameRendererAccessor) client.gameRenderer).callBobView(matrixStack, tickDelta);
 		}
 
 		if (shader.getUniform("bobMat") != null) {
-			shader.getUniform("bobMat").setMat4x4(matrixStack.peek().getModel());
+			shader.getUniform("bobMat").set(matrixStack.peek().getPositionMatrix());
 		}
 
 	}
 
 	@Override
 	@ClientOnly
-	public MutableQuad modifyQuad(ChunkRenderRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
+	public MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
 		quad.getV1().setUv(new Vec2f(0.0F, 0.0F));
 		quad.getV2().setUv(new Vec2f(0.0F, 1.0F));
