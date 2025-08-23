@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.mixin.render;
+package net.ludocrypt.specialmodels.client.impl.mixin.render;
 
 import net.minecraft.client.gl.VertexBuffer;
 import org.spongepowered.asm.mixin.Mixin;

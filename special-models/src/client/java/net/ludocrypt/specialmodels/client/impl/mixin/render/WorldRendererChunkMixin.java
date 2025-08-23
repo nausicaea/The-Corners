@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.mixin.render;
+package net.ludocrypt.specialmodels.client.impl.mixin.render;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;

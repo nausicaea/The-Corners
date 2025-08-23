@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.mixin.model;
+package net.ludocrypt.specialmodels.client.impl.mixin.model;
 
 import java.lang.reflect.Type;
 import java.util.Map;
