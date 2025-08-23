@@ -18,6 +18,14 @@ repositories {
 
 loom {
 	accessWidenerPath = file("src/main/resources/specialmodels.accesswidener")
+	splitEnvironmentSourceSets()
+
+	mods {
+		"specialmodels" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
 }
 
 dependencies {
