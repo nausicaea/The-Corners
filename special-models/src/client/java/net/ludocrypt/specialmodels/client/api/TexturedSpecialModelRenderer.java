@@ -1,5 +1,6 @@
 package net.ludocrypt.specialmodels.client.api;
 
+import net.ludocrypt.specialmodels.impl.SpecialModels;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -31,6 +32,7 @@ public class TexturedSpecialModelRenderer extends SpecialModelRenderer {
 	}
 
 	public static void init() {
+		SpecialModels.LOGGER.info("TexturedSpecialModelRenderer::init");
 	}
 
 }
