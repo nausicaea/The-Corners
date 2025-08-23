@@ -1,7 +1,6 @@
 package net.ludocrypt.specialmodels.client.api;
 
 import org.joml.Matrix4f;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.ShaderProgram;
@@ -26,7 +25,6 @@ public class TexturedSpecialModelRenderer extends SpecialModelRenderer {
 	}
 
 	@Override
-	@ClientOnly
 	public void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos origin) {
 		RenderSystem.setShaderTexture(0, PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);

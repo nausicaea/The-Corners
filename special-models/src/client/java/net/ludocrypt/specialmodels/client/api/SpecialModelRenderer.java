@@ -37,33 +37,27 @@ public abstract class SpecialModelRenderer {
 		this.performOutside = performOutside;
 	}
 
-	@ClientOnly
 	public abstract void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos chunkOrigin);
 
-	@ClientOnly
 	public MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
 		return quad;
 	}
 
-	@ClientOnly
 	public Matrix4f positionMatrix(Matrix4f in) {
 		return in;
 	}
 
-	@ClientOnly
 	public Matrix4f viewMatrix(Matrix4f in) {
 		return in;
 	}
 
-	@ClientOnly
 	public Vec4b appendState(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			long modelSeed) {
 		return new Vec4b(0, 0, 0, 0);
 	}
 
-	@ClientOnly
 	public ShaderProgram getShaderProgram(MatrixStack matrices, float tickDelta) {
 		return SpecialModels.LOADED_SHADERS.get(this);
 	}
