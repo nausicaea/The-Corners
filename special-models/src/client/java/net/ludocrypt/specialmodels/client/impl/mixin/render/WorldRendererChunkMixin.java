@@ -107,7 +107,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 		this.specialmodels$setWorldSpecial(world);
 	}
 
-	@Inject(method = "Lnet/minecraft/client/render/WorldRenderer;reload()V", at = @At("HEAD"))
+	@Inject(method = "reload()V", at = @At("HEAD"))
 	private void specialModels$reload(CallbackInfo ci) {
 		this.specialmodels$reloadSpecial();
 	}
