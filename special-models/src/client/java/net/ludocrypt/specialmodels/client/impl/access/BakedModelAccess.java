@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.mojang.datafixers.util.Pair;
 
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.model.BakedModel;
 
