@@ -11,9 +11,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.jetbrains.annotations.Nullable;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilderStorage;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialBuiltChunkStorage;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilderStorage;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBuiltChunkStorage;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.world.ClientWorld;
@@ -23,48 +23,48 @@ import net.minecraft.util.math.Vec3d;
 
 public interface WorldChunkBuilderAccess {
 
-	public SpecialChunkBuilder getSpecialChunkBuilder();
+	SpecialChunkBuilder getSpecialChunkBuilder();
 
-	public Future<?> getLastFullSpecialBuiltChunkUpdate();
+	Future<?> getLastFullSpecialBuiltChunkUpdate();
 
-	public BlockingQueue<SpecialChunkBuilder.BuiltChunk> getRecentlyCompiledSpecialChunks();
+	BlockingQueue<SpecialChunkBuilder.BuiltChunk> getRecentlyCompiledSpecialChunks();
 
-	public AtomicReference<SpecialChunkBuilder.RenderableChunks> getRenderableSpecialChunks();
+	AtomicReference<SpecialChunkBuilder.RenderableChunks> getRenderableSpecialChunks();
 
-	public ObjectArrayList<SpecialChunkBuilder.ChunkInfo> getSpecialChunkInfoList();
+	ObjectArrayList<SpecialChunkBuilder.ChunkInfo> getSpecialChunkInfoList();
 
-	public SpecialBuiltChunkStorage getSpecialChunks();
+	SpecialBuiltChunkStorage getSpecialChunks();
 
-	public SpecialBufferBuilderStorage getSpecialBufferBuilderStorage();
+	SpecialBufferBuilderStorage getSpecialBufferBuilderStorage();
 
-	public boolean shouldNeedsFullSpecialBuiltChunkUpdate();
+	boolean shouldNeedsFullSpecialBuiltChunkUpdate();
 
-	public AtomicBoolean shouldNeedsSpecialFrustumUpdate();
+	AtomicBoolean shouldNeedsSpecialFrustumUpdate();
 
-	public AtomicLong getNextFullSpecialUpdateMilliseconds();
+	AtomicLong getNextFullSpecialUpdateMilliseconds();
 
-	public void setWorldSpecial(ClientWorld world);
+	void setWorldSpecial(ClientWorld world);
 
-	public void reloadSpecial();
+	void reloadSpecial();
 
-	public void setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator);
+	void setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator);
 
-	public void addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue);
+	void addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue);
 
-	public void addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk);
+	void addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk);
 
-	public void updateSpecialBuiltChunks(LinkedHashSet<SpecialChunkBuilder.ChunkInfo> builtChunks,
-			SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
-			Queue<SpecialChunkBuilder.ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
+	void updateSpecialBuiltChunks(LinkedHashSet<SpecialChunkBuilder.ChunkInfo> builtChunks,
+								  SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
+								  Queue<SpecialChunkBuilder.ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
 
 	@Nullable
-	public SpecialChunkBuilder.BuiltChunk getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
-			Direction direction);
+	SpecialChunkBuilder.BuiltChunk getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
+														   Direction direction);
 
-	public boolean isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk);
+	boolean isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk);
 
-	public void applySpecialFrustum(Frustum frustum);
+	void applySpecialFrustum(Frustum frustum);
 
-	public void findSpecialChunksToRebuild(Camera camera);
+	void findSpecialChunksToRebuild(Camera camera);
 
 }
