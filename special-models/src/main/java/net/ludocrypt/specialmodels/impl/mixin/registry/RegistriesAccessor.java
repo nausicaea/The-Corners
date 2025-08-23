@@ -12,7 +12,7 @@ import net.minecraft.registry.RegistryKey;
 @Mixin(Registries.class)
 public interface RegistriesAccessor {
 	@Invoker
-	static <T> Registry<T> callRegisterSimple(RegistryKey<? extends Registry<T>> registryKey, Lifecycle lifecycle,
+	static <T> Registry<T> callCreate(RegistryKey<? extends Registry<T>> registryKey, Lifecycle lifecycle,
 			Registries.Initializer<T> bootstrap) {
 		throw new UnsupportedOperationException();
 	}
