@@ -917,7 +917,7 @@ public class SpecialChunkBuilder {
 
 		}
 
-		abstract class Task implements Comparable<Task> {
+		public abstract static class Task implements Comparable<Task> {
 
 			protected final double distance;
 			protected final AtomicBoolean cancelled = new AtomicBoolean(false);
