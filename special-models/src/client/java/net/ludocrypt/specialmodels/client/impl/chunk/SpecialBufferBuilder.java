@@ -1,10 +1,11 @@
-package net.ludocrypt.specialmodels.impl.chunk;
+package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.function.Supplier;
 
+import net.ludocrypt.specialmodels.client.impl.mixin.render.UsageAccessor;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -30,7 +31,7 @@ import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.ints.IntConsumer;
 import net.ludocrypt.specialmodels.impl.mixin.render.UsageAccessor;
 import net.ludocrypt.specialmodels.impl.mixin.render.VertexBufferAccessor;
-import net.ludocrypt.specialmodels.impl.render.SpecialVertexFormats;
+import net.ludocrypt.specialmodels.client.impl.mixin.render.SpecialVertexFormats;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
 import net.minecraft.util.math.MathHelper;
 

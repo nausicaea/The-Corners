@@ -11,11 +11,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexBuffer;
 
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.impl.access.WorldRendererAccess;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.ChunkInfo;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.client.impl.access.WorldRendererAccess;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkInfo;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilderStorage;
 import net.minecraft.client.render.Camera;

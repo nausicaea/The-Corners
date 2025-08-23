@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
-import net.ludocrypt.specialmodels.impl.access.WorldRendererAccess;
+import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.client.impl.access.WorldRendererAccess;
 import net.ludocrypt.specialmodels.impl.bridge.IrisBridge;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;

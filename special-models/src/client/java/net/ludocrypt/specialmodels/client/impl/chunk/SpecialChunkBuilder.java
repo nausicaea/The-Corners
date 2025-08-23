@@ -1,4 +1,4 @@
-package net.ludocrypt.specialmodels.impl.chunk;
+package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -35,14 +35,14 @@ import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.impl.access.BakedModelAccess;
-import net.ludocrypt.specialmodels.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.client.impl.access.BakedModelAccess;
+import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
 import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilder.RenderedBuffer;
 import net.ludocrypt.specialmodels.impl.chunk.SpecialBufferBuilder.SortState;
-import net.ludocrypt.specialmodels.impl.chunk.SpecialChunkBuilder.BuiltChunk.Task;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk.Task;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.ludocrypt.specialmodels.impl.render.MutableVertice;
-import net.ludocrypt.specialmodels.impl.render.SpecialVertexFormats;
+import net.ludocrypt.specialmodels.client.impl.mixin.render.SpecialVertexFormats;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -268,7 +268,7 @@ public class SpecialChunkBuilder {
 		});
 	}
 
-	public CompletableFuture<Void> scheduleUpload(SpecialModelRenderer modelRenderer, RenderedBuffer renderedBuffer,
+	public CompletableFuture<Void> scheduleUpload(SpecialModelRenderer modelRenderer, SpecialBufferBuilder.RenderedBuffer renderedBuffer,
 			VertexBuffer buffer) {
 		return CompletableFuture.runAsync(() -> {
 
@@ -540,7 +540,7 @@ public class SpecialChunkBuilder {
 					RenderedChunkData renderedChunkData = this.render(x, y, z, buffers);
 
 					if (this.cancelled.get()) {
-						renderedChunkData.renderedBuffers.values().forEach(RenderedBuffer::release);
+						renderedChunkData.renderedBuffers.values().forEach(SpecialBufferBuilder.RenderedBuffer::release);
 						return CompletableFuture.completedFuture(Result.CANCELLED);
 					} else {
 						ChunkData chunkData = new ChunkData();
@@ -690,7 +690,7 @@ public class SpecialChunkBuilder {
 									SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE);
 						}
 
-						RenderedBuffer renderedBuffer = bufferBuilder.end();
+						SpecialBufferBuilder.RenderedBuffer renderedBuffer = bufferBuilder.end();
 
 						if (renderedBuffer != null) {
 							renderedChunkData.renderedBuffers.put(modelRenderer, renderedBuffer);
@@ -809,8 +809,8 @@ public class SpecialChunkBuilder {
 
 			public static final class RenderedChunkData {
 
-				public final Map<SpecialModelRenderer, RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
-				public final Map<SpecialModelRenderer, SortState> bufferStates = new Reference2ObjectArrayMap<>();
+				public final Map<SpecialModelRenderer, SpecialBufferBuilder.RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
+				public final Map<SpecialModelRenderer, SpecialBufferBuilder.SortState> bufferStates = new Reference2ObjectArrayMap<>();
 				public ChunkOcclusionData occlusionGraph = new ChunkOcclusionData();
 
 			}
@@ -870,7 +870,7 @@ public class SpecialChunkBuilder {
 					float z = (float) cameraPos.z;
 
 					if (this.data.bufferStates.containsKey(renderer) && !this.data.isEmpty(renderer)) {
-						SortState sortState = this.data.bufferStates.get(renderer);
+						SpecialBufferBuilder.SortState sortState = this.data.bufferStates.get(renderer);
 						SpecialBufferBuilder bufferBuilder = buffers.get(renderer);
 
 						BuiltChunk.this.beginBufferBuilding(bufferBuilder);
@@ -883,7 +883,7 @@ public class SpecialChunkBuilder {
 
 						this.data.bufferStates.put(renderer, bufferBuilder.popState());
 
-						RenderedBuffer renderedBuffer = bufferBuilder.end();
+						SpecialBufferBuilder.RenderedBuffer renderedBuffer = bufferBuilder.end();
 
 						if (this.cancelled.get()) {
 							renderedBuffer.release();
@@ -955,8 +955,8 @@ public class SpecialChunkBuilder {
 
 		};
 
-		public final Map<SpecialModelRenderer, RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
-		public final Map<SpecialModelRenderer, SortState> bufferStates = new Reference2ObjectArrayMap<>();
+		public final Map<SpecialModelRenderer, SpecialBufferBuilder.RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
+		public final Map<SpecialModelRenderer, SpecialBufferBuilder.SortState> bufferStates = new Reference2ObjectArrayMap<>();
 
 		public ChunkOcclusionData occlusionGraph = new ChunkOcclusionData();
 
