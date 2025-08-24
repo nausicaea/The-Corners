@@ -1,13 +1,12 @@
 package net.ludocrypt.corners.client.mixin;
 
+import net.minecraft.client.util.Window;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.mojang.blaze3d.glfw.Window;
 
 import net.ludocrypt.corners.config.CornerConfig;
 import net.ludocrypt.corners.init.CornerSoundEvents;
@@ -28,7 +27,7 @@ public class MinecraftClientMixin {
 	@Shadow
 	private Window window;
 
-	@Inject(method = "getMusic", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getMusicType()Lnet/minecraft/sound/MusicSound;", at = @At("HEAD"), cancellable = true)
 	private void corners$getMusic(CallbackInfoReturnable<MusicSound> ci) {
 
 		if (this.player != null) {
