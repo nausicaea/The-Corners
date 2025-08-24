@@ -38,7 +38,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "com.terraformersmc:modmenu:${project.terraformersmc_menu_version}"
-    // FIXME(doesn't work because I cannot build limlib yet): modImplementation include("net.ludocrypt:limlib:${project.limlib_version}")
+    modImplementation include("net.ludocrypt:limlib:${project.limlib_version}")
     modImplementation include("net.ludocrypt:special-models:${project.specialmodels_version}")
     modImplementation include("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
 }
