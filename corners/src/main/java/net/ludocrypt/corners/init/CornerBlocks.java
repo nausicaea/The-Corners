@@ -143,25 +143,25 @@ public class CornerBlocks {
 		DispenserBlock.registerBehavior(GAIA_BOAT, new CornerBoatDispensorBehavior(CornerBoat.GAIA, false));
 		DispenserBlock.registerBehavior(GAIA_CHEST_BOAT, new CornerBoatDispensorBehavior(CornerBoat.GAIA, true));
 
-        FlammableBlockRegistry.getInstance(NYLON_FIBER_BLOCK).add(NYLON_FIBER_BLOCK, 30, 60);
-		FlammableBlockRegistry.getInstance(NYLON_FIBER_STAIRS).add(NYLON_FIBER_STAIRS, 30, 60);
-		FlammableBlockRegistry.getInstance(NYLON_FIBER_SLAB).add(NYLON_FIBER_SLAB, 30, 60);
-		FlammableBlockRegistry.getInstance(DRYWALL).add(DRYWALL, 5, 20);
-		FlammableBlockRegistry.getInstance(WOODEN_RADIO).add(WOODEN_RADIO, 10, 20);
-		FlammableBlockRegistry.getInstance(TUNED_RADIO).add(TUNED_RADIO, 10, 20);
-		FlammableBlockRegistry.getInstance(BROKEN_RADIO).add(BROKEN_RADIO, 10, 20);
-		FlammableBlockRegistry.getInstance(GROWN_RADIO).add(GROWN_RADIO, 10, 20);
-		FlammableBlockRegistry.getInstance(STRIPPED_GAIA_LOG).add(STRIPPED_GAIA_LOG, 5, 5);
-		FlammableBlockRegistry.getInstance(STRIPPED_GAIA_WOOD).add(STRIPPED_GAIA_WOOD, 5, 5);
-		FlammableBlockRegistry.getInstance(GAIA_LOG).add(GAIA_LOG, 5, 5);
-		FlammableBlockRegistry.getInstance(GAIA_WOOD).add(GAIA_WOOD, 5, 5);
-		FlammableBlockRegistry.getInstance(GAIA_STAIRS).add(GAIA_STAIRS, 5, 20);
-		FlammableBlockRegistry.getInstance(GAIA_SLAB).add(GAIA_SLAB, 5, 20);
-		FlammableBlockRegistry.getInstance(GAIA_PLANKS).add(GAIA_PLANKS, 5, 20);
-		FlammableBlockRegistry.getInstance(CARVED_GAIA).add(CARVED_GAIA, 5, 20);
-		FlammableBlockRegistry.getInstance(GAIA_FENCE).add(GAIA_FENCE, 5, 20);
-		FlammableBlockRegistry.getInstance(GAIA_FENCE_GATE).add(GAIA_FENCE_GATE, 5, 20);
-		FlammableBlockRegistry.getInstance(GAIA_LEAVES).add(GAIA_LEAVES, 30, 60);
+        FlammableBlockRegistry.getDefaultInstance().add(NYLON_FIBER_BLOCK, 30, 60);
+		FlammableBlockRegistry.getDefaultInstance().add(NYLON_FIBER_STAIRS, 30, 60);
+		FlammableBlockRegistry.getDefaultInstance().add(NYLON_FIBER_SLAB, 30, 60);
+		FlammableBlockRegistry.getDefaultInstance().add(DRYWALL, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(WOODEN_RADIO, 10, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(TUNED_RADIO, 10, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(BROKEN_RADIO, 10, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(GROWN_RADIO, 10, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(STRIPPED_GAIA_LOG, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(STRIPPED_GAIA_WOOD, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_LOG, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_WOOD, 5, 5);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_STAIRS, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_SLAB, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_PLANKS, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(CARVED_GAIA, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_FENCE, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_FENCE_GATE, 5, 20);
+		FlammableBlockRegistry.getDefaultInstance().add(GAIA_LEAVES, 30, 60);
 
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(new ModifyEntries() {
 
