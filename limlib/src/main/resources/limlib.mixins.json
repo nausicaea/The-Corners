@@ -8,7 +8,6 @@
 		"ChunkStatusMixin",
 		"GeneratorTypeAccessor",
 		"RegistriesAccessor",
-		"RegistryLoaderMixin",
 		"ServerPlayerEntityMixin",
     "DimensionOptionsRegistryHolderMixin",
 		"WorldSaveStorageMixin"
