@@ -19,10 +19,10 @@ import net.minecraft.registry.tag.WorldPresetTags;
 import net.minecraft.world.gen.WorldPreset;
 
 @Mixin(VanillaWorldPresetTagProvider.class)
-public abstract class WorldPresetTagProviderMixin extends TagProvider<WorldPreset> {
+public abstract class VanillaWorldPresetTagProviderMixin extends TagProvider<WorldPreset> {
 
-	protected WorldPresetTagProviderMixin(DataOutput output, RegistryKey<? extends Registry<WorldPreset>> key,
-			CompletableFuture<WrapperLookup> lookupProvider) {
+	protected VanillaWorldPresetTagProviderMixin(DataOutput output, RegistryKey<? extends Registry<WorldPreset>> key,
+												 CompletableFuture<WrapperLookup> lookupProvider) {
 		super(output, key, lookupProvider);
 	}
 
