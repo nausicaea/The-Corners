@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.api.effects.sound.distortion;
+package net.ludocrypt.limlib.api.effects.sound.distortion;
 
 import java.util.function.Function;
 
@@ -29,7 +29,7 @@ public abstract class DistortionEffect {
 
 	/**
 	 * Whether or not a Sound Event should be ignored
-	 *
+	 * 
 	 * @param identifier the Identifier of the Sound Event
 	 */
 	public abstract boolean shouldIgnore(Identifier identifier);
