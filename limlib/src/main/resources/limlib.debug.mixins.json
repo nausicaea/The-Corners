@@ -7,7 +7,7 @@
 		"GeneratorTypesMixin",
       "WorldPresetsRegistrarMixin",
 		"WorldPresetTagProviderMixin",
-		"WorldDimensionsMixin"
+    "DimensionOptionsRegistryHolderMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
