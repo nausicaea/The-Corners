@@ -47,7 +47,7 @@ public class SkyboxRenderer extends SpecialModelRenderer {
 		}
 
 		MatrixStack matrixStack = new MatrixStack();
-		((GameRendererAccessor) client.gameRenderer).callBobViewWhenHurt(matrixStack, tickDelta);
+		((GameRendererAccessor) client.gameRenderer).callTiltViewWhenHurt(matrixStack, tickDelta);
 
 		if (client.options.getBobView().getValue()) {
 			((GameRendererAccessor) client.gameRenderer).callBobView(matrixStack, tickDelta);
