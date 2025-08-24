@@ -1,9 +1,9 @@
 plugins {
-	id 'fabric-loom' version "1.11.7"
+	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
-version = project.version
+version = "${project.version}+${project.minecraft_version}"
 group = project.maven_group
 
 base {
@@ -11,9 +11,6 @@ base {
 }
 
 repositories {
-    maven {
-        url = 'https://maven.quiltmc.org/repository/release'
-    }
 	maven {
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
     }
@@ -47,30 +44,21 @@ loom {
 }
 
 dependencies {
-	minecraft libs.minecraft
-	mappings "org.quiltmc:quilt-mappings:${libs.versions.quilt.mappings.get()}:intermediary-v2"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation libs.quilt.loader
-
-	modImplementation libs.quilted.fabric.api
-
-	modImplementation libs.terraformersmc.modmenu
-
-//	modImplementation files ("libs/limlib.jar")
-	includeMod libs.ludocrypt.limlib
-	includeMod libs.ludocrypt.specialmodels
-	includeMod libs.shedaniel.cloth
-}
-
-def includeMod(var dep) {
-	dependencies.modImplementation(dep)
-	dependencies.include(dep)
+	modImplementation "com.terraformersmc:modmenu:${project.terraformersmc_menu_version}"
+    modImplementation include("net.ludocrypt:limlib:${project.limlib_version}")
+    modImplementation include("net.ludocrypt:specialmodels:${project.specialmodels_version}")
+    modImplementation include("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
 }
 
 processResources {
 	inputs.property "version", version
 
-	filesMatching('quilt.mod.json') {
+	filesMatching('fabric.mod.json') {
 		expand "version": version
 	}
 }
