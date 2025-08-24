@@ -21,7 +21,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		super(world, pos, f, gameProfile);
 	}
 
-	@Inject(method = "tick", at = @At("TAIL"))
+	@Inject(method = "tick()V", at = @At("TAIL"))
 	private void corners$tick(CallbackInfo ci) {
 
 		if (this.getWorld().getRegistryKey().getValue().getNamespace().equals("corners")) {
