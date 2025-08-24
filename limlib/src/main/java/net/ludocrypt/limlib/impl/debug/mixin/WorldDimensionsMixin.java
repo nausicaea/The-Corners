@@ -16,13 +16,13 @@ public abstract class WorldDimensionsMixin {
 	@Inject(method = "isDebug", at = @At("HEAD"), cancellable = true)
 	public void limlib$isDebug(CallbackInfoReturnable<Boolean> ci) {
 
-		if (this.getChunkGenerator() instanceof DebugNbtChunkGenerator) {
+		if (this.getOverworldChunkGenerator() instanceof DebugNbtChunkGenerator) {
 			ci.setReturnValue(true);
 		}
 
 	}
 
 	@Shadow
-	public abstract ChunkGenerator getChunkGenerator();
+	public abstract ChunkGenerator getOverworldChunkGenerator();
 
 }
