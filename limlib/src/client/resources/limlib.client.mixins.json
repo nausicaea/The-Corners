@@ -9,7 +9,7 @@
     "SerializableRegistriesMixin",
 		"BackgroundRendererMixin",
 		"ClientWorldMixin",
-		"DimensionVisualEffectsMixin",
+    "DimensionEffectsMixin",
 		"GameRendererMixin",
 		"MinecraftClientMixin",
 		"SoundSystemMixin",
