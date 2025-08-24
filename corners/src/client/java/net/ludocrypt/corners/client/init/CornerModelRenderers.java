@@ -1,10 +1,10 @@
-package net.ludocrypt.corners.init;
+package net.ludocrypt.corners.client.init;
 
 import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.client.render.ChristmasRenderer;
 import net.ludocrypt.corners.client.render.DeepBookshelfRenderer;
 import net.ludocrypt.corners.client.render.SkyboxRenderer;
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.minecraft.registry.Registry;
 
 public class CornerModelRenderers {
