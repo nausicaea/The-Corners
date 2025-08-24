@@ -3,8 +3,6 @@ package net.ludocrypt.limlib.client.api.effects.sky;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
-import org.quiltmc.loader.api.minecraft.ClientOnly;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
 
@@ -33,7 +31,6 @@ public abstract class DimensionEffects {
 
 	public abstract Codec<? extends DimensionEffects> getCodec();
 
-	@ClientOnly
 	public abstract net.minecraft.client.render.DimensionEffects getDimensionEffects();
 
 	public abstract float getSkyShading();
