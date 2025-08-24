@@ -5,10 +5,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.client.rendering.EntityRendererRegistryImpl;
-import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.client.init.CornerModelRenderers;
 import net.ludocrypt.corners.client.render.CornerBoatEntityRenderer;
-import net.ludocrypt.corners.client.render.StrongPostEffect;
 import net.ludocrypt.corners.entity.CornerBoatEntity;
 import net.ludocrypt.corners.init.CornerBlocks;
 import net.ludocrypt.corners.init.CornerEntities;
@@ -17,13 +15,10 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.PaintingEntityRenderer;
 import net.minecraft.client.render.entity.model.BoatEntityModel;
 import net.minecraft.client.render.entity.model.ChestBoatEntityModel;
-import net.minecraft.registry.Registry;
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
 
 public class TheCornersClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        Registry.register(PostEffect.POST_EFFECT_CODEC, TheCorners.id("strong_shader"), StrongPostEffect.CODEC);
         CornerModelRenderers.init();
         ServerToClientPackets.manageServerToClientPackets();
         BlockRenderLayerMap.INSTANCE
