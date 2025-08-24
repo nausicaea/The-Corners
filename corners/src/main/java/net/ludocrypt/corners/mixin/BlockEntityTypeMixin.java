@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 public class BlockEntityTypeMixin<T extends BlockEntity> {
 
 	@SuppressWarnings("unchecked")
-	@Inject(method = "Lnet/minecraft/block/entity/BlockEntityType;supports(Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "supports(Lnet/minecraft/block/BlockState;)Z", at = @At("HEAD"), cancellable = true)
 	private void corners$supports(BlockState state, CallbackInfoReturnable<Boolean> ci) {
 		Identifier id = BlockEntityType.getId((BlockEntityType<T>) ((Object) this));
 

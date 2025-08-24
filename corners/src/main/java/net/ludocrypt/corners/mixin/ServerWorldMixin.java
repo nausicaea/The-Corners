@@ -19,7 +19,7 @@ public class ServerWorldMixin {
 	@Final
 	private ServerWorldProperties worldProperties;
 
-	@Inject(method = "Lnet/minecraft/server/world/ServerWorld;tickWeather()V", at = @At("HEAD"))
+	@Inject(method = "tickWeather()V", at = @At("HEAD"))
 	private void corners$tickWeather(CallbackInfo ci) {
 
 		ServerWorld world = ((ServerWorld) (Object) this);
