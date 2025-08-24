@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.shader;
+package net.ludocrypt.limlib.client.impl.shader;
 
 import java.util.Set;
 
