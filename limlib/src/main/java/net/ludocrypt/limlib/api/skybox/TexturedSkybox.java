@@ -1,6 +1,5 @@
-package net.ludocrypt.limlib.client.api.skybox;
+package net.ludocrypt.limlib.api.skybox;
 
-import net.ludocrypt.limlib.api.skybox.Skybox;
 import org.joml.Matrix4f;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
