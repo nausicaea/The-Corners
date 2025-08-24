@@ -43,7 +43,7 @@ public class CornerBoatEntity extends BoatEntity {
 
 	public static BoatEntity copy(BoatEntity original, CornerBoat boatData) {
 		var chest = original instanceof ChestBoatEntity;
-		var boat = boatData.factory(chest).create(boatData.entityType(chest), original.method_48926());
+		var boat = boatData.factory(chest).create(boatData.entityType(chest), original.getWorld());
 		boat.updatePosition(original.getX(), original.getY(), original.getZ());
 		return boat;
 	}
