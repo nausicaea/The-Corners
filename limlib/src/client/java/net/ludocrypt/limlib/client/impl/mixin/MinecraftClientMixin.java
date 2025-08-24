@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.mojang.blaze3d.glfw.Window;
 
 import net.ludocrypt.limlib.api.effects.LookupGrabber;
-import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
+import net.ludocrypt.limlib.client.api.effects.sound.SoundEffects;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesserManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
