@@ -12,7 +12,7 @@ import net.ludocrypt.corners.client.render.StrongPostEffect;
 import net.ludocrypt.corners.entity.CornerBoatEntity;
 import net.ludocrypt.corners.init.CornerBlocks;
 import net.ludocrypt.corners.init.CornerEntities;
-import net.ludocrypt.corners.packet.ServerToClientPackets;
+import net.ludocrypt.corners.client.packet.ServerToClientPackets;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.PaintingEntityRenderer;
 import net.minecraft.client.render.entity.model.BoatEntityModel;
