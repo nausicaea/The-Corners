@@ -14,7 +14,7 @@ public interface GameRendererAccessor {
 	double callGetFov(Camera camera, float tickDelta, boolean changingFov);
 
 	@Invoker
-	void callBobViewWhenHurt(MatrixStack matrices, float tickDelta);
+	void callTiltViewWhenHurt(MatrixStack matrices, float tickDelta);
 
 	@Invoker
 	void callBobView(MatrixStack matrices, float tickDelta);
