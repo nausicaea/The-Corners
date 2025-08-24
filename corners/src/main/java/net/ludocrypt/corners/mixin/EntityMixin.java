@@ -21,7 +21,7 @@ import net.minecraft.util.Hand;
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 
-	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", at = @At("HEAD"), cancellable = true)
 	private void corners$interact(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> ci) {
 
 		if (!player.getWorld().isClient) {
