@@ -21,7 +21,7 @@ public abstract class Skybox {
 	public static final RegistryKey<Registry<Codec<? extends Skybox>>> SKYBOX_CODEC_KEY = RegistryKey
 		.ofRegistry(new Identifier("limlib/codec/skybox"));
 	public static final Registry<Codec<? extends Skybox>> SKYBOX_CODEC = RegistriesAccessor
-		.callCreate(SKYBOX_CODEC_KEY, Lifecycle.stable(), (registry) -> TexturedSkybox.CODEC);
+		.callRegisterSimple(SKYBOX_CODEC_KEY, Lifecycle.stable(), (registry) -> TexturedSkybox.CODEC);
 	public static final Codec<Skybox> CODEC = SKYBOX_CODEC.getCodec().dispatchStable(Skybox::getCodec, Function.identity());
 	public static final RegistryKey<Registry<Skybox>> SKYBOX_KEY = RegistryKey.ofRegistry(new Identifier("limlib/skybox"));
 
