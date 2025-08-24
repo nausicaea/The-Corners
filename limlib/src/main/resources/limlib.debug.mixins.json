@@ -5,7 +5,7 @@
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
 		"GeneratorTypesMixin",
-		"GeneratorTypesBootstrapMixin",
+      "WorldPresetsRegistrarMixin",
 		"WorldPresetTagProviderMixin",
 		"WorldDimensionsMixin"
 	],
