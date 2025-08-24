@@ -3,6 +3,9 @@ package net.ludocrypt.limlib.client.impl;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
+import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffects;
+import net.ludocrypt.limlib.client.api.effects.sky.EmptyDimensionEffects;
+import net.ludocrypt.limlib.client.api.effects.sky.StaticDimensionEffects;
 import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffect;
 import net.ludocrypt.limlib.client.api.effects.sound.distortion.StaticDistortionEffect;
 import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffect;
@@ -28,6 +31,12 @@ public class LimlibClient implements ClientModInitializer {
 				StaticReverbEffect.CODEC);
 		Registry.register(Skybox.SKYBOX_CODEC, new Identifier("limlib", "empty"), EmptySkybox.CODEC);
 		Registry.register(Skybox.SKYBOX_CODEC, new Identifier("limlib", "textured"), TexturedSkybox.CODEC);
+		Registry
+			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "static"),
+				StaticDimensionEffects.CODEC);
+		Registry
+			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "empty"),
+				EmptyDimensionEffects.CODEC);
 	}
 
 }
