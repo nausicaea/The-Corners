@@ -1,8 +1,7 @@
 package net.ludocrypt.limlib.client.impl;
 
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
-import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
 import net.ludocrypt.limlib.impl.shader.PostProcesserManager;
 import net.minecraft.resource.ResourceType;
@@ -10,8 +9,8 @@ import net.minecraft.resource.ResourceType;
 public class LimlibClient implements ClientModInitializer {
 
 	@Override
-	public void onInitializeClient(ModContainer mod) {
-		ResourceLoader.get(ResourceType.CLIENT_RESOURCES).registerReloader(PostProcesserManager.INSTANCE);
+	public void onInitializeClient() {
+		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(PostProcesserManager.INSTANCE);
 	}
 
 }
