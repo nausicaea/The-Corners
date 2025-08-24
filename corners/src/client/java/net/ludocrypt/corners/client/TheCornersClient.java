@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.client.rendering.EntityRendererRegistryImpl;
+import net.ludocrypt.corners.client.init.CornerModelRenderers;
 import net.ludocrypt.corners.client.render.CornerBoatEntityRenderer;
 import net.ludocrypt.corners.entity.CornerBoatEntity;
 import net.ludocrypt.corners.init.CornerBlocks;
@@ -18,6 +19,7 @@ import net.minecraft.client.render.entity.model.ChestBoatEntityModel;
 public class TheCornersClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        CornerModelRenderers.init();
         ServerToClientPackets.manageServerToClientPackets();
         BlockRenderLayerMap.INSTANCE
                 .putBlocks(RenderLayer.getCutout(), CornerBlocks.SNOWY_GLASS_PANE, CornerBlocks.SNOWY_GLASS,

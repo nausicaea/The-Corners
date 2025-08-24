@@ -11,7 +11,6 @@ import net.ludocrypt.corners.config.CornerConfig;
 import net.ludocrypt.corners.init.CornerBiomes;
 import net.ludocrypt.corners.init.CornerBlocks;
 import net.ludocrypt.corners.init.CornerEntities;
-import net.ludocrypt.corners.init.CornerModelRenderers;
 import net.ludocrypt.corners.init.CornerPaintings;
 import net.ludocrypt.corners.init.CornerRadioRegistry;
 import net.ludocrypt.corners.init.CornerSoundEvents;
@@ -37,7 +36,6 @@ public class TheCorners implements ModInitializer {
         CornerPaintings.init();
         CornerSoundEvents.init();
         CornerRadioRegistry.init();
-        CornerModelRenderers.init();
         ClientToServerPackets.manageClientToServerPackets();
         Registry.register(PostEffect.POST_EFFECT_CODEC, id("strong_shader"), StrongPostEffect.CODEC);
     }
