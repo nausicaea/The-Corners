@@ -9,7 +9,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Lifecycle;
 
 import net.ludocrypt.corners.TheCorners;
-import net.ludocrypt.corners.client.render.StrongPostEffect;
+import net.ludocrypt.corners.render.StrongPostEffect;
 import net.ludocrypt.corners.world.biome.CommunalCorridorsBiome;
 import net.ludocrypt.corners.world.biome.HoaryCrossroadsBiome;
 import net.ludocrypt.corners.world.biome.YearningCanalBiome;
