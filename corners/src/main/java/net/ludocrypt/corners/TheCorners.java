@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.ludocrypt.corners.client.render.StrongPostEffect;
 import net.ludocrypt.corners.config.CornerConfig;
 import net.ludocrypt.corners.init.CornerBiomes;
 import net.ludocrypt.corners.init.CornerBlocks;
@@ -15,8 +14,6 @@ import net.ludocrypt.corners.init.CornerPaintings;
 import net.ludocrypt.corners.init.CornerRadioRegistry;
 import net.ludocrypt.corners.init.CornerSoundEvents;
 import net.ludocrypt.corners.packet.ClientToServerPackets;
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class TheCorners implements ModInitializer {
@@ -37,6 +34,5 @@ public class TheCorners implements ModInitializer {
         CornerSoundEvents.init();
         CornerRadioRegistry.init();
         ClientToServerPackets.manageClientToServerPackets();
-        Registry.register(PostEffect.POST_EFFECT_CODEC, id("strong_shader"), StrongPostEffect.CODEC);
     }
 }
