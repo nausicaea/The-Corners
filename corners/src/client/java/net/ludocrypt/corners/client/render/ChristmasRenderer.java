@@ -2,7 +2,6 @@ package net.ludocrypt.corners.client.render;
 
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -31,13 +30,10 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 		this.id = id;
 	}
 
-	@ClientOnly
 	private double gazeTimer = 0;
-	@ClientOnly
 	private double gazeWaiting = 0;
 
 	@Override
-	@ClientOnly
 	public void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos origin) {
 
@@ -120,7 +116,6 @@ public class ChristmasRenderer extends SpecialModelRenderer {
 	}
 
 	@Override
-	@ClientOnly
 	public MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
 		quad.getV1().setUv(new Vec2f(0.0F, 0.0F));
