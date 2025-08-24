@@ -5,8 +5,8 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.ludocrypt.corners.TheCorners;
-import net.ludocrypt.corners.mixin.GameRendererAccessor;
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.corners.client.mixin.GameRendererAccessor;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
