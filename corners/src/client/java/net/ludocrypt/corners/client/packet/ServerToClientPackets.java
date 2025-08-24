@@ -1,15 +1,16 @@
-package net.ludocrypt.corners.packet;
+package net.ludocrypt.corners.client.packet;
 
 import java.util.Comparator;
 import java.util.List;
 
-import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.ludocrypt.corners.packet.ClientToServerPackets;
 
 import net.ludocrypt.corners.access.MusicTrackerAccess;
 import net.ludocrypt.corners.client.sound.LoopingPositionedSoundInstance;
 import net.ludocrypt.corners.init.CornerBlocks;
 import net.ludocrypt.corners.init.CornerRadioRegistry;
-import net.ludocrypt.corners.mixin.SoundManagerAccessor;
+import net.ludocrypt.corners.client.mixin.SoundManagerAccessor;
 import net.ludocrypt.corners.util.DimensionalPaintingVariant;
 import net.ludocrypt.corners.util.RadioSoundTable;
 import net.ludocrypt.limlib.impl.access.SoundSystemAccess;
@@ -29,7 +30,7 @@ public class ServerToClientPackets {
 				BlockPos pos = buf.readBlockPos();
 				boolean start = buf.readBoolean();
 				client.execute(() -> {
-					RadioSoundTable id = CornerRadioRegistry.getCurrent(client);
+					RadioSoundTable id = CornerRadioRegistry.getCurrent(client.world.getRegistryKey());
 					List<PaintingEntity> closestPaintings = client.world
 						.getEntitiesByClass(PaintingEntity.class, Box.from(Vec3d.of(pos)).expand(16.0D),
 							(entity) -> entity.getVariant().value() instanceof DimensionalPaintingVariant)
