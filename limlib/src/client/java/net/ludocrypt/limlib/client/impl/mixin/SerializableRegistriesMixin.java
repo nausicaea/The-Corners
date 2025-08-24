@@ -21,20 +21,20 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SerializableRegistries;
 
 @Mixin(SerializableRegistries.class)
-public abstract class DynamicRegistrySyncMixin {
+public abstract class SerializableRegistriesMixin {
 
-	@Inject(method = "method_45958()Lcom/google/common/collect/ImmutableMap;", at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/DynamicRegistrySync;addSyncedRegistry(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V", ordinal = 2, shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(method = "method_45958()Lcom/google/common/collect/ImmutableMap;", at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/SerializableRegistries;add(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/registry/RegistryKey;Lcom/mojang/serialization/Codec;)V", ordinal = 2, shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void limlib$makeMap$mapped(
 			CallbackInfoReturnable<ImmutableMap<RegistryKey<? extends Registry<?>>, SerializableRegistries.Info<?>>> ci,
 			Builder<RegistryKey<? extends Registry<?>>, SerializableRegistries.Info<?>> builder) {
-		addSyncedRegistry(builder, PostEffect.POST_EFFECT_KEY, PostEffect.CODEC);
-		addSyncedRegistry(builder, DimensionEffects.DIMENSION_EFFECTS_KEY, DimensionEffects.CODEC);
-		addSyncedRegistry(builder, SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC);
-		addSyncedRegistry(builder, Skybox.SKYBOX_KEY, Skybox.CODEC);
+		add(builder, PostEffect.POST_EFFECT_KEY, PostEffect.CODEC);
+		add(builder, DimensionEffects.DIMENSION_EFFECTS_KEY, DimensionEffects.CODEC);
+		add(builder, SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC);
+		add(builder, Skybox.SKYBOX_KEY, Skybox.CODEC);
 	}
 
 	@Shadow
-	private native static <E> void addSyncedRegistry(
+	private native static <E> void add(
 			Builder<RegistryKey<? extends Registry<?>>, SerializableRegistries.Info<?>> builder,
 			RegistryKey<? extends Registry<E>> registryKey, Codec<E> codec);
 
