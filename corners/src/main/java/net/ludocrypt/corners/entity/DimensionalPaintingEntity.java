@@ -78,7 +78,7 @@ public class DimensionalPaintingEntity extends PaintingEntity {
 
 				if (player.getVelocity().length() > 0.05) {
 
-					if (this.method_48926() instanceof ServerWorld && player instanceof ServerPlayerEntity spe) {
+					if (this.getWorld() instanceof ServerWorld && player instanceof ServerPlayerEntity spe) {
 						ServerWorld world = player.getServer().getWorld(variant.dimension.apply(spe, this));
 						TeleportTarget teleportTarget = variant.teleportTarget.apply(spe, this);
 						LimlibTravelling
