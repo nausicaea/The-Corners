@@ -3,7 +3,6 @@ package net.ludocrypt.limlib.client.api.skybox;
 import java.util.function.Function;
 
 import org.joml.Matrix4f;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Lifecycle;
@@ -27,7 +26,6 @@ public abstract class Skybox {
 
 	public abstract Codec<? extends Skybox> getCodec();
 
-	@ClientOnly
 	public abstract void renderSky(WorldRenderer worldRenderer, MinecraftClient client, MatrixStack matrices,
 			Matrix4f projectionMatrix, float tickDelta);
 
