@@ -13,9 +13,9 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.DimensionTypeRegistrar;
 
 @Mixin(DimensionTypeRegistrar.class)
-public class BuiltinDimensionTypesMixin {
+public class DimensionTypeRegistrarMixin {
 
-	@Inject(method = "bootstrap(Lnet/minecraft/world/gen/BootstrapContext;)V", at = @At("RETURN"))
+	@Inject(method = "bootstrap(Lnet/minecraft/registry/Registerable;)V", at = @At("RETURN"))
 	private static void limlib$initAndGetDefault(Registerable<DimensionType> bootstrapContext, CallbackInfo ci) {
 		LimlibWorld.LIMLIB_WORLD
 			.getEntrySet()
