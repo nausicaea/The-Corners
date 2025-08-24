@@ -1,12 +1,12 @@
-package net.ludocrypt.limlib.client.api.effects.sound;
+package net.ludocrypt.limlib.api.effects.sound;
 
 import java.util.Optional;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffect;
-import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffect;
+import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffect;
+import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffect;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.MusicSound;

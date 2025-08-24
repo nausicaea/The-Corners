@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.api.effects.sound.distortion;
+package net.ludocrypt.limlib.api.effects.sound.distortion;
 
 import org.lwjgl.openal.EXTEfx;
 
