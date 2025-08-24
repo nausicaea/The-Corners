@@ -2,8 +2,8 @@ package net.ludocrypt.limlib.api;
 
 import java.util.Set;
 
+import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import org.jetbrains.annotations.ApiStatus.Internal;
-import org.quiltmc.qsl.worldgen.dimension.api.QuiltDimensions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -31,7 +31,7 @@ public class LimlibTravelling {
 	public static <E extends Entity> E travelTo(E teleported, ServerWorld destination, TeleportTarget target,
 			SoundEvent sound, float volume, float pitch) {
 
-		if (destination.equals(teleported.method_48926())) {
+		if (destination.equals(teleported.getWorld())) {
 
 			BlockPos blockPos = BlockPos.ofFloored(target.position.x, target.position.y, target.position.z);
 
@@ -63,7 +63,7 @@ public class LimlibTravelling {
 
 			teleported.setVelocity(target.velocity);
 			teleported
-				.method_48926()
+				.getWorld()
 				.playSound(null, teleported.getX(), teleported.getY(), teleported.getZ(), sound, SoundCategory.AMBIENT,
 					volume, pitch);
 
@@ -74,7 +74,7 @@ public class LimlibTravelling {
 				travelingSound = sound;
 				travelingVolume = volume;
 				travelingPitch = pitch;
-				return QuiltDimensions.teleport(teleported, destination, target);
+				return FabricDimensions.teleport(teleported, destination, target);
 			} finally {
 				travelingSound = null;
 				travelingVolume = 0.0F;
