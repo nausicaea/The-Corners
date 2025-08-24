@@ -4,7 +4,7 @@
 	"package": "net.ludocrypt.limlib.impl.debug.mixin",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
-		"GeneratorTypesMixin",
+    "WorldPresetsMixin",
       "WorldPresetsRegistrarMixin",
 		"WorldPresetTagProviderMixin",
     "DimensionOptionsRegistryHolderMixin"
