@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.ludocrypt.limlib.api.effects.LookupGrabber;
-import net.ludocrypt.limlib.api.skybox.Skybox;
+import net.ludocrypt.limlib.client.api.skybox.Skybox;
 import net.ludocrypt.limlib.impl.bridge.IrisBridge;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
