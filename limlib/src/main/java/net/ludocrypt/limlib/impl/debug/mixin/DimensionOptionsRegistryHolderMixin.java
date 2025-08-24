@@ -11,7 +11,7 @@ import net.minecraft.world.dimension.DimensionOptionsRegistryHolder;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 
 @Mixin(DimensionOptionsRegistryHolder.class)
-public abstract class WorldDimensionsMixin {
+public abstract class DimensionOptionsRegistryHolderMixin {
 
 	@Inject(method = "isDebug", at = @At("HEAD"), cancellable = true)
 	public void limlib$isDebug(CallbackInfoReturnable<Boolean> ci) {
