@@ -2,7 +2,7 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "net.ludocrypt.corners.mixin",
-	"compatibilityLevel": "JAVA_16",
+	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"AbstractDecorationEntityAccessor",
 		"BlockEntityTypeMixin",
