@@ -6,7 +6,6 @@
 	"mixins": [
     "DimensionTypeRegistrarMixin",
 		"ChunkStatusMixin",
-		"DynamicRegistrySyncMixin",
 		"GeneratorTypeAccessor",
 		"RegistriesAccessor",
 		"RegistryLoaderMixin",

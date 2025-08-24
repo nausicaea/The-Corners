@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.mixin;
+package net.ludocrypt.limlib.client.impl.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,9 +13,9 @@ import com.google.common.collect.ImmutableMap.Builder;
 import com.mojang.serialization.Codec;
 
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
-import net.ludocrypt.limlib.api.effects.sky.DimensionEffects;
-import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
-import net.ludocrypt.limlib.api.skybox.Skybox;
+import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffects;
+import net.ludocrypt.limlib.client.api.effects.sound.SoundEffects;
+import net.ludocrypt.limlib.client.api.skybox.Skybox;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SerializableRegistries;
