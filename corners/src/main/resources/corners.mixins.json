@@ -16,17 +16,6 @@
 		"SignTypeAccessor",
 		"SnowBlockMixin"
 	],
-	"client": [
-		"BackgroundRendererMixin",
-		"BakedModelManagerMixin",
-		"FrustumAccessor",
-		"GameRendererAccessor",
-		"MinecraftClientAccessor",
-		"MinecraftClientMixin",
-		"MusicTrackerMixin",
-		"SoundManagerAccessor",
-		"WorldRendererAccessor"
-	],
 	"injectors": {
 		"defaultRequire": 1
 	}
