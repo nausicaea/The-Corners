@@ -13,8 +13,6 @@ import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
 import net.ludocrypt.limlib.api.effects.sky.DimensionEffects;
 import net.ludocrypt.limlib.api.effects.sky.EmptyDimensionEffects;
 import net.ludocrypt.limlib.api.effects.sky.StaticDimensionEffects;
-import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffect;
-import net.ludocrypt.limlib.api.effects.sound.distortion.StaticDistortionEffect;
 import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffect;
 import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffect;
 import net.ludocrypt.limlib.api.skybox.EmptySkybox;
@@ -33,9 +31,6 @@ public class Limlib implements ModInitializer {
 	public void onInitialize() {
 		LimlibWorld.load();
 		Registry.register(ReverbEffect.REVERB_EFFECT_CODEC, new Identifier("limlib", "static"), StaticReverbEffect.CODEC);
-		Registry
-			.register(DistortionEffect.DISTORTION_EFFECT_CODEC, new Identifier("limlib", "static"),
-				StaticDistortionEffect.CODEC);
 		Registry
 			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "static"),
 				StaticDimensionEffects.CODEC);
