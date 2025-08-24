@@ -13,9 +13,6 @@ import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
 import net.ludocrypt.limlib.api.effects.sky.DimensionEffects;
 import net.ludocrypt.limlib.api.effects.sky.EmptyDimensionEffects;
 import net.ludocrypt.limlib.api.effects.sky.StaticDimensionEffects;
-import net.ludocrypt.limlib.api.skybox.EmptySkybox;
-import net.ludocrypt.limlib.api.skybox.Skybox;
-import net.ludocrypt.limlib.api.skybox.TexturedSkybox;
 import net.ludocrypt.limlib.impl.debug.DebugNbtChunkGenerator;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -36,8 +33,6 @@ public class Limlib implements ModInitializer {
 				EmptyDimensionEffects.CODEC);
 		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
 		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
-		Registry.register(Skybox.SKYBOX_CODEC, new Identifier("limlib", "empty"), EmptySkybox.CODEC);
-		Registry.register(Skybox.SKYBOX_CODEC, new Identifier("limlib", "textured"), TexturedSkybox.CODEC);
 		Registry
 			.register(Registries.CHUNK_GENERATOR, new Identifier("limlib", "debug_nbt_chunk_generator"),
 				DebugNbtChunkGenerator.CODEC);

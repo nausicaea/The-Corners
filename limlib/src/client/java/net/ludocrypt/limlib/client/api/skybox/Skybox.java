@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.api.skybox;
+package net.ludocrypt.limlib.client.api.skybox;
 
 import java.util.function.Function;
 
