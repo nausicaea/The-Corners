@@ -1,4 +1,4 @@
-package net.ludocrypt.corners.mixin;
+package net.ludocrypt.corners.client.mixin;
 
 import java.util.HashMap;
 import java.util.Map;
