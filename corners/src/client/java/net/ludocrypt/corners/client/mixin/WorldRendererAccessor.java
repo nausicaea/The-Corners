@@ -1,4 +1,4 @@
-package net.ludocrypt.corners.mixin;
+package net.ludocrypt.corners.client.mixin;
 
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.render.WorldRenderer;
