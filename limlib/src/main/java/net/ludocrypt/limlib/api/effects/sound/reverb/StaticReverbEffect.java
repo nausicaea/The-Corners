@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.api.effects.sound.reverb;
+package net.ludocrypt.limlib.api.effects.sound.reverb;
 
 import org.lwjgl.openal.EXTEfx;
 
