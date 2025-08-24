@@ -9,7 +9,7 @@ import org.lwjgl.openal.EXTEfx;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import net.ludocrypt.limlib.api.effects.LookupGrabber;
-import net.ludocrypt.limlib.client.api.effects.sound.SoundEffects;
+import net.ludocrypt.limlib.api.effects.sound.SoundEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.registry.RegistryKey;
