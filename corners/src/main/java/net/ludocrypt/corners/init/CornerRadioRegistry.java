@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.util.RadioSoundTable;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SimpleRegistry;
@@ -33,10 +32,6 @@ public class CornerRadioRegistry {
 
 	public static RadioSoundTable register(RegistryKey<World> world, RadioSoundTable sound) {
 		return Registry.register(RADIO_REGISTRY, world.getValue(), sound);
-	}
-
-	public static RadioSoundTable getCurrent(MinecraftClient client) {
-		return getCurrent(client.world.getRegistryKey());
 	}
 
 	public static RadioSoundTable getCurrent(RegistryKey<World> key) {
