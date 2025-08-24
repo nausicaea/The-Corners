@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.api.effects.sky;
+package net.ludocrypt.limlib.api.effects.sky;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
