@@ -35,7 +35,7 @@ public class DeepBookshelfRenderer extends SpecialModelRenderer {
 		MinecraftClient client = MinecraftClient.getInstance();
 		Camera camera = client.gameRenderer.getCamera();
 		MatrixStack matrixStack = new MatrixStack();
-		((GameRendererAccessor) client.gameRenderer).callBobViewWhenHurt(matrixStack, tickDelta);
+		((GameRendererAccessor) client.gameRenderer).callTiltViewWhenHurt(matrixStack, tickDelta);
 
 		if (client.options.getBobView().getValue()) {
 			((GameRendererAccessor) client.gameRenderer).callBobView(matrixStack, tickDelta);
