@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.impl.shader;
+package net.ludocrypt.limlib.impl.shader;
 
 import java.io.IOException;
 
