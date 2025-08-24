@@ -1,14 +1,13 @@
 package net.ludocrypt.corners.client.render;
 
 import org.joml.Matrix4f;
-import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.init.CornerBlocks;
-import net.ludocrypt.corners.mixin.GameRendererAccessor;
-import net.ludocrypt.specialmodels.api.SpecialModelRenderer;
+import net.ludocrypt.corners.client.mixin.GameRendererAccessor;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -27,7 +26,6 @@ public class DeepBookshelfRenderer extends SpecialModelRenderer {
 	public static final Identifier DEEP_BOOKSHELF_ATLAS_TEXTURE = TheCorners.id("textures/atlas/deep.png");
 
 	@Override
-	@ClientOnly
 	public void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos origin) {
 		RenderSystem.enablePolygonOffset();
@@ -65,7 +63,6 @@ public class DeepBookshelfRenderer extends SpecialModelRenderer {
 	}
 
 	@Override
-	@ClientOnly
 	public Vec4b appendState(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			long modelSeed) {
 
