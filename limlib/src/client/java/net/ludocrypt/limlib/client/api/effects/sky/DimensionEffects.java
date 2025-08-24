@@ -20,7 +20,7 @@ public abstract class DimensionEffects {
 	public static final RegistryKey<Registry<Codec<? extends DimensionEffects>>> DIMENSION_EFFECTS_CODEC_KEY = RegistryKey
 		.ofRegistry(new Identifier("limlib/codec/dimension_effects"));
 	public static final Registry<Codec<? extends DimensionEffects>> DIMENSION_EFFECTS_CODEC = RegistriesAccessor
-		.callRegisterSimple(DIMENSION_EFFECTS_CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDimensionEffects.CODEC);
+		.callCreate(DIMENSION_EFFECTS_CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDimensionEffects.CODEC);
 	public static final Codec<DimensionEffects> CODEC = DIMENSION_EFFECTS_CODEC
 		.getCodec()
 		.dispatchStable(DimensionEffects::getCodec, Function.identity());

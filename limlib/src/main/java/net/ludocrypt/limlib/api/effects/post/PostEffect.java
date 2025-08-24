@@ -15,7 +15,7 @@ public abstract class PostEffect {
 	public static final RegistryKey<Registry<Codec<? extends PostEffect>>> POST_EFFECT_CODEC_KEY = RegistryKey
 		.ofRegistry(new Identifier("limlib/codec/post_effect"));
 	public static final Registry<Codec<? extends PostEffect>> POST_EFFECT_CODEC = RegistriesAccessor
-		.callRegisterSimple(POST_EFFECT_CODEC_KEY, Lifecycle.stable(), (registry) -> StaticPostEffect.CODEC);
+		.callCreate(POST_EFFECT_CODEC_KEY, Lifecycle.stable(), (registry) -> StaticPostEffect.CODEC);
 	public static final Codec<PostEffect> CODEC = POST_EFFECT_CODEC
 		.getCodec()
 		.dispatchStable(PostEffect::getCodec, Function.identity());
