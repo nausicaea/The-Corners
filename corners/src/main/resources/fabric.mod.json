@@ -21,7 +21,9 @@
   "entrypoints": {
     "main": ["net.ludocrypt.corners.TheCorners"],
     "client": ["net.ludocrypt.corners.client.TheCornersClient"],
-    "modmenu": ["net.ludocrypt.corners.config.CornerModmenu"],
+    "modmenu": [
+      "net.ludocrypt.corners.client.config.CornerModmenu"
+    ],
     "limlib:registrar": ["net.ludocrypt.corners.init.CornerWorlds"]
   },
   "mixins": ["corners.mixins.json", "corners.client.mixins.json"],
