@@ -10,9 +10,6 @@ import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.effects.post.EmptyPostEffect;
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
-import net.ludocrypt.limlib.api.effects.sky.DimensionEffects;
-import net.ludocrypt.limlib.api.effects.sky.EmptyDimensionEffects;
-import net.ludocrypt.limlib.api.effects.sky.StaticDimensionEffects;
 import net.ludocrypt.limlib.impl.debug.DebugNbtChunkGenerator;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -25,12 +22,6 @@ public class Limlib implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LimlibWorld.load();
-		Registry
-			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "static"),
-				StaticDimensionEffects.CODEC);
-		Registry
-			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "empty"),
-				EmptyDimensionEffects.CODEC);
 		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
 		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
 		Registry

@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.api.effects.sky;
+package net.ludocrypt.limlib.client.api.effects.sky;
 
 import java.util.Optional;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
