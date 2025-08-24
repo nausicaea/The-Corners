@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.mixin;
+package net.ludocrypt.limlib.client.impl.mixin;
 
 import java.io.Reader;
 import java.util.Iterator;
