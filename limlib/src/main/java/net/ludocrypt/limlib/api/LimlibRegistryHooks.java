@@ -53,7 +53,7 @@ public class LimlibRegistryHooks {
 		/**
 		 * @param infoLookup  The full registry lookup.
 		 * @param registryKey The RegistryKey of the registry.
-		 * @param registry    The MutableRegistry where to register.
+		 * @param registryOps    The MutableRegistry where to register.
 		 * @param jsonElement The jsonElement to modify before being read by a CODEC.
 		 */
 		void register(RegistryInfoGetter infoLookup, RegistryKey<? extends Registry<O>> registryKey,
