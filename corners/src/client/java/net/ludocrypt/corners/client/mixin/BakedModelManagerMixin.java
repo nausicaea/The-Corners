@@ -19,12 +19,12 @@ public class BakedModelManagerMixin {
 	@Shadow
 	@Final
 	@Mutable
-	private static Map<Identifier, Identifier> ATLAS_RESOURCES;
+	private static Map<Identifier, Identifier> LAYERS_TO_LOADERS;
 	static {
 		Map<Identifier, Identifier> newAtli = new HashMap<Identifier, Identifier>();
-		newAtli.putAll(ATLAS_RESOURCES);
+		newAtli.putAll(LAYERS_TO_LOADERS);
 		newAtli.put(DeepBookshelfRenderer.DEEP_BOOKSHELF_ATLAS_TEXTURE, TheCorners.id("deep"));
-		ATLAS_RESOURCES = Map.copyOf(newAtli);
+		LAYERS_TO_LOADERS = Map.copyOf(newAtli);
 	}
 
 }
