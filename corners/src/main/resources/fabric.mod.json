@@ -24,7 +24,10 @@
     "modmenu": [
       "net.ludocrypt.corners.client.config.CornerModmenu"
     ],
-    "limlib:registrar": ["net.ludocrypt.corners.init.CornerWorlds"]
+    "limlib:registrar": [
+      "net.ludocrypt.corners.init.CornerWorlds",
+      "net.ludocrypt.corners.client.init.CornerWorldsClient"
+    ]
   },
   "mixins": ["corners.mixins.json", "corners.client.mixins.json"],
   "access_widener": "corners.accesswidener",
