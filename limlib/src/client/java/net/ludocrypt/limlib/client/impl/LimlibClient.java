@@ -14,6 +14,7 @@ import net.ludocrypt.limlib.client.api.skybox.EmptySkybox;
 import net.ludocrypt.limlib.client.api.skybox.Skybox;
 import net.ludocrypt.limlib.client.api.skybox.TexturedSkybox;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesserManager;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.registry.Registry;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -32,10 +33,10 @@ public class LimlibClient implements ClientModInitializer {
 		Registry.register(Skybox.SKYBOX_CODEC, new Identifier("limlib", "empty"), EmptySkybox.CODEC);
 		Registry.register(Skybox.SKYBOX_CODEC, new Identifier("limlib", "textured"), TexturedSkybox.CODEC);
 		Registry
-			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "static"),
+			.register(LimlibRegistries.DimFx.REGISTRY, new Identifier("limlib", "static"),
 				StaticDimensionEffects.CODEC);
 		Registry
-			.register(DimensionEffects.DIMENSION_EFFECTS_CODEC, new Identifier("limlib", "empty"),
+			.register(LimlibRegistries.DimFx.REGISTRY, new Identifier("limlib", "empty"),
 				EmptyDimensionEffects.CODEC);
 	}
 
