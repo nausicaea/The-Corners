@@ -19,7 +19,7 @@ import net.minecraft.util.Identifier;
 import java.util.function.Function;
 
 public abstract class LimlibRegistries {
-	public static class PostEffects {
+	public static class PostFx {
 		public static final RegistryKey<Registry<PostEffect>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/post_effect"));
 		public static final RegistryKey<Registry<Codec<? extends PostEffect>>> CODEC_KEY = RegistryKey
@@ -32,7 +32,7 @@ public abstract class LimlibRegistries {
 			.dispatchStable(PostEffect::getCodec, Function.identity());
 	}
 
-	public static class DimensionEffects {
+	public static class DimFx {
 		public static final RegistryKey<Registry<DimensionEffects>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/dimension_effects"));
 		public static final RegistryKey<Registry<Codec<? extends DimensionEffects>>> CODEC_KEY = RegistryKey
@@ -45,7 +45,7 @@ public abstract class LimlibRegistries {
 			.dispatchStable(DimensionEffects::getCodec, Function.identity());
 	}
 
-	public static class DistortionEffects {
+	public static class DistFx {
 		public static final RegistryKey<Registry<DistortionEffect>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/distortion_effect"));
 		public static final RegistryKey<Registry<Codec<? extends DistortionEffect>>> CODEC_KEY = RegistryKey
@@ -57,7 +57,7 @@ public abstract class LimlibRegistries {
 			.dispatchStable(DistortionEffect::getCodec, Function.identity());
 	}
 
-	public static class ReverbEffects {
+	public static class RevFx {
 		public static final RegistryKey<Registry<ReverbEffect>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/reverb_effect"));
 		public static final RegistryKey<Registry<Codec<? extends ReverbEffect>>> CODEC_KEY = RegistryKey
@@ -69,7 +69,7 @@ public abstract class LimlibRegistries {
 			.dispatchStable(ReverbEffect::getCodec, Function.identity());
 	}
 
-	public static class SoundEffects {
+	public static class SndFx {
 		public static final RegistryKey<Registry<SoundEffects>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/sound_effects"));
 
@@ -104,7 +104,7 @@ public abstract class LimlibRegistries {
 
 	public static void init() {
 		Limlib.LOGGER.info("Declaring registries");
-		Registry.register(PostEffects.REGISTRY, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
-		Registry.register(PostEffects.REGISTRY, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
+		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
+		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
 	}
 }
