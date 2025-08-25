@@ -25,7 +25,6 @@
     "limlib.debug.mixins.json",
     "limlib.client.mixins.json"
   ],
-  "access_widener": "limlib.accesswidener",
   "modmenu": {
     "badges": [
       "library"

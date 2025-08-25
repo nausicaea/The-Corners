@@ -24,7 +24,6 @@
   },
   "depends": {},
   "mixins": ["specialmodels.mixins.json", "specialmodels.client.mixins.json"],
-  "access_widener": "specialmodels.accesswidener",
   "modmenu": {
     "badges": [
       "library"
