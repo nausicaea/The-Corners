@@ -1,30 +1,16 @@
 package net.ludocrypt.limlib.client.api.effects.sound.distortion;
 
-import java.util.function.Function;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Lifecycle;
 
-import net.ludocrypt.limlib.impl.mixin.RegistriesAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 /**
  * A Distortion effect controls
  */
 public abstract class DistortionEffect {
-
-	public static final RegistryKey<Registry<Codec<? extends DistortionEffect>>> DISTORTION_EFFECT_CODEC_KEY = RegistryKey
-		.ofRegistry(new Identifier("limlib/codec/distortion_effect"));
-	public static final Registry<Codec<? extends DistortionEffect>> DISTORTION_EFFECT_CODEC = RegistriesAccessor
-		.callCreate(DISTORTION_EFFECT_CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDistortionEffect.CODEC);
-	public static final Codec<DistortionEffect> CODEC = DISTORTION_EFFECT_CODEC
-		.getCodec()
-		.dispatchStable(DistortionEffect::getCodec, Function.identity());
-
 	public abstract Codec<? extends DistortionEffect> getCodec();
 
 	/**
