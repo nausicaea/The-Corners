@@ -106,5 +106,19 @@ public abstract class LimlibRegistries {
 		Limlib.LOGGER.info("Declaring registries");
 		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
 		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
+		Registry
+			.register(DistFx.REGISTRY, new Identifier("limlib", "static"),
+				StaticDistortionEffect.CODEC);
+		Registry
+			.register(RevFx.REGISTRY, new Identifier("limlib", "static"),
+				StaticReverbEffect.CODEC);
+		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "empty"), EmptySkybox.CODEC);
+		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "textured"), TexturedSkybox.CODEC);
+		Registry
+			.register(DimFx.REGISTRY, new Identifier("limlib", "static"),
+				StaticDimensionEffects.CODEC);
+		Registry
+			.register(DimFx.REGISTRY, new Identifier("limlib", "empty"),
+				EmptyDimensionEffects.CODEC);
 	}
 }
