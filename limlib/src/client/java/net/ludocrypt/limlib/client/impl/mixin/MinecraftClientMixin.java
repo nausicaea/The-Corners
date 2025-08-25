@@ -2,6 +2,7 @@ package net.ludocrypt.limlib.client.impl.mixin;
 
 import java.util.Optional;
 
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.util.Window;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,8 +39,8 @@ public class MinecraftClientMixin {
 
 		if (this.player != null) {
 			Optional<SoundEffects> soundEffects = LookupGrabber
-				.snatch(world.getRegistryManager().getOptionalWrapper(SoundEffects.SOUND_EFFECTS_KEY).get(),
-					RegistryKey.of(SoundEffects.SOUND_EFFECTS_KEY, world.getRegistryKey().getValue()));
+				.snatch(world.getRegistryManager().getOptionalWrapper(LimlibRegistries.SndFx.REGISTRY_KEY).get(),
+					RegistryKey.of(LimlibRegistries.SndFx.REGISTRY_KEY, world.getRegistryKey().getValue()));
 
 			if (soundEffects.isPresent()) {
 				Optional<MusicSound> musicSound = soundEffects.get().getMusic();
