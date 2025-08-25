@@ -21,7 +21,9 @@ public class Limlib implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LimlibRegistries.init();
 		LimlibWorld.load();
+
 		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
 		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
 		Registry
