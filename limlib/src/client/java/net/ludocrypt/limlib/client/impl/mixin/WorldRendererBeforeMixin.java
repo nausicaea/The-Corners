@@ -2,6 +2,7 @@ package net.ludocrypt.limlib.client.impl.mixin;
 
 import java.util.Optional;
 
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,8 +39,8 @@ public abstract class WorldRendererBeforeMixin {
 		MinecraftClient client = MinecraftClient.getInstance();
 
 		Optional<Skybox> sky = LookupGrabber
-			.snatch(client.world.getRegistryManager().getOptionalWrapper(Skybox.SKYBOX_KEY).get(),
-				RegistryKey.of(Skybox.SKYBOX_KEY, client.world.getRegistryKey().getValue()));
+			.snatch(client.world.getRegistryManager().getOptionalWrapper(LimlibRegistries.Skyboxes.REGISTRY_KEY).get(),
+				RegistryKey.of(LimlibRegistries.Skyboxes.REGISTRY_KEY, client.world.getRegistryKey().getValue()));
 
 		if (sky.isPresent()) {
 			sky.get().renderSky(((WorldRenderer) (Object) this), client, matrices, positionMatrix, tickDelta);
