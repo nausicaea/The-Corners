@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -57,10 +58,10 @@ public class RegistryLoaderMixin {
 	static {
 		List<RegistryLoader.Entry<?>> newRegistries = Lists.newArrayList();
 		newRegistries.addAll(DYNAMIC_REGISTRIES);
-		newRegistries.add(new RegistryLoader.Entry(PostEffect.POST_EFFECT_KEY, PostEffect.CODEC));
-		newRegistries.add(new RegistryLoader.Entry(DimensionEffects.DIMENSION_EFFECTS_KEY, DimensionEffects.CODEC));
-		newRegistries.add(new RegistryLoader.Entry(SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC));
-		newRegistries.add(new RegistryLoader.Entry(Skybox.SKYBOX_KEY, Skybox.CODEC));
+		newRegistries.add(new RegistryLoader.Entry(LimlibRegistries.PostFx.REGISTRY_KEY, LimlibRegistries.PostFx.CODEC));
+		newRegistries.add(new RegistryLoader.Entry(LimlibRegistries.DimFx.REGISTRY_KEY, LimlibRegistries.DimFx.CODEC));
+		newRegistries.add(new RegistryLoader.Entry(LimlibRegistries.SndFx.REGISTRY_KEY, LimlibRegistries.SndFx.CODEC));
+		newRegistries.add(new RegistryLoader.Entry(LimlibRegistries.Skyboxes.REGISTRY_KEY, LimlibRegistries.Skyboxes.CODEC));
 		DYNAMIC_REGISTRIES = newRegistries;
 	}
 
