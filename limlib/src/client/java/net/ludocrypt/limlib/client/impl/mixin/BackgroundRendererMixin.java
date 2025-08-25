@@ -2,6 +2,7 @@ package net.ludocrypt.limlib.client.impl.mixin;
 
 import java.util.Optional;
 
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -20,8 +21,8 @@ public abstract class BackgroundRendererMixin {
 		MinecraftClient client = MinecraftClient.getInstance();
 
 		Optional<DimensionEffects> dimensionEffects = LookupGrabber
-			.snatch(client.world.getRegistryManager().getOptionalWrapper(DimensionEffects.DIMENSION_EFFECTS_KEY).get(),
-				RegistryKey.of(DimensionEffects.DIMENSION_EFFECTS_KEY, client.world.getRegistryKey().getValue()));
+			.snatch(client.world.getRegistryManager().getOptionalWrapper(LimlibRegistries.DimFx.REGISTRY_KEY).get(),
+				RegistryKey.of(LimlibRegistries.DimFx.REGISTRY_KEY, client.world.getRegistryKey().getValue()));
 
 		if (dimensionEffects.isPresent()) {
 			return dimensionEffects.get().getSkyShading();
