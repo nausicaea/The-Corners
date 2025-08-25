@@ -7,9 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import net.ludocrypt.limlib.api.LimlibRegistrar;
 import net.ludocrypt.limlib.api.LimlibWorld;
-import net.ludocrypt.limlib.api.effects.post.EmptyPostEffect;
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
-import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
 import net.ludocrypt.limlib.impl.debug.DebugNbtChunkGenerator;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -24,8 +21,6 @@ public class Limlib implements ModInitializer {
 		LimlibRegistries.init();
 		LimlibWorld.load();
 
-		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
-		Registry.register(PostEffect.POST_EFFECT_CODEC, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
 		Registry
 			.register(Registries.CHUNK_GENERATOR, new Identifier("limlib", "debug_nbt_chunk_generator"),
 				DebugNbtChunkGenerator.CODEC);

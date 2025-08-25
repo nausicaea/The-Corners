@@ -1,6 +1,7 @@
 package net.ludocrypt.limlib.client.impl.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,10 +29,10 @@ public abstract class SerializableRegistriesMixin {
 	private static void limlib$makeMap$mapped(
 		CallbackInfoReturnable<ImmutableMap<RegistryKey<? extends Registry<?>>, SerializableRegistries.Info<?>>> ci,
 		@Local Builder<RegistryKey<? extends Registry<?>>, SerializableRegistries.Info<?>> builder) {
-		add(builder, PostEffect.POST_EFFECT_KEY, PostEffect.CODEC);
-		add(builder, DimensionEffects.DIMENSION_EFFECTS_KEY, DimensionEffects.CODEC);
-		add(builder, SoundEffects.SOUND_EFFECTS_KEY, SoundEffects.CODEC);
-		add(builder, Skybox.SKYBOX_KEY, Skybox.CODEC);
+		add(builder, LimlibRegistries.PostFx.REGISTRY_KEY, LimlibRegistries.PostFx.CODEC);
+		add(builder, LimlibRegistries.DimFx.REGISTRY_KEY, LimlibRegistries.DimFx.CODEC);
+		add(builder, LimlibRegistries.SndFx.REGISTRY_KEY, LimlibRegistries.SndFx.CODEC);
+		add(builder, LimlibRegistries.Skyboxes.REGISTRY_KEY, LimlibRegistries.Skyboxes.CODEC);
 	}
 
 	@Shadow
