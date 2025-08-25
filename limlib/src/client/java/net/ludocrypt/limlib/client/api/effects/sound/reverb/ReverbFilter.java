@@ -2,6 +2,7 @@ package net.ludocrypt.limlib.client.api.effects.sound.reverb;
 
 import java.util.Optional;
 
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.openal.AL11;
@@ -115,8 +116,8 @@ public class ReverbFilter {
 
 		if (!(client == null || client.world == null)) {
 			Optional<SoundEffects> soundEffects = LookupGrabber
-				.snatch(client.world.getRegistryManager().getOptionalWrapper(SoundEffects.SOUND_EFFECTS_KEY).get(),
-					RegistryKey.of(SoundEffects.SOUND_EFFECTS_KEY, client.world.getRegistryKey().getValue()));
+				.snatch(client.world.getRegistryManager().getOptionalWrapper(LimlibRegistries.SndFx.REGISTRY_KEY).get(),
+					RegistryKey.of(LimlibRegistries.SndFx.REGISTRY_KEY, client.world.getRegistryKey().getValue()));
 
 			if (soundEffects.isPresent()) {
 				Optional<ReverbEffect> reverb = soundEffects.get().getReverb();
