@@ -4,12 +4,12 @@ import net.ludocrypt.limlib.api.effects.sky.DimensionEffectsDto;
 import net.ludocrypt.limlib.api.effects.sky.SkyTypeDto;
 import net.minecraft.util.math.Vec3d;
 
-public abstract class DimensionEffectsResolver {
-	public static net.minecraft.client.render.DimensionEffects resolve(DimensionEffectsDto dto) {
+public abstract class DimensionEffectsHelper {
+	public static net.minecraft.client.render.DimensionEffects createDefault(DimensionEffectsDto dto) {
 		return new net.minecraft.client.render.DimensionEffects(
 			dto.cloudsHeight(),
 			dto.alternateSkyColor(),
-			resolve(dto.skyType()),
+			create(dto.skyType()),
 			dto.brightenLightning(),
 			dto.darkened()) {
 
@@ -25,7 +25,7 @@ public abstract class DimensionEffectsResolver {
 		};
 	}
 
-	private static net.minecraft.client.render.DimensionEffects.SkyType resolve(SkyTypeDto dto) {
+	public static net.minecraft.client.render.DimensionEffects.SkyType create(SkyTypeDto dto) {
 		switch (dto) {
 			case NONE -> {
 				return net.minecraft.client.render.DimensionEffects.SkyType.NONE;
