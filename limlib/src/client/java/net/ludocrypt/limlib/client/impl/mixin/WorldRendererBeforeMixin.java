@@ -1,6 +1,6 @@
 package net.ludocrypt.limlib.client.impl.mixin;
 
-import net.ludocrypt.limlib.client.api.skybox.SkyboxResolver;
+import net.ludocrypt.limlib.client.api.skybox.SkyboxRenderHelper;
 import net.minecraft.client.world.ClientWorld;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +30,7 @@ public abstract class WorldRendererBeforeMixin {
 			return;
 		}
 
-		SkyboxResolver.render(world, camera, matrices, tickDelta);
+		SkyboxRenderHelper.render(world, camera, matrices, tickDelta);
 	}
 
 }
