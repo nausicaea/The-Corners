@@ -19,7 +19,6 @@ public class Limlib implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LimlibRegistries.init();
-		LimlibWorld.load();
 
 		Registry
 			.register(Registries.CHUNK_GENERATOR, new Identifier("limlib", "debug_nbt_chunk_generator"),
