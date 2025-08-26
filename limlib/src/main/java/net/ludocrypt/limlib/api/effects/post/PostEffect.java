@@ -3,14 +3,14 @@ package net.ludocrypt.limlib.api.effects.post;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.Identifier;
 
-public abstract class PostEffect {
+public interface PostEffect {
 
-	public abstract Codec<? extends PostEffect> getCodec();
+	Codec<? extends PostEffect> getCodec();
 
-	public abstract boolean shouldRender();
+	boolean shouldRender();
 
-	public abstract void beforeRender();
+	void beforeRender();
 
-	public abstract Identifier getShaderLocation();
+	Identifier getShaderLocation();
 
 }
