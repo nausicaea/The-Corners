@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.api.effects.sky;
+package net.ludocrypt.limlib.client.impl.effects.sky;
 
 import net.ludocrypt.limlib.api.effects.sky.DimensionEffectsDto;
 import net.ludocrypt.limlib.api.effects.sky.SkyTypeDto;

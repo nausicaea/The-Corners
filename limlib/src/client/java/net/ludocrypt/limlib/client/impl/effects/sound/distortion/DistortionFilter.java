@@ -1,16 +1,18 @@
-package net.ludocrypt.limlib.client.api.effects.sound.distortion;
+package net.ludocrypt.limlib.client.impl.effects.sound.distortion;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.ludocrypt.limlib.api.effects.sound.SoundEffectsDto;
+import net.ludocrypt.limlib.impl.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffectDto;
+import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffect;
+import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffectFactories;
 import net.ludocrypt.limlib.impl.Limlib;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.world.ClientWorld;
 import org.lwjgl.openal.AL11;
 import org.lwjgl.openal.EXTEfx;
 
-import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.impl.effects.LookupGrabber;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.registry.RegistryKey;

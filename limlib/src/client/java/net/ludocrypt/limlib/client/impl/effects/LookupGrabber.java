@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.api.effects;
+package net.ludocrypt.limlib.client.impl.effects;
 
 import java.util.Optional;
 import net.minecraft.registry.RegistryKey;

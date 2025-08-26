@@ -1,7 +1,8 @@
-package net.ludocrypt.limlib.api.effects.sound.distortion;
+package net.ludocrypt.limlib.impl.effects.sound.distortion;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffectDto;
 import net.minecraft.util.Identifier;
 import org.lwjgl.openal.EXTEfx;
 

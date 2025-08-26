@@ -1,7 +1,8 @@
-package net.ludocrypt.limlib.client.api.effects.sound.distortion;
+package net.ludocrypt.limlib.client.impl.effects.sound.distortion;
 
-import net.ludocrypt.limlib.api.effects.sound.distortion.StaticDistortionEffectDto;
+import net.ludocrypt.limlib.impl.effects.sound.distortion.StaticDistortionEffectDto;
 
+import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffect;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundInstance;
 

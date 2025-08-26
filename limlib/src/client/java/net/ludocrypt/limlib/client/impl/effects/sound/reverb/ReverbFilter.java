@@ -1,16 +1,18 @@
-package net.ludocrypt.limlib.client.api.effects.sound.reverb;
+package net.ludocrypt.limlib.client.impl.effects.sound.reverb;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.ludocrypt.limlib.api.effects.sound.SoundEffectsDto;
+import net.ludocrypt.limlib.impl.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffectDto;
+import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffect;
+import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffectFactories;
 import net.ludocrypt.limlib.impl.Limlib;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.world.ClientWorld;
 import org.lwjgl.openal.AL11;
 import org.lwjgl.openal.EXTEfx;
 
-import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.impl.effects.LookupGrabber;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.registry.RegistryKey;
