@@ -25,8 +25,7 @@ import com.mojang.serialization.Lifecycle;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks.LimlibJsonRegistryHook;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks.LimlibRegistryHook;
-import net.ludocrypt.limlib.api.LimlibWorld;
-import net.ludocrypt.limlib.api.LimlibWorld.RegistryProvider;
+import net.ludocrypt.limlib.api.LimlibRegistryProvider;
 import net.ludocrypt.limlib.impl.SaveStorageSupplier;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.MutableRegistry;
@@ -68,13 +67,13 @@ public class RegistryLoaderMixin {
 		if (registryKey2.isOf(RegistryKeys.WORLD_PRESET)) {
 			JsonObject presetType = jsonElement.getAsJsonObject();
 			JsonObject dimensions = presetType.get("dimensions").getAsJsonObject();
-			LimlibWorld.LIMLIB_WORLD
+			LimlibRegistries.Worlds.REGISTRY
 				.getEntrySet()
 				.forEach((world) -> dimensions
 					.add(world.getKey().getValue().toString(),
 						DimensionOptions.CODEC
 							.encodeStart(registryOps,
-								world.getValue().getDimensionOptionsSupplier().apply(new RegistryProvider() {
+								world.getValue().dimensionOptionsSupplier().apply(new LimlibRegistryProvider() {
 
 									@Override
 									public <T> RegistryEntryLookup<T> get(RegistryKey<Registry<T>> key) {
@@ -98,11 +97,11 @@ public class RegistryLoaderMixin {
 			Decoder<E> decoder, Map<RegistryKey<?>, Exception> readFailures, CallbackInfo ci) {
 
 		if (registryKey.equals(RegistryKeys.DIMENSION_TYPE)) {
-			LimlibWorld.LIMLIB_WORLD
+			LimlibRegistries.Worlds.REGISTRY
 				.getEntrySet()
 				.forEach((world) -> ((MutableRegistry<DimensionType>) registry)
 					.add(RegistryKey.of(RegistryKeys.DIMENSION_TYPE, world.getKey().getValue()),
-						world.getValue().getDimensionTypeSupplier().get(), Lifecycle.stable()));
+						world.getValue().dimensionTypeSupplier().get(), Lifecycle.stable()));
 		}
 
 		LimlibRegistryHooks.REGISTRY_HOOKS

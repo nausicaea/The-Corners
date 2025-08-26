@@ -3,6 +3,7 @@ package net.ludocrypt.limlib.impl.mixin;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +14,7 @@ import com.mojang.datafixers.DataFixer;
 import com.mojang.serialization.Dynamic;
 
 import net.ludocrypt.limlib.api.LimlibWorld;
-import net.ludocrypt.limlib.api.LimlibWorld.RegistryProvider;
+import net.ludocrypt.limlib.api.LimlibRegistryProvider;
 import net.ludocrypt.limlib.impl.SaveStorageSupplier;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.DynamicRegistryManager;
@@ -32,7 +33,7 @@ public class WorldSaveStorageMixin {
 			DataFixer dataFixer, int version) {
 		Dynamic<T> dynamic = in;
 
-		for (Entry<RegistryKey<LimlibWorld>, LimlibWorld> entry : LimlibWorld.LIMLIB_WORLD.getEntrySet()) {
+		for (Entry<RegistryKey<LimlibWorld>, LimlibWorld> entry : LimlibRegistries.Worlds.REGISTRY.getEntrySet()) {
 			dynamic = limlib$addDimension(entry.getKey(), entry.getValue(), dynamic);
 		}
 
@@ -54,7 +55,7 @@ public class WorldSaveStorageMixin {
 					new Dynamic<T>(dimensions.getOps(),
 						(T) DimensionOptions.CODEC
 							.encodeStart(RegistryOps.of(NbtOps.INSTANCE, registryManager),
-								world.getDimensionOptionsSupplier().apply(new RegistryProvider() {
+								world.dimensionOptionsSupplier().apply(new LimlibRegistryProvider() {
 
 									@Override
 									public <Q> RegistryEntryLookup<Q> get(RegistryKey<Registry<Q>> key) {

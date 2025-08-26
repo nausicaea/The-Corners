@@ -2,6 +2,7 @@ package net.ludocrypt.limlib.impl.mixin;
 
 import java.util.Set;
 
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -31,7 +32,7 @@ public class DimensionOptionsRegistryHolderMixin {
 	private static void limlib$clinit(CallbackInfo ci) {
 		Set<RegistryKey<DimensionOptions>> dimensions = Sets.newHashSet();
 		dimensions.addAll(VANILLA_KEYS);
-		LimlibWorld.LIMLIB_WORLD
+		LimlibRegistries.Worlds.REGISTRY
 			.getEntrySet()
 			.forEach((entry) -> dimensions.add(RegistryKey.of(RegistryKeys.DIMENSION, entry.getKey().getValue())));
 		VANILLA_KEYS = dimensions;
