@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.impl.mixin;
+package net.ludocrypt.limlib.impl.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
@@ -8,16 +8,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.mojang.serialization.Codec;
 
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
-import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffects;
-import net.ludocrypt.limlib.client.api.effects.sound.SoundEffects;
-import net.ludocrypt.limlib.client.api.skybox.Skybox;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SerializableRegistries;

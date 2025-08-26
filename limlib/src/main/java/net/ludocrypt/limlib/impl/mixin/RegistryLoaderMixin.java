@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.client.impl.mixin;
+package net.ludocrypt.limlib.impl.mixin;
 
 import java.util.List;
 import java.util.Map;
@@ -27,10 +27,6 @@ import net.ludocrypt.limlib.api.LimlibRegistryHooks.LimlibJsonRegistryHook;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks.LimlibRegistryHook;
 import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.LimlibWorld.RegistryProvider;
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
-import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffects;
-import net.ludocrypt.limlib.client.api.effects.sound.SoundEffects;
-import net.ludocrypt.limlib.client.api.skybox.Skybox;
 import net.ludocrypt.limlib.impl.SaveStorageSupplier;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.MutableRegistry;
@@ -40,10 +36,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryLoader;
 import net.minecraft.registry.RegistryOps;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
 
