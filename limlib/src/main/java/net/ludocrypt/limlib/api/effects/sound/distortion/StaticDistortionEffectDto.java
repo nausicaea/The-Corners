@@ -7,6 +7,7 @@ import org.lwjgl.openal.EXTEfx;
 
 public record StaticDistortionEffectDto(boolean enabled, float edge, float gain, float lowpassCutoff, float eqCenter,
 										float eqBandWidth) implements DistortionEffectDto {
+	public static final Identifier ID = new Identifier("limlib", "static");
 	public static final Codec<StaticDistortionEffectDto> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(Codec.BOOL.optionalFieldOf("enabled", true).stable().forGetter((distortion) -> distortion.enabled), Codec
 					.floatRange(EXTEfx.AL_DISTORTION_MIN_EDGE, EXTEfx.AL_DISTORTION_MAX_EDGE)
@@ -35,6 +36,11 @@ public record StaticDistortionEffectDto(boolean enabled, float edge, float gain,
 					.forGetter((distortion) -> distortion.eqBandWidth))
 			.apply(instance, instance.stable(StaticDistortionEffectDto::new));
 	});
+
+	@Override
+	public Identifier getId() {
+		return ID;
+	}
 
 	@Override
 	public Codec<StaticDistortionEffectDto> getCodec() {
