@@ -14,6 +14,8 @@ import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffectDto;
 import net.ludocrypt.limlib.api.effects.sound.distortion.StaticDistortionEffectDto;
 import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffectDto;
 import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffectDto;
+import net.ludocrypt.limlib.api.skybox.SkyboxDto;
+import net.ludocrypt.limlib.api.skybox.TexturedSkyboxDto;
 import net.ludocrypt.limlib.impl.mixin.RegistriesAccessor;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -93,12 +95,12 @@ public abstract class LimlibRegistries {
 	}
 
 	public static class Skyboxes {
-		public static final RegistryKey<Registry<Skybox>> REGISTRY_KEY = RegistryKey.ofRegistry(new Identifier("limlib/skybox"));
-		public static final RegistryKey<Registry<Codec<? extends Skybox>>> CODEC_KEY = RegistryKey
+		public static final RegistryKey<Registry<SkyboxDto>> REGISTRY_KEY = RegistryKey.ofRegistry(new Identifier("limlib/skybox"));
+		public static final RegistryKey<Registry<Codec<? extends SkyboxDto>>> CODEC_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/codec/skybox"));
-		public static final Registry<Codec<? extends Skybox>> REGISTRY = RegistriesAccessor
-			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> TexturedSkybox.CODEC);
-		public static final Codec<Skybox> CODEC = REGISTRY.getCodec().dispatchStable(Skybox::getCodec, Function.identity());
+		public static final Registry<Codec<? extends SkyboxDto>> REGISTRY = RegistriesAccessor
+			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> TexturedSkyboxDto.CODEC);
+		public static final Codec<SkyboxDto> CODEC = REGISTRY.getCodec().dispatchStable(SkyboxDto::getCodec, Function.identity());
 	}
 
 	public static class Worlds {
