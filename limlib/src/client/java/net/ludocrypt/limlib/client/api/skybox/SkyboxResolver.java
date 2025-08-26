@@ -1,46 +1,51 @@
 package net.ludocrypt.limlib.client.api.skybox;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-
+import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.api.skybox.EmptySkyboxDto;
+import net.ludocrypt.limlib.api.skybox.SkyboxDto;
+import net.ludocrypt.limlib.api.skybox.TexturedSkyboxDto;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix4f;
 
-public class TexturedSkybox extends Skybox {
+public abstract class SkyboxResolver {
+	public static void render(ClientWorld world, Camera camera, MatrixStack matrices, float tickDelta) {
+		var dynamicRegistries = world.getRegistryManager();
+		var skyboxRegistry = dynamicRegistries
+			.getOptionalWrapper(LimlibRegistries.Skyboxes.REGISTRY_KEY)
+			.orElseThrow(() -> new IllegalStateException("Client: Cannot find skybox registry (key: %s)".formatted(LimlibRegistries.Skyboxes.REGISTRY_KEY)));
 
-	public static final Codec<TexturedSkybox> CODEC = RecordCodecBuilder.create((instance) -> {
-		return instance.group(Identifier.CODEC.fieldOf("skybox").stable().forGetter((sky) -> {
-			return sky.identifier;
-		})).apply(instance, instance.stable(TexturedSkybox::new));
-	});
-
-	public final Identifier identifier;
-
-	public TexturedSkybox(Identifier identifier) {
-		this.identifier = identifier;
+		var effect = world.getRegistryKey().getValue();
+		LookupGrabber
+			.snatch(skyboxRegistry,
+				RegistryKey.of(LimlibRegistries.Skyboxes.REGISTRY_KEY, effect))
+			.ifPresent(s -> {
+				SkyboxResolver.renderSky(s, world, camera, matrices, tickDelta);
+			});
 	}
 
-	@Override
-	public void renderSky(WorldRenderer worldRenderer, MinecraftClient client, MatrixStack matrices,
-			Matrix4f projectionMatrix, float tickDelta) {
+	public static void renderSky(SkyboxDto dto, ClientWorld world, Camera camera, MatrixStack matrices, float tickDelta) {
+		switch (dto) {
+			case EmptySkyboxDto edto -> {}
+			case TexturedSkyboxDto tdto -> renderSky(tdto, world, camera, matrices, tickDelta);
+			default -> throw new UnsupportedOperationException("Unknown skybox: %s".formatted(dto.getClass()));
+		}
+	}
+
+	private static void renderSky(TexturedSkyboxDto dto, ClientWorld world, Camera camera, MatrixStack matrices, float tickDelta) {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.depthMask(MinecraftClient.isFabulousGraphicsOrBetter());
 
-		Vec3d color = client.world.getSkyColor(client.gameRenderer.getCamera().getPos(), tickDelta).multiply(255);
+		Vec3d color = world.getSkyColor(camera.getPos(), tickDelta).multiply(255);
 		int r = (int) Math.floor(color.x);
 		int g = (int) Math.floor(color.y);
 		int b = (int) Math.floor(color.z);
@@ -78,7 +83,7 @@ public class TexturedSkybox extends Skybox {
 
 			Matrix4f matrix4f = matrices.peek().getPositionMatrix();
 
-			RenderSystem.setShaderTexture(0, new Identifier(identifier.toString() + "_" + i + ".png"));
+			RenderSystem.setShaderTexture(0, new Identifier(dto.identifier().toString() + "_" + i + ".png"));
 			bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
 			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).texture(0.0F, 0.0F).color(r, g, b, a).next();
 			bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).texture(0.0F, 1.0F).color(r, g, b, a).next();
@@ -91,10 +96,4 @@ public class TexturedSkybox extends Skybox {
 		RenderSystem.depthMask(true);
 		RenderSystem.disableBlend();
 	}
-
-	@Override
-	public Codec<? extends Skybox> getCodec() {
-		return CODEC;
-	}
-
 }
