@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.effects.sound.distortion;
+package net.ludocrypt.limlib.api.effects.sound.distortion;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

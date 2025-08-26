@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.effects.post;
+package net.ludocrypt.limlib.api.effects.post;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
