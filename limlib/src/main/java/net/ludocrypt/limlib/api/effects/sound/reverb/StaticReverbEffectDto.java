@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.effects.sound.reverb;
+package net.ludocrypt.limlib.api.effects.sound.reverb;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

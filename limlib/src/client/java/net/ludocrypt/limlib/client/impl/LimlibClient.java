@@ -3,12 +3,12 @@ package net.ludocrypt.limlib.client.impl;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 
-import net.ludocrypt.limlib.impl.effects.sky.EmptyDimensionEffectsDto;
-import net.ludocrypt.limlib.impl.effects.sky.StaticDimensionEffectsDto;
-import net.ludocrypt.limlib.impl.effects.sound.distortion.StaticDistortionEffectDto;
-import net.ludocrypt.limlib.impl.effects.sound.reverb.StaticReverbEffectDto;
-import net.ludocrypt.limlib.impl.skybox.EmptySkyboxDto;
-import net.ludocrypt.limlib.impl.skybox.TexturedSkyboxDto;
+import net.ludocrypt.limlib.api.effects.sky.EmptyDimensionEffectsDto;
+import net.ludocrypt.limlib.api.effects.sky.StaticDimensionEffectsDto;
+import net.ludocrypt.limlib.api.effects.sound.distortion.StaticDistortionEffectDto;
+import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffectDto;
+import net.ludocrypt.limlib.api.skybox.EmptySkyboxDto;
+import net.ludocrypt.limlib.api.skybox.TexturedSkyboxDto;
 import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffectsFactories;
 import net.ludocrypt.limlib.client.impl.effects.sky.DimensionEffectsHelper;
 import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffectFactories;

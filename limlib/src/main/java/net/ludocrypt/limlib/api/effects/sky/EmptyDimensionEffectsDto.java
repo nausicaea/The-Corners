@@ -1,4 +1,4 @@
-package net.ludocrypt.limlib.impl.effects.sky;
+package net.ludocrypt.limlib.api.effects.sky;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
