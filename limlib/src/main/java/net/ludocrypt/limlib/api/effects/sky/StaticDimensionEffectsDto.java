@@ -2,12 +2,14 @@ package net.ludocrypt.limlib.api.effects.sky;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
 public record StaticDimensionEffectsDto(float cloudsHeight, boolean alternateSkyColor, SkyTypeDto skyType,
 										boolean brightenLightning, boolean darkened, boolean thickFog,
 										float skyShading) implements DimensionEffectsDto {
+	public static final Identifier ID = new Identifier("limlib", "static");
 	public static final Codec<StaticDimensionEffectsDto> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
 		Codec.FLOAT.fieldOf("cloud_height")
 			.stable()
@@ -31,6 +33,11 @@ public record StaticDimensionEffectsDto(float cloudsHeight, boolean alternateSky
 			.stable()
 			.forGetter((effects) -> effects.skyShading)
 	).apply(instance, instance.stable(StaticDimensionEffectsDto::new)));
+
+	@Override
+	public Identifier getId() {
+		return ID;
+	}
 
 	public @NotNull Codec<StaticDimensionEffectsDto> getCodec() {
 		return CODEC;
