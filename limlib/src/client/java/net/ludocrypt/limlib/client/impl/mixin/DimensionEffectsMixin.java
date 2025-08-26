@@ -1,8 +1,8 @@
 package net.ludocrypt.limlib.client.impl.mixin;
 
 import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffectsResolver;
+import net.ludocrypt.limlib.client.impl.ClientSharedMutableState;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
-import net.ludocrypt.limlib.impl.SharedMutableState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +20,7 @@ public class DimensionEffectsMixin {
 			CallbackInfoReturnable<net.minecraft.client.render.DimensionEffects> ci) {
 		var effect = dimensionType.effects();
 		var dimensionEffects = LookupGrabber
-			.snatch(SharedMutableState.MIXIN_WORLD_LOOKUP.get(),
+			.snatch(ClientSharedMutableState.MIXIN_WORLD_LOOKUP.get(),
 				RegistryKey.of(LimlibRegistries.DimFx.REGISTRY_KEY, effect))
 			.orElseThrow(() -> new IllegalStateException("Client: cannot find the dimension effect '%s' in registry".formatted(effect)));
 
