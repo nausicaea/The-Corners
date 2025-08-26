@@ -1,7 +1,6 @@
 package net.ludocrypt.limlib.client.impl.mixin;
 
-import java.util.Optional;
-
+import net.ludocrypt.limlib.api.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.util.Window;
 import org.spongepowered.asm.mixin.Final;
@@ -13,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.ludocrypt.limlib.api.effects.LookupGrabber;
-import net.ludocrypt.limlib.client.api.effects.sound.SoundEffects;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesserManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -36,23 +34,22 @@ public class MinecraftClientMixin {
 
 	@Inject(method = "getMusicType()Lnet/minecraft/sound/MusicSound;", at = @At("HEAD"), cancellable = true)
 	private void limlib$getMusic(CallbackInfoReturnable<MusicSound> ci) {
-
-		if (this.player != null) {
-			Optional<SoundEffects> soundEffects = LookupGrabber
-				.snatch(world.getRegistryManager().getOptionalWrapper(LimlibRegistries.SndFx.REGISTRY_KEY).get(),
-					RegistryKey.of(LimlibRegistries.SndFx.REGISTRY_KEY, world.getRegistryKey().getValue()));
-
-			if (soundEffects.isPresent()) {
-				Optional<MusicSound> musicSound = soundEffects.get().getMusic();
-
-				if (musicSound.isPresent()) {
-					ci.setReturnValue(musicSound.get());
-				}
-
-			}
-
+		if (player == null) {
+			return;
 		}
 
+		var dynamicRegistries = world.getRegistryManager();
+		var soundEffectsRegistry = dynamicRegistries
+			.getOptionalWrapper(LimlibRegistries.SndFx.REGISTRY_KEY)
+			.orElseThrow(() -> new IllegalStateException("Client: Cannot find sound effects registry (key: %s)".formatted(LimlibRegistries.SndFx.REGISTRY_KEY)));
+
+		var effect = world.getRegistryKey().getValue();
+		LookupGrabber.snatch(
+			soundEffectsRegistry,
+			RegistryKey.of(LimlibRegistries.SndFx.REGISTRY_KEY, effect)
+		)
+			.flatMap(SoundEffectsDto::music)
+			.ifPresent(ci::setReturnValue);
 	}
 
 	@Inject(method = "onResolutionChanged", at = @At("RETURN"))
