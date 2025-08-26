@@ -2,6 +2,7 @@ package net.ludocrypt.corners;
 
 import net.fabricmc.api.ModInitializer;
 import net.ludocrypt.corners.render.StrongPostEffect;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +18,6 @@ import net.ludocrypt.corners.init.CornerRadioRegistry;
 import net.ludocrypt.corners.init.CornerSoundEvents;
 import net.ludocrypt.corners.packet.ClientToServerPackets;
 import net.minecraft.util.Identifier;
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
 
 public class TheCorners implements ModInitializer {
 
@@ -30,7 +30,7 @@ public class TheCorners implements ModInitializer {
     @Override
     public void onInitialize() {
         AutoConfig.register(CornerConfig.class, GsonConfigSerializer::new);
-        Registry.register(PostEffect.POST_EFFECT_CODEC, TheCorners.id("strong_shader"), StrongPostEffect.CODEC);
+        Registry.register(LimlibRegistries.PostFx.REGISTRY, TheCorners.id("strong_shader"), StrongPostEffect.CODEC);
         CornerBlocks.init();
         CornerBiomes.init();
         CornerEntities.init();

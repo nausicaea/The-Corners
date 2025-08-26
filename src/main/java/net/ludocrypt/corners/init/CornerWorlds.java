@@ -21,6 +21,7 @@ import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -112,9 +113,9 @@ public class CornerWorlds implements LimlibRegistrar {
 						HoaryCrossroadsChunkGenerator.createGroup(), 16, 16, 4, 0))));
 
 		// Registries
-		WORLDS.forEach((pair) -> LimlibWorld.LIMLIB_WORLD.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable()));
+		WORLDS.forEach((pair) -> LimlibRegistries.Worlds.REGISTRY.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable()));
 		LimlibRegistryHooks
-			.hook(PostEffect.POST_EFFECT_KEY, (infoLookup, registryKey, registry) -> POST_EFFECTS
+			.hook(LimlibRegistries.PostFx.REGISTRY_KEY, (infoLookup, registryKey, registry) -> POST_EFFECTS
 				.forEach((pair) -> registry.add(pair.getFirst(), pair.getSecond(), Lifecycle.stable())));
 		LimlibRegistryHooks.hook(RegistryKeys.BIOME, (infoLookup, registryKey, registry) -> {
 			RegistryEntryLookup<PlacedFeature> features = infoLookup.getRegistryInfo(RegistryKeys.PLACED_FEATURE).get().entryLookup();
@@ -153,12 +154,12 @@ public class CornerWorlds implements LimlibRegistrar {
 	}
 
 	private static <W extends LimlibWorld> W get(String id, W world) {
-		WORLDS.add(Pair.of(RegistryKey.of(LimlibWorld.LIMLIB_WORLD_KEY, TheCorners.id(id)), world));
+		WORLDS.add(Pair.of(RegistryKey.of(LimlibRegistries.Worlds.REGISTRY_KEY, TheCorners.id(id)), world));
 		return world;
 	}
 
 	private static <P extends PostEffect> P get(String id, P postEffect) {
-		POST_EFFECTS.add(Pair.of(RegistryKey.of(PostEffect.POST_EFFECT_KEY, TheCorners.id(id)), postEffect));
+		POST_EFFECTS.add(Pair.of(RegistryKey.of(LimlibRegistries.PostFx.REGISTRY_KEY, TheCorners.id(id)), postEffect));
 		return postEffect;
 	}
 }

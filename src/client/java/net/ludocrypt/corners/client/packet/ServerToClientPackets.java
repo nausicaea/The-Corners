@@ -41,12 +41,12 @@ public class ServerToClientPackets {
 					if (!closestPaintings.isEmpty()) {
 						id = CornerRadioRegistry
 							.getCurrent(
-								((DimensionalPaintingVariant) closestPaintings.get(0).getVariant().value()).radioRedirect);
+								((DimensionalPaintingVariant) closestPaintings.getFirst().getVariant().value()).radioRedirect);
 					}
 
 					SoundSystemAccess
 						.get(((SoundManagerAccessor) client.getSoundManager()).getSoundSystem())
-						.stopSoundsAtPosition(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, null,
+						.limlib$stopSoundsAtPosition(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5, null,
 							SoundCategory.RECORDS);
 					((MusicTrackerAccess) (client.getMusicTracker())).getRadioPositions().remove(pos);
 
