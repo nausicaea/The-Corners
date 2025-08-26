@@ -3,6 +3,7 @@ package net.ludocrypt.limlib.client.impl.mixin;
 import java.util.function.Supplier;
 
 import net.ludocrypt.limlib.impl.LimlibRegistries;
+import net.ludocrypt.limlib.impl.SharedMutableState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
@@ -39,7 +40,7 @@ public abstract class ClientWorldMixin extends World {
 			.getOptionalWrapper(LimlibRegistries.DimFx.REGISTRY_KEY)
 			.orElseThrow(() -> new IllegalStateException("Client: Cannot find dimension effects registry (key: %s)".formatted(LimlibRegistries.DimFx.REGISTRY_KEY)));
 
-		LimlibRegistries.DimFx.MIXIN_WORLD_LOOKUP.set(dimensionEffectsRegistry);
+		SharedMutableState.MIXIN_WORLD_LOOKUP.set(dimensionEffectsRegistry);
 	}
 
 }
