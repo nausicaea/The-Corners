@@ -120,19 +120,11 @@ public abstract class LimlibRegistries {
 		Limlib.LOGGER.info("Declaring custom registries");
 		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
 		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
-		Registry
-			.register(DistFx.REGISTRY, new Identifier("limlib", "static"),
-				StaticDistortionEffectDto.CODEC);
-		Registry
-			.register(RevFx.REGISTRY, new Identifier("limlib", "static"),
-				StaticReverbEffectDto.CODEC);
-		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "empty"), EmptySkyboxDto.CODEC);
-		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "textured"), TexturedSkyboxDto.CODEC);
-		Registry
-			.register(DimFx.REGISTRY, new Identifier("limlib", "static"),
-				StaticDimensionEffectsDto.CODEC);
-		Registry
-			.register(DimFx.REGISTRY, new Identifier("limlib", "empty"),
-				EmptyDimensionEffectsDto.CODEC);
+		Registry.register(DistFx.REGISTRY, StaticDistortionEffectDto.ID, StaticDistortionEffectDto.CODEC);
+		Registry.register(RevFx.REGISTRY, StaticReverbEffectDto.ID, StaticReverbEffectDto.CODEC);
+		Registry.register(Skyboxes.REGISTRY, EmptySkyboxDto.ID, EmptySkyboxDto.CODEC);
+		Registry.register(Skyboxes.REGISTRY, TexturedSkyboxDto.ID, TexturedSkyboxDto.CODEC);
+		Registry.register(DimFx.REGISTRY, StaticDimensionEffectsDto.ID, StaticDimensionEffectsDto.CODEC);
+		Registry.register(DimFx.REGISTRY, EmptyDimensionEffectsDto.ID, EmptyDimensionEffectsDto.CODEC);
 	}
 }
