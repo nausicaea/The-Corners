@@ -1,8 +1,9 @@
-package net.ludocrypt.limlib.api.effects.post;
+package net.ludocrypt.limlib.impl.effects.post;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.minecraft.util.Identifier;
 
 public class EmptyPostEffect extends PostEffect {

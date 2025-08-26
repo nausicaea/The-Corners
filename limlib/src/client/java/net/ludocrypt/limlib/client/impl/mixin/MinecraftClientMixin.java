@@ -1,6 +1,6 @@
 package net.ludocrypt.limlib.client.impl.mixin;
 
-import net.ludocrypt.limlib.api.effects.sound.SoundEffectsDto;
+import net.ludocrypt.limlib.impl.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.util.Window;
 import org.spongepowered.asm.mixin.Final;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.impl.effects.LookupGrabber;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesserManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;

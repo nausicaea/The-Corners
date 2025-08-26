@@ -1,14 +1,13 @@
 package net.ludocrypt.limlib.client.impl.mixin;
 
 import net.ludocrypt.limlib.api.effects.sky.DimensionEffectsDto;
-import net.ludocrypt.limlib.impl.Limlib;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.world.ClientWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.impl.effects.LookupGrabber;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.registry.RegistryKey;

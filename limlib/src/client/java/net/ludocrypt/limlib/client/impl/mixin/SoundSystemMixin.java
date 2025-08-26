@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.google.common.collect.Multimap;
 
-import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionFilter;
-import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbFilter;
+import net.ludocrypt.limlib.client.impl.effects.sound.distortion.DistortionFilter;
+import net.ludocrypt.limlib.client.impl.effects.sound.reverb.ReverbFilter;
 import net.ludocrypt.limlib.impl.access.SoundSystemAccess;
 import net.minecraft.client.sound.Channel;
 import net.minecraft.client.sound.SoundInstance;
