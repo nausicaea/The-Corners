@@ -1,7 +1,7 @@
 package net.ludocrypt.limlib.client.impl.skybox;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.ludocrypt.limlib.impl.skybox.TexturedSkyboxDto;
+import net.ludocrypt.limlib.api.skybox.TexturedSkyboxDto;
 import net.ludocrypt.limlib.client.api.skybox.Skybox;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;

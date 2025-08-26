@@ -1,8 +1,7 @@
-package net.ludocrypt.limlib.impl.skybox;
+package net.ludocrypt.limlib.api.skybox;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.ludocrypt.limlib.api.skybox.SkyboxDto;
 import net.minecraft.util.Identifier;
 
 public record TexturedSkyboxDto(Identifier identifier) implements SkyboxDto {

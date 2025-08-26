@@ -1,6 +1,6 @@
 package net.ludocrypt.limlib.client.impl.effects.sound.reverb;
 
-import net.ludocrypt.limlib.impl.effects.sound.reverb.StaticReverbEffectDto;
+import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffectDto;
 import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffect;
 
 import net.minecraft.client.MinecraftClient;

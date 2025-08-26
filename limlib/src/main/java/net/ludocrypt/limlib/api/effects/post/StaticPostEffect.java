@@ -1,9 +1,8 @@
-package net.ludocrypt.limlib.impl.effects.post;
+package net.ludocrypt.limlib.api.effects.post;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.minecraft.util.Identifier;
 
 public record StaticPostEffect(Identifier shaderName) implements PostEffect {
