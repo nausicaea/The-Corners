@@ -10,7 +10,9 @@
 		"RegistriesAccessor",
 		"ServerPlayerEntityMixin",
     "DimensionOptionsRegistryHolderMixin",
-		"WorldSaveStorageMixin"
+		"WorldSaveStorageMixin",
+    "RegistryLoaderMixin",
+    "SerializableRegistriesMixin"
 	],
 	"client": [],
 	"injectors": {
