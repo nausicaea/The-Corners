@@ -23,7 +23,10 @@
   "mixins": [
     "limlib.mixins.json",
     "limlib.debug.mixins.json",
-    "limlib.client.mixins.json"
+    {
+      "config": "limlib.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "modmenu": {
     "badges": [

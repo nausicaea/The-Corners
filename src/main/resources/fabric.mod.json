@@ -29,7 +29,7 @@
             "net.ludocrypt.corners.client.init.CornerWorldsClient"
         ]
     },
-    "mixins": ["corners.mixins.json", "corners.client.mixins.json"],
+    "mixins": ["corners.mixins.json", { "config": "corners.client.mixins.json", "environment": "client" }],
     "custom": {
         "modmenu": {
             "links": {
