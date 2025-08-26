@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.minecraft.util.Identifier;
 
-public class EmptyPostEffect extends PostEffect {
+public record EmptyPostEffect() implements PostEffect {
 
 	public static final Codec<EmptyPostEffect> CODEC = RecordCodecBuilder
 		.create((instance) -> instance.stable(new EmptyPostEffect()));
