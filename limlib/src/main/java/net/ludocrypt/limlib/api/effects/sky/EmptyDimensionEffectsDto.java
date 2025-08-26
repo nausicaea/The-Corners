@@ -2,12 +2,19 @@ package net.ludocrypt.limlib.api.effects.sky;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
 public record EmptyDimensionEffectsDto() implements DimensionEffectsDto {
+	public static Identifier ID = new Identifier("limlib", "empty");
 	public static final Codec<EmptyDimensionEffectsDto> CODEC = RecordCodecBuilder
 		.create((instance) -> instance.stable(new EmptyDimensionEffectsDto()));
+
+	@Override
+	public Identifier getId() {
+		return ID;
+	}
 
 	@Override
 	public @NotNull Codec<EmptyDimensionEffectsDto> getCodec() {
