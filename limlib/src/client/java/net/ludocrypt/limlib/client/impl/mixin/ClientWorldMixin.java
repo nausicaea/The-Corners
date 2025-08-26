@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.ludocrypt.limlib.client.api.effects.sky.DimensionEffects;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -35,8 +34,12 @@ public abstract class ClientWorldMixin extends World {
 	private void limlib$init(ClientPlayNetworkHandler netHandler, ClientWorld.Properties clientWorldProperties,
 			RegistryKey<World> registryKey, RegistryEntry<DimensionType> dimensionType, int chunkManager, int simulationDistance,
 			Supplier<Profiler> profiler, WorldRenderer worldRenderer, boolean debugWorld, long seed, CallbackInfo ci) {
-		DimensionEffects.MIXIN_WORLD_LOOKUP
-			.set(this.getRegistryManager().getOptionalWrapper(LimlibRegistries.DimFx.REGISTRY_KEY).get());
+		var dynamicRegistries = this.getRegistryManager();
+		var dimensionEffectsRegistry = dynamicRegistries
+			.getOptionalWrapper(LimlibRegistries.DimFx.REGISTRY_KEY)
+			.orElseThrow(() -> new IllegalStateException("Client: Cannot find dimension effects registry (key: %s)".formatted(LimlibRegistries.DimFx.REGISTRY_KEY)));
+
+		LimlibRegistries.DimFx.MIXIN_WORLD_LOOKUP.set(dimensionEffectsRegistry);
 	}
 
 }
