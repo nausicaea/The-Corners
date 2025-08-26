@@ -23,7 +23,7 @@
     ]
   },
   "depends": {},
-  "mixins": ["specialmodels.mixins.json", "specialmodels.client.mixins.json"],
+  "mixins": ["specialmodels.mixins.json", { "config": "specialmodels.client.mixins.json", "environment":  "client" }],
   "modmenu": {
     "badges": [
       "library"
