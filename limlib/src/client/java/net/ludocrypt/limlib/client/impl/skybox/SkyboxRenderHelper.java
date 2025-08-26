@@ -1,6 +1,8 @@
-package net.ludocrypt.limlib.client.api.skybox;
+package net.ludocrypt.limlib.client.impl.skybox;
 
-import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.impl.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.api.skybox.Skybox;
+import net.ludocrypt.limlib.client.api.skybox.SkyboxFactories;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;

@@ -1,14 +1,10 @@
-package net.ludocrypt.limlib.client.api.effects.sound.reverb;
+package net.ludocrypt.limlib.client.impl.effects.sound.reverb;
 
-import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffectDto;
-import org.lwjgl.openal.EXTEfx;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.ludocrypt.limlib.impl.effects.sound.reverb.StaticReverbEffectDto;
+import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffect;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.util.Identifier;
 
 /**
  * A Reverb effect controls

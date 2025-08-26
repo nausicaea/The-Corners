@@ -1,7 +1,9 @@
-package net.ludocrypt.limlib.api.effects.sky;
+package net.ludocrypt.limlib.impl.effects.sky;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.ludocrypt.limlib.api.effects.sky.DimensionEffectsDto;
+import net.ludocrypt.limlib.api.effects.sky.SkyTypeDto;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;

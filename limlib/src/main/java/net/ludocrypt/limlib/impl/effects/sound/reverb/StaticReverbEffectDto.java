@@ -1,7 +1,8 @@
-package net.ludocrypt.limlib.api.effects.sound.reverb;
+package net.ludocrypt.limlib.impl.effects.sound.reverb;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffectDto;
 import net.minecraft.util.Identifier;
 import org.lwjgl.openal.EXTEfx;
 

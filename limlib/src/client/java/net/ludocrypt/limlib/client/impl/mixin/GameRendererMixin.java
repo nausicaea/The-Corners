@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.ludocrypt.limlib.api.effects.LookupGrabber;
+import net.ludocrypt.limlib.client.impl.effects.LookupGrabber;
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesser;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesserManager;
