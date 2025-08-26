@@ -25,8 +25,7 @@
             "net.ludocrypt.corners.client.config.CornerModmenu"
         ],
         "limlib:registrar": [
-            "net.ludocrypt.corners.init.CornerWorlds",
-            "net.ludocrypt.corners.client.init.CornerWorldsClient"
+            "net.ludocrypt.corners.init.CornerWorlds"
         ]
     },
     "mixins": ["corners.mixins.json", { "config": "corners.client.mixins.json", "environment": "client" }],
