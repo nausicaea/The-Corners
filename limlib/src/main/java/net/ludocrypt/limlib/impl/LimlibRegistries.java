@@ -23,12 +23,10 @@ import net.ludocrypt.limlib.api.skybox.TexturedSkyboxDto;
 import net.ludocrypt.limlib.impl.mixin.RegistriesAccessor;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.util.Identifier;
 
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 public abstract class LimlibRegistries {
@@ -56,7 +54,6 @@ public abstract class LimlibRegistries {
 		public static final Codec<DimensionEffectsDto> CODEC = REGISTRY
 			.getCodec()
 			.dispatchStable(DimensionEffectsDto::getCodec, Function.identity());
-		public static final AtomicReference<RegistryWrapper<DimensionEffectsDto>> MIXIN_WORLD_LOOKUP = new AtomicReference<>();
 	}
 
 	public static class DistFx {
