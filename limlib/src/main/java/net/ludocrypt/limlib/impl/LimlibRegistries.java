@@ -9,20 +9,26 @@ import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.effects.post.EmptyPostEffect;
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
+import net.ludocrypt.limlib.api.effects.sky.DimensionEffectsDto;
+import net.ludocrypt.limlib.api.effects.sky.EmptyDimensionEffectsDto;
+import net.ludocrypt.limlib.api.effects.sky.StaticDimensionEffectsDto;
 import net.ludocrypt.limlib.api.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffectDto;
 import net.ludocrypt.limlib.api.effects.sound.distortion.StaticDistortionEffectDto;
 import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffectDto;
 import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffectDto;
+import net.ludocrypt.limlib.api.skybox.EmptySkyboxDto;
 import net.ludocrypt.limlib.api.skybox.SkyboxDto;
 import net.ludocrypt.limlib.api.skybox.TexturedSkyboxDto;
 import net.ludocrypt.limlib.impl.mixin.RegistriesAccessor;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.sound.MusicSound;
 import net.minecraft.util.Identifier;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 public abstract class LimlibRegistries {
@@ -40,16 +46,17 @@ public abstract class LimlibRegistries {
 	}
 
 	public static class DimFx {
-		public static final RegistryKey<Registry<DimensionEffects>> REGISTRY_KEY = RegistryKey
+		public static final RegistryKey<Registry<DimensionEffectsDto>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/dimension_effects"));
-		public static final RegistryKey<Registry<Codec<? extends DimensionEffects>>> CODEC_KEY = RegistryKey
+		public static final RegistryKey<Registry<Codec<? extends DimensionEffectsDto>>> CODEC_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/codec/dimension_effects"));
 
-		public static final Registry<Codec<? extends DimensionEffects>> REGISTRY = RegistriesAccessor
-			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDimensionEffects.CODEC);
-		public static final Codec<DimensionEffects> CODEC = REGISTRY
+		public static final Registry<Codec<? extends DimensionEffectsDto>> REGISTRY = RegistriesAccessor
+			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDimensionEffectsDto.CODEC);
+		public static final Codec<DimensionEffectsDto> CODEC = REGISTRY
 			.getCodec()
-			.dispatchStable(DimensionEffects::getCodec, Function.identity());
+			.dispatchStable(DimensionEffectsDto::getCodec, Function.identity());
+		public static final AtomicReference<RegistryWrapper<DimensionEffectsDto>> MIXIN_WORLD_LOOKUP = new AtomicReference<>();
 	}
 
 	public static class DistFx {
@@ -113,22 +120,22 @@ public abstract class LimlibRegistries {
 	}
 
 	public static void init() {
-		Limlib.LOGGER.info("Declaring registries");
+		Limlib.LOGGER.info("Declaring custom registries");
 		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
 		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
 		Registry
 			.register(DistFx.REGISTRY, new Identifier("limlib", "static"),
-				StaticDistortionEffect.CODEC);
+				StaticDistortionEffectDto.CODEC);
 		Registry
 			.register(RevFx.REGISTRY, new Identifier("limlib", "static"),
-				StaticReverbEffect.CODEC);
-		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "empty"), EmptySkybox.CODEC);
-		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "textured"), TexturedSkybox.CODEC);
+				StaticReverbEffectDto.CODEC);
+		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "empty"), EmptySkyboxDto.CODEC);
+		Registry.register(Skyboxes.REGISTRY, new Identifier("limlib", "textured"), TexturedSkyboxDto.CODEC);
 		Registry
 			.register(DimFx.REGISTRY, new Identifier("limlib", "static"),
-				StaticDimensionEffects.CODEC);
+				StaticDimensionEffectsDto.CODEC);
 		Registry
 			.register(DimFx.REGISTRY, new Identifier("limlib", "empty"),
-				EmptyDimensionEffects.CODEC);
+				EmptyDimensionEffectsDto.CODEC);
 	}
 }
