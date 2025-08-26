@@ -9,6 +9,11 @@ import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.effects.post.EmptyPostEffect;
 import net.ludocrypt.limlib.api.effects.post.PostEffect;
 import net.ludocrypt.limlib.api.effects.post.StaticPostEffect;
+import net.ludocrypt.limlib.api.effects.sound.SoundEffectsDto;
+import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffectDto;
+import net.ludocrypt.limlib.api.effects.sound.distortion.StaticDistortionEffectDto;
+import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffectDto;
+import net.ludocrypt.limlib.api.effects.sound.reverb.StaticReverbEffectDto;
 import net.ludocrypt.limlib.impl.mixin.RegistriesAccessor;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -46,42 +51,45 @@ public abstract class LimlibRegistries {
 	}
 
 	public static class DistFx {
-		public static final RegistryKey<Registry<DistortionEffect>> REGISTRY_KEY = RegistryKey
+		public static final RegistryKey<Registry<DistortionEffectDto>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/distortion_effect"));
-		public static final RegistryKey<Registry<Codec<? extends DistortionEffect>>> CODEC_KEY = RegistryKey
+		public static final RegistryKey<Registry<Codec<? extends DistortionEffectDto>>> CODEC_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/codec/distortion_effect"));
-		public static final Registry<Codec<? extends DistortionEffect>> REGISTRY = RegistriesAccessor
-			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDistortionEffect.CODEC);
-		public static final Codec<DistortionEffect> CODEC = REGISTRY
+		public static final Registry<Codec<? extends DistortionEffectDto>> REGISTRY = RegistriesAccessor
+			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> StaticDistortionEffectDto.CODEC);
+		public static final Codec<DistortionEffectDto> CODEC = REGISTRY
 			.getCodec()
-			.dispatchStable(DistortionEffect::getCodec, Function.identity());
+			.dispatchStable(DistortionEffectDto::getCodec, Function.identity());
 	}
 
 	public static class RevFx {
-		public static final RegistryKey<Registry<ReverbEffect>> REGISTRY_KEY = RegistryKey
+		public static final RegistryKey<Registry<ReverbEffectDto>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/reverb_effect"));
-		public static final RegistryKey<Registry<Codec<? extends ReverbEffect>>> CODEC_KEY = RegistryKey
+		public static final RegistryKey<Registry<Codec<? extends ReverbEffectDto>>> CODEC_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/codec/reverb_effect"));
-		public static final Registry<Codec<? extends ReverbEffect>> REGISTRY = RegistriesAccessor
-			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> StaticReverbEffect.CODEC);
-		public static final Codec<ReverbEffect> CODEC = REGISTRY
+		public static final Registry<Codec<? extends ReverbEffectDto>> REGISTRY = RegistriesAccessor
+			.callCreate(CODEC_KEY, Lifecycle.stable(), (registry) -> StaticReverbEffectDto.CODEC);
+		public static final Codec<ReverbEffectDto> CODEC = REGISTRY
 			.getCodec()
-			.dispatchStable(ReverbEffect::getCodec, Function.identity());
+			.dispatchStable(ReverbEffectDto::getCodec, Function.identity());
 	}
 
 	public static class SndFx {
-		public static final RegistryKey<Registry<SoundEffects>> REGISTRY_KEY = RegistryKey
+		public static final RegistryKey<Registry<SoundEffectsDto>> REGISTRY_KEY = RegistryKey
 			.ofRegistry(new Identifier("limlib/sound_effects"));
-
-		public static final Codec<SoundEffects> CODEC = RecordCodecBuilder.create((instance) -> {
-			return instance.group(ReverbEffect.CODEC.optionalFieldOf("reverb").stable().forGetter((soundEffects) -> {
-				return soundEffects.reverb;
-			}), DistortionEffect.CODEC.optionalFieldOf("distortion").stable().forGetter((soundEffects) -> {
-				return soundEffects.distortion;
-			}), MusicSound.CODEC.optionalFieldOf("music").stable().forGetter((soundEffects) -> {
-				return soundEffects.music;
-			})).apply(instance, instance.stable(SoundEffects::new));
-		});
+		public static final Codec<SoundEffectsDto> CODEC = RecordCodecBuilder.create((instance) -> instance
+			.group(LimlibRegistries.RevFx.CODEC
+					.optionalFieldOf("reverb")
+					.stable()
+					.forGetter(SoundEffectsDto::reverb),
+				LimlibRegistries.DistFx.CODEC
+					.optionalFieldOf("distortion")
+					.stable()
+					.forGetter(SoundEffectsDto::distortion),
+				MusicSound.CODEC.optionalFieldOf("music")
+					.stable()
+					.forGetter(SoundEffectsDto::music))
+			.apply(instance, instance.stable(SoundEffectsDto::new)));
 	}
 
 	public static class Skyboxes {
