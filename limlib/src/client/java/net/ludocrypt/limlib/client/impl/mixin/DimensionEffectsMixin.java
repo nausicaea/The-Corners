@@ -19,11 +19,9 @@ public class DimensionEffectsMixin {
 	private static void limlib$byDimensionType(DimensionType dimensionType,
 			CallbackInfoReturnable<net.minecraft.client.render.DimensionEffects> ci) {
 		var effect = dimensionType.effects();
-		var dimensionEffects = LookupGrabber
+		LookupGrabber
 			.snatch(ClientSharedMutableState.MIXIN_WORLD_LOOKUP.get(),
 				RegistryKey.of(LimlibRegistries.DimFx.REGISTRY_KEY, effect))
-			.orElseThrow(() -> new IllegalStateException("Client: cannot find the dimension effect '%s' in registry".formatted(effect)));
-
-		ci.setReturnValue(DimensionEffectsFactories.resolve(dimensionEffects));
+			.ifPresent(deff -> ci.setReturnValue(DimensionEffectsFactories.resolve(deff)));
 	}
 }
