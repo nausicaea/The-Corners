@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.Identifier;
 
 public record StaticPostEffect(Identifier shaderName) implements PostEffect {
-
+	public static final Identifier ID = new Identifier("limlib", "static");
 	public static final Codec<StaticPostEffect> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(Identifier.CODEC.fieldOf("shader_name").stable().forGetter((postEffect) -> {
 			return postEffect.shaderName;
