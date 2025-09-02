@@ -28,7 +28,7 @@ public class GameRendererMixin {
 
 	@Shadow
 	@Final
-	MinecraftClient client;
+	private MinecraftClient client;
 
 	@Unique
 	private final Function<Identifier, PostProcesser> memoizedShaders = Util
