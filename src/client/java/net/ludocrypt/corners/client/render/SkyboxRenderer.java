@@ -1,6 +1,5 @@
 package net.ludocrypt.corners.client.render;
 
-import net.ludocrypt.corners.render.SkyboxRendererDto;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -21,13 +20,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec2f;
 
-public record SkyboxRenderer(SkyboxRendererDto dto) implements SpecialModelRenderer {
+public class SkyboxRenderer extends SpecialModelRenderer {
+
+	private final String id;
+
+	public SkyboxRenderer(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos origin) {
 
 		for (int i = 0; i < 6; i++) {
-			RenderSystem.setShaderTexture(i, TheCorners.id("textures/sky/%s_%d.png".formatted(dto.id(), i)));
+			RenderSystem.setShaderTexture(i, TheCorners.id("textures/sky/" + id + "_" + i + ".png"));
 		}
 
 		MinecraftClient client = MinecraftClient.getInstance();
@@ -53,18 +59,13 @@ public record SkyboxRenderer(SkyboxRendererDto dto) implements SpecialModelRende
 
 	}
 
-    @Override
-    public boolean performOutside() {
-        return dto.performOutside();
-    }
-
-    @Override
+	@Override
 	public MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
-		quad.v1().setUv(new Vec2f(0.0F, 0.0F));
-		quad.v2().setUv(new Vec2f(0.0F, 1.0F));
-		quad.v3().setUv(new Vec2f(1.0F, 1.0F));
-		quad.v4().setUv(new Vec2f(1.0F, 0.0F));
+		quad.getV1().setUv(new Vec2f(0.0F, 0.0F));
+		quad.getV2().setUv(new Vec2f(0.0F, 1.0F));
+		quad.getV3().setUv(new Vec2f(1.0F, 1.0F));
+		quad.getV4().setUv(new Vec2f(1.0F, 0.0F));
 		return quad;
 	}
 
