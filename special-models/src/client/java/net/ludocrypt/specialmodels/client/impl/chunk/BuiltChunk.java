@@ -52,7 +52,7 @@ public class BuiltChunk {
 	private final SpecialChunkBuilder specialChunkBuilder;
 	public final int index;
 
-	public final AtomicReference<ChunkData> data = new AtomicReference<ChunkData>(ChunkData.EMPTY);
+	public final AtomicReference<SpecialChunkBuilder.ChunkData> data = new AtomicReference<SpecialChunkBuilder.ChunkData>(SpecialChunkBuilder.ChunkData.EMPTY);
 	private final AtomicInteger cancelledInitialBuilds = new AtomicInteger(0);
 
 	@Nullable
@@ -138,13 +138,13 @@ public class BuiltChunk {
 		buffer.begin(VertexFormat.DrawMode.QUADS, SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE);
 	}
 
-	public ChunkData getData() {
+	public SpecialChunkBuilder.ChunkData getData() {
 		return this.data.get();
 	}
 
 	private void clear() {
 		this.cancel();
-		this.data.set(ChunkData.EMPTY);
+		this.data.set(SpecialChunkBuilder.ChunkData.EMPTY);
 		this.needsRebuild = true;
 	}
 
@@ -181,7 +181,7 @@ public class BuiltChunk {
 	}
 
 	public boolean scheduleSort(SpecialModelRenderer renderer, SpecialChunkBuilder chunkRenderer) {
-		ChunkData data = this.getData();
+		SpecialChunkBuilder.ChunkData data = this.getData();
 
 		if (this.sortTasks.containsKey(renderer)) {
 			this.sortTasks.get(renderer).cancel();
@@ -220,7 +220,7 @@ public class BuiltChunk {
 		ChunkRendererRegion region = cache
 			.build(specialChunkBuilder.world(), pos.add(-1, -1, -1), pos.add(16, 16, 16), 1);
 
-		boolean empty = this.data.get() == ChunkData.EMPTY;
+		boolean empty = this.data.get() == SpecialChunkBuilder.ChunkData.EMPTY;
 
 		if (empty && cancelled) {
 			this.cancelledInitialBuilds.incrementAndGet();
@@ -255,17 +255,17 @@ public class BuiltChunk {
 		}
 
 		@Override
-		public CompletableFuture<ChunkBuildResult> run(SpecialBufferBuilderStorage buffers) {
+		public CompletableFuture<SpecialChunkBuilder.Result> run(SpecialBufferBuilderStorage buffers) {
 
 			if (this.cancelled.get()) {
-				return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+				return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 			} else if (!BuiltChunk.this.shouldBuild()) {
 				this.region = null;
 				BuiltChunk.this.scheduleRebuild(false);
 				this.cancelled.set(true);
-				return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+				return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 			} else if (this.cancelled.get()) {
-				return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+				return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 			} else {
 				Vec3d cameraPos = specialChunkBuilder.getCameraPosition();
 				float x = (float) cameraPos.x;
@@ -275,9 +275,9 @@ public class BuiltChunk {
 
 				if (this.cancelled.get()) {
 					renderedChunkData.renderedBuffers.values().forEach(RenderedBuffer::release);
-					return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+					return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 				} else {
-					ChunkData chunkData = new ChunkData();
+					SpecialChunkBuilder.ChunkData chunkData = new SpecialChunkBuilder.ChunkData();
 
 					chunkData.occlusionGraph = renderedChunkData.occlusionGraph;
 
@@ -308,7 +308,7 @@ public class BuiltChunk {
 						}
 
 						if (this.cancelled.get()) {
-							return ChunkBuildResult.CANCELLED;
+							return SpecialChunkBuilder.Result.CANCELLED;
 						} else {
 							BuiltChunk.this.data.set(chunkData);
 							BuiltChunk.this.cancelledInitialBuilds.set(0);
@@ -316,7 +316,7 @@ public class BuiltChunk {
 							((WorldChunkBuilderAccess) (specialChunkBuilder.worldRenderer()))
 								.specialmodels$addSpecialBuiltChunk(BuiltChunk.this);
 
-							return ChunkBuildResult.SUCCESSFUL;
+							return SpecialChunkBuilder.Result.SUCCESSFUL;
 						}
 
 					});
@@ -573,10 +573,10 @@ public class BuiltChunk {
 
 	public class SortTask extends Task {
 
-		private final ChunkData data;
+		private final SpecialChunkBuilder.ChunkData data;
 		private final SpecialModelRenderer renderer;
 
-		public SortTask(double distance, ChunkData data, SpecialModelRenderer renderer) {
+		public SortTask(double distance, SpecialChunkBuilder.ChunkData data, SpecialModelRenderer renderer) {
 			super(distance, true);
 			this.data = data;
 			this.renderer = renderer;
@@ -588,15 +588,15 @@ public class BuiltChunk {
 		}
 
 		@Override
-		public CompletableFuture<ChunkBuildResult> run(SpecialBufferBuilderStorage buffers) {
+		public CompletableFuture<SpecialChunkBuilder.Result> run(SpecialBufferBuilderStorage buffers) {
 
 			if (this.cancelled.get()) {
-				return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+				return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 			} else if (!BuiltChunk.this.shouldBuild()) {
 				this.cancelled.set(true);
-				return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+				return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 			} else if (this.cancelled.get()) {
-				return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+				return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 			} else {
 				Vec3d cameraPos = specialChunkBuilder.getCameraPosition();
 				float x = (float) cameraPos.x;
@@ -621,11 +621,11 @@ public class BuiltChunk {
 
 					if (this.cancelled.get()) {
 						renderedBuffer.release();
-						return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+						return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 					} else {
-						CompletableFuture<ChunkBuildResult> completableFuture = specialChunkBuilder
+						CompletableFuture<SpecialChunkBuilder.Result> completableFuture = specialChunkBuilder
 							.scheduleUpload(renderer, renderedBuffer, BuiltChunk.this.getBuffer(renderer))
-							.thenApply(v -> ChunkBuildResult.CANCELLED);
+							.thenApply(v -> SpecialChunkBuilder.Result.CANCELLED);
 						return completableFuture.handle((result, throwable) -> {
 
 							if (throwable != null && !(throwable instanceof CancellationException) && !(throwable instanceof InterruptedException)) {
@@ -634,12 +634,12 @@ public class BuiltChunk {
 									.setCrashReportSupplierAndAddDetails(CrashReport.create(throwable, "Rendering chunk"));
 							}
 
-							return this.cancelled.get() ? ChunkBuildResult.CANCELLED : ChunkBuildResult.SUCCESSFUL;
+							return this.cancelled.get() ? SpecialChunkBuilder.Result.CANCELLED : SpecialChunkBuilder.Result.SUCCESSFUL;
 						});
 					}
 
 				} else {
-					return CompletableFuture.completedFuture(ChunkBuildResult.CANCELLED);
+					return CompletableFuture.completedFuture(SpecialChunkBuilder.Result.CANCELLED);
 				}
 
 			}
@@ -664,7 +664,7 @@ public class BuiltChunk {
 			this.highPriority = highPriority;
 		}
 
-		public abstract CompletableFuture<ChunkBuildResult> run(SpecialBufferBuilderStorage buffers);
+		public abstract CompletableFuture<SpecialChunkBuilder.Result> run(SpecialBufferBuilderStorage buffers);
 
 		public abstract void cancel();
 
