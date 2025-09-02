@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.ludocrypt.limlib.impl.LimlibRegistries;
+import net.ludocrypt.limlib.impl.SharedMutableState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -26,7 +27,6 @@ import net.ludocrypt.limlib.api.LimlibRegistryHooks;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks.LimlibJsonRegistryHook;
 import net.ludocrypt.limlib.api.LimlibRegistryHooks.LimlibRegistryHook;
 import net.ludocrypt.limlib.api.LimlibRegistryProvider;
-import net.ludocrypt.limlib.impl.SaveStorageSupplier;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.MutableRegistry;
 import net.minecraft.registry.Registry;
@@ -113,7 +113,7 @@ public class RegistryLoaderMixin {
 	private static void limlib$loadRegistriesIntoManager(ResourceManager resourceManager,
 			DynamicRegistryManager registryManager, List<RegistryLoader.Entry<?>> decodingData,
 			CallbackInfoReturnable<DynamicRegistryManager.Immutable> ci) {
-		SaveStorageSupplier.LOADED_REGISTRY.set(registryManager.toImmutable());
+		SharedMutableState.LOADED_REGISTRY.set(registryManager.toImmutable());
 	}
 
 }
