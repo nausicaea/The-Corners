@@ -4,7 +4,6 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.ludocrypt.specialmodels.impl.SpecialModelsRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,11 +34,11 @@ public abstract class JsonUnbakedModelDeserializerMixin {
 
 			for (Entry<String, JsonElement> entry : limlibExtra.entrySet()) {
 
-				if (SpecialModelsRegistries.Renderer.REGISTRY
+				if (SpecialModelRenderer.SPECIAL_MODEL_RENDERER
 					.contains(
-						RegistryKey.of(SpecialModelsRegistries.Renderer.REGISTRY_KEY, new Identifier(entry.getKey())))) {
+						RegistryKey.of(SpecialModelRenderer.SPECIAL_MODEL_RENDERER_KEY, new Identifier(entry.getKey())))) {
 					map
-						.put(SpecialModelsRegistries.Renderer.REGISTRY.get(new Identifier(entry.getKey())),
+						.put(SpecialModelRenderer.SPECIAL_MODEL_RENDERER.get(new Identifier(entry.getKey())),
 							new Identifier(entry.getValue().getAsString()));
 				}
 
