@@ -18,6 +18,7 @@ public class Limlib implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		SharedMutableState.init();
 		LimlibRegistries.init();
 
 		Registry
