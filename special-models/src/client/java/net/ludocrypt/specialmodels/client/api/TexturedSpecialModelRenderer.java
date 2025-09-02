@@ -1,6 +1,5 @@
 package net.ludocrypt.specialmodels.client.api;
 
-import net.ludocrypt.specialmodels.api.TexturedSpecialModelRendererDto;
 import net.ludocrypt.specialmodels.impl.SpecialModels;
 import org.joml.Matrix4f;
 
@@ -12,7 +11,16 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-public record TexturedSpecialModelRenderer(TexturedSpecialModelRendererDto dto) implements SpecialModelRenderer {
+public class TexturedSpecialModelRenderer extends SpecialModelRenderer {
+
+	public TexturedSpecialModelRenderer() {
+		super();
+	}
+
+	public TexturedSpecialModelRenderer(boolean performOutside) {
+		super(performOutside);
+	}
+
 	@Override
 	public void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos origin) {
