@@ -1,9 +1,7 @@
 package net.ludocrypt.specialmodels.client.impl.chunk;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -17,20 +15,16 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.mojang.logging.LogUtils;
 
-import it.unimi.dsi.fastutil.objects.Reference2ObjectArrayMap;
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.client.impl.chunk.BuiltChunk.Task;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.render.chunk.ChunkOcclusionData;
 import net.minecraft.client.render.chunk.ChunkRendererRegionBuilder;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Util;
 import net.minecraft.util.crash.CrashReport;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.thread.TaskExecutor;
 
@@ -53,8 +47,8 @@ public class SpecialChunkBuilder {
 	private final TaskExecutor<Runnable> mailbox;
 	private final Executor executor;
 
-	private MinecraftClient client;
-	private WorldRenderer worldRenderer;
+	private final MinecraftClient client;
+	private final WorldRenderer worldRenderer;
 	private ClientWorld world;
 
 	private Vec3d cameraPosition = Vec3d.ZERO;
@@ -90,7 +84,7 @@ public class SpecialChunkBuilder {
 			int size = Math.min(storage.size() * 2 / 3, storage.size() - 1);
 
 			for (int i = 0; i < size; ++i) {
-				storage.remove(storage.size() - 1);
+				storage.removeLast();
 			}
 
 			System.gc();
@@ -128,7 +122,7 @@ public class SpecialChunkBuilder {
 						} else {
 							this.mailbox.send(() -> {
 
-								if (result == SpecialChunkBuilder.Result.SUCCESSFUL) {
+								if (result == ChunkBuildResult.SUCCESSFUL) {
 									storage.clear();
 								} else {
 									storage.reset();
@@ -289,134 +283,6 @@ public class SpecialChunkBuilder {
 
 	public MinecraftClient client() {
 		return client;
-	}
-
-	public static class ChunkData {
-
-		public static final SpecialChunkBuilder.ChunkData EMPTY = new SpecialChunkBuilder.ChunkData() {
-
-			@Override
-			public boolean isVisibleThrough(Direction from, Direction to) {
-				return false;
-			}
-
-		};
-
-		public final Map<SpecialModelRenderer, RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
-		public final Map<SpecialModelRenderer, SortState> bufferStates = new Reference2ObjectArrayMap<>();
-
-		public ChunkOcclusionData occlusionGraph = new ChunkOcclusionData();
-
-		public boolean isEmpty() {
-			return this.renderedBuffers.isEmpty();
-		}
-
-		public boolean isEmpty(SpecialModelRenderer layer) {
-			return !this.renderedBuffers
-				.containsKey(
-					layer) || (this.renderedBuffers.containsKey(layer) && this.renderedBuffers.get(layer).isEmpty());
-		}
-
-		public boolean isVisibleThrough(Direction from, Direction to) {
-			return this.occlusionGraph.isVisibleThrough(from, to);
-		}
-
-	}
-
-	public static enum Result {
-		SUCCESSFUL,
-		CANCELLED;
-	}
-
-	public static class ChunkInfo {
-
-		public final BuiltChunk chunk;
-		private byte direction;
-		public byte cullingState;
-		public final int propagationLevel;
-
-		public ChunkInfo(BuiltChunk chunk, @Nullable Direction direction, int propagationLevel) {
-			this.chunk = chunk;
-
-			if (direction != null) {
-				this.addDirection(direction);
-			}
-
-			this.propagationLevel = propagationLevel;
-		}
-
-		public void updateCullingState(byte parentCullingState, Direction from) {
-			this.cullingState = (byte) (this.cullingState | parentCullingState | 1 << from.ordinal());
-		}
-
-		public boolean canCull(Direction from) {
-			return (this.cullingState & 1 << from.ordinal()) > 0;
-		}
-
-		public void addDirection(Direction direction) {
-			this.direction = (byte) (this.direction | this.direction | 1 << direction.ordinal());
-		}
-
-		public boolean hasDirection(int ordinal) {
-			return (this.direction & 1 << ordinal) > 0;
-		}
-
-		public boolean hasAnyDirection() {
-			return this.direction != 0;
-		}
-
-		public boolean isAxisAlignedWith(int i, int j, int k) {
-			BlockPos blockPos = this.chunk.getOrigin();
-			return i == blockPos.getX() / 16 || k == blockPos.getZ() / 16 || j == blockPos.getY() / 16;
-		}
-
-		public int hashCode() {
-			return this.chunk.getOrigin().hashCode();
-		}
-
-		public boolean equals(Object object) {
-
-			if (!(object instanceof ChunkInfo)) {
-				return false;
-			} else {
-				ChunkInfo chunkInfo = (ChunkInfo) object;
-				return this.chunk.getOrigin().equals(chunkInfo.chunk.getOrigin());
-			}
-
-		}
-
-	}
-
-	public static class ChunkInfoListMap {
-
-		private final ChunkInfo[] current;
-
-		ChunkInfoListMap(int size) {
-			this.current = new ChunkInfo[size];
-		}
-
-		public void setInfo(BuiltChunk chunk, ChunkInfo info) {
-			this.current[chunk.index] = info;
-		}
-
-		@Nullable
-		public ChunkInfo getInfo(BuiltChunk chunk) {
-			int i = chunk.index;
-			return i >= 0 && i < this.current.length ? this.current[i] : null;
-		}
-
-	}
-
-	public static class RenderableChunks {
-
-		public final ChunkInfoListMap builtChunkMap;
-		public final LinkedHashSet<ChunkInfo> builtChunks;
-
-		public RenderableChunks(int size) {
-			this.builtChunkMap = new ChunkInfoListMap(size);
-			this.builtChunks = new LinkedHashSet<ChunkInfo>(size);
-		}
-
 	}
 
 }

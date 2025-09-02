@@ -13,7 +13,7 @@ import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
 import net.ludocrypt.specialmodels.client.impl.access.WorldRendererAccess;
 import net.ludocrypt.specialmodels.client.impl.chunk.BuiltChunk;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.ChunkInfo;
+import net.ludocrypt.specialmodels.client.impl.chunk.ChunkInfo;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.gl.VertexBuffer;
