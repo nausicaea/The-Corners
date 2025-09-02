@@ -1,6 +1,5 @@
 package net.ludocrypt.specialmodels.client.api;
 
-import net.ludocrypt.specialmodels.client.impl.ClientSharedMutableState;
 import net.ludocrypt.specialmodels.client.impl.SpecialModelsClient;
 import org.joml.Matrix4f;
 
@@ -54,7 +53,7 @@ public abstract class SpecialModelRenderer {
 	}
 
 	public ShaderProgram getShaderProgram(MatrixStack matrices, float tickDelta) {
-		return ClientSharedMutableState.LOADED_SHADERS.get(this);
+		return SpecialModelsClient.LOADED_SHADERS.get(this);
 	}
 
 }
