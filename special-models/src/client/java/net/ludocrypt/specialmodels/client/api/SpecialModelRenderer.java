@@ -18,6 +18,8 @@ public interface SpecialModelRenderer {
 	void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos chunkOrigin);
 
+	boolean performOutside();
+
 	default MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
 		return quad;

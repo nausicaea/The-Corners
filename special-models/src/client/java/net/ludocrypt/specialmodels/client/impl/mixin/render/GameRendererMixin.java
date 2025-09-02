@@ -39,7 +39,7 @@ public class GameRendererMixin {
 
 				SpecialModelRenderer renderer = SpecialModelsRegistries.Renderer.REGISTRY.get(id);
 
-				if (renderer == null || !renderer.performOutside) {
+				if (renderer == null || !renderer.performOutside()) {
 					return;
 				}
 
