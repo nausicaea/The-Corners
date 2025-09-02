@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.ludocrypt.specialmodels.client.impl.SpecialModelsClient;
+import net.ludocrypt.specialmodels.client.impl.ClientSharedMutableState;
 import net.ludocrypt.specialmodels.impl.SpecialModelsRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +29,7 @@ public class GameRendererMixin {
 	@Inject(method = "loadPrograms", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 58, shift = Shift.AFTER))
 	private void specialModels$loadShaders(ResourceFactory manager, CallbackInfo ci,
 										   @Local(ordinal = 1) List<Pair<ShaderProgram, Consumer<ShaderProgram>>> list2) {
-		SpecialModelsClient.LOADED_SHADERS.clear();
+		ClientSharedMutableState.LOADED_SHADERS.clear();
 		SpecialModelsRegistries.Renderer.REGISTRY
 			.getEntrySet()
 			.stream()
@@ -48,7 +48,7 @@ public class GameRendererMixin {
 						.add(Pair
 							.of(new ShaderProgram(manager, "rendertype_" + id.getNamespace() + "_" + id.getPath(),
 								SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE),
-								(shader) -> SpecialModelsClient.LOADED_SHADERS.put(renderer, shader)));
+								(shader) -> ClientSharedMutableState.LOADED_SHADERS.put(renderer, shader)));
 				} catch (IOException e) {
 					SpecialModels.LOGGER.error("Could not reload shader: {}", id);
 					e.printStackTrace();
@@ -58,7 +58,7 @@ public class GameRendererMixin {
 							.add(Pair
 								.of(new ShaderProgram(manager, "rendertype_specialmodels_textured",
 									SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE),
-									(shader) -> SpecialModelsClient.LOADED_SHADERS.put(renderer, shader)));
+									(shader) -> ClientSharedMutableState.LOADED_SHADERS.put(renderer, shader)));
 					} catch (IOException e2) {
 						list2.forEach((pair) -> pair.getFirst().close());
 						e2.printStackTrace();
