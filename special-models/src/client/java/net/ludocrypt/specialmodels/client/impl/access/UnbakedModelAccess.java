@@ -7,6 +7,6 @@ import net.minecraft.util.Identifier;
 
 public interface UnbakedModelAccess {
 
-	Map<SpecialModelRenderer, Identifier> specialmodels$getSubModels();
+	public Map<SpecialModelRenderer, Identifier> specialmodels$getSubModels();
 
 }
