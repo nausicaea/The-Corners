@@ -33,6 +33,8 @@ import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.client.impl.access.BakedModelAccess;
 import net.ludocrypt.specialmodels.client.impl.access.WorldChunkBuilderAccess;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilder.RenderedBuffer;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilder.SortState;
 import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk.Task;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.ludocrypt.specialmodels.impl.render.MutableVertice;
