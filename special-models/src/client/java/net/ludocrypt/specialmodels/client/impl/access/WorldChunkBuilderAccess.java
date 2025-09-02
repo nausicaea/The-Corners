@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.ludocrypt.specialmodels.client.impl.chunk.BuiltChunk;
 import org.jetbrains.annotations.Nullable;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -28,7 +27,7 @@ public interface WorldChunkBuilderAccess {
 
 	Future<?> specialmodels$getLastFullSpecialBuiltChunkUpdate();
 
-	BlockingQueue<BuiltChunk> specialmodels$getRecentlyCompiledSpecialChunks();
+	BlockingQueue<SpecialChunkBuilder.BuiltChunk> specialmodels$getRecentlyCompiledSpecialChunks();
 
 	AtomicReference<SpecialChunkBuilder.RenderableChunks> specialmodels$getRenderableSpecialChunks();
 
@@ -52,17 +51,17 @@ public interface WorldChunkBuilderAccess {
 
 	void specialmodels$addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue);
 
-	void specialmodels$addSpecialBuiltChunk(BuiltChunk builtChunk);
+	void specialmodels$addSpecialBuiltChunk(SpecialChunkBuilder.BuiltChunk builtChunk);
 
 	void specialmodels$updateSpecialBuiltChunks(LinkedHashSet<SpecialChunkBuilder.ChunkInfo> builtChunks,
 												SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
 												Queue<SpecialChunkBuilder.ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
 
 	@Nullable
-	BuiltChunk specialmodels$getAdjacentSpecialChunk(BlockPos pos, BuiltChunk chunk,
-													 Direction direction);
+	SpecialChunkBuilder.BuiltChunk specialmodels$getAdjacentSpecialChunk(BlockPos pos, SpecialChunkBuilder.BuiltChunk chunk,
+																		 Direction direction);
 
-	boolean specialmodels$isSpecialChunkNearMaxViewDistance(BlockPos blockPos, BuiltChunk builtChunk);
+	boolean specialmodels$isSpecialChunkNearMaxViewDistance(BlockPos blockPos, SpecialChunkBuilder.BuiltChunk builtChunk);
 
 	void specialmodels$applySpecialFrustum(Frustum frustum);
 
