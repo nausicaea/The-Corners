@@ -386,10 +386,10 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 
 			if (format == SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE) {
 				Vec4b state = this.state.get();
-				this.putByte(o + 7, state.getX());
-				this.putByte(o + 8, state.getY());
-				this.putByte(o + 9, state.getZ());
-				this.putByte(o + 10, state.getW());
+				this.putByte(o + 7, state.x());
+				this.putByte(o + 8, state.y());
+				this.putByte(o + 9, state.z());
+				this.putByte(o + 10, state.w());
 				o += 4;
 			}
 
