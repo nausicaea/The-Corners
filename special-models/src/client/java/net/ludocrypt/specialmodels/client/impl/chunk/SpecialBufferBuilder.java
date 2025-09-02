@@ -132,7 +132,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 			this.building = true;
 			this.drawMode = drawMode;
 			this.setFormat(format);
-			this.currentElement = format.getElements().get(0);
+			this.currentElement = format.getElements().getFirst();
 			this.elementIndex = 0;
 			this.buffer.rewind();
 		}
