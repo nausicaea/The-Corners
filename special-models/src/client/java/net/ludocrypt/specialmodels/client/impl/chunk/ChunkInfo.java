@@ -30,7 +30,7 @@ public class ChunkInfo {
 	}
 
 	public void addDirection(Direction direction) {
-		this.direction = (byte) (this.direction | this.direction | 1 << direction.ordinal());
+		this.direction = (byte) (this.direction | 1 << direction.ordinal());
 	}
 
 	public boolean hasDirection(int ordinal) {
@@ -51,14 +51,11 @@ public class ChunkInfo {
 	}
 
 	public boolean equals(Object object) {
-
-		if (!(object instanceof ChunkInfo)) {
-			return false;
-		} else {
-			ChunkInfo chunkInfo = (ChunkInfo) object;
+		if (object instanceof ChunkInfo chunkInfo) {
 			return this.chunk.getOrigin().equals(chunkInfo.chunk.getOrigin());
+		} else {
+			return false;
 		}
-
 	}
 
 }
