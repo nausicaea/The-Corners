@@ -15,9 +15,4 @@ public record TexturedSpecialModelRenderer(TexturedSpecialModelRendererDto dto) 
 			ShaderProgram shader, BlockPos origin) {
 		RenderSystem.setShaderTexture(0, PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);
 	}
-
-	@Override
-	public boolean performOutside() {
-		return dto.performOutside();
-	}
 }
