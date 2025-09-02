@@ -5,13 +5,12 @@ import java.nio.FloatBuffer;
 import java.util.List;
 import java.util.function.Supplier;
 
+import net.ludocrypt.specialmodels.impl.SpecialModels;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
-import org.slf4j.Logger;
 import com.mojang.blaze3d.systems.VertexSorter;
-import com.mojang.logging.LogUtils;
 
 import it.unimi.dsi.fastutil.ints.IntConsumer;
 import net.ludocrypt.specialmodels.client.impl.render.SpecialVertexFormats;
@@ -28,9 +27,6 @@ import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.util.math.MathHelper;
 
 public class SpecialBufferBuilder extends FixedColorVertexConsumer implements BufferVertexConsumer {
-
-	private static final Logger LOGGER = LogUtils.getLogger();
-
 	private ByteBuffer buffer;
 
 	private int renderedBufferCount;
@@ -76,7 +72,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 		if (this.elementOffset + size > this.buffer.capacity()) {
 			int oldSize = this.buffer.capacity();
 			int newSize = oldSize + roundBufferSize(size);
-			LOGGER.debug("Needed to grow BufferBuilder buffer: Old size {} bytes, new size {} bytes.", oldSize, newSize);
+			SpecialModels.LOGGER.debug("Needed to grow BufferBuilder buffer: Old size {} bytes, new size {} bytes.", oldSize, newSize);
 			ByteBuffer byteBuffer = GlAllocationUtils.resizeByteBuffer(this.buffer, newSize);
 			byteBuffer.rewind();
 			this.buffer = byteBuffer;
@@ -406,7 +402,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	public void clear() {
 
 		if (this.renderedBufferCount > 0) {
-			LOGGER.warn("Clearing BufferBuilder with unused batches");
+			SpecialModels.LOGGER.warn("Clearing BufferBuilder with unused batches");
 		}
 
 		this.discard();
