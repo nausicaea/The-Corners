@@ -58,7 +58,7 @@ public abstract class WorldRendererMixin implements WorldRendererAccess, WorldCh
 			BuiltChunk builtChunk = chunkInfo.chunk;
 			builtChunk.getSpecialModelBuffers().forEach((modelRenderer, vertexBuffer) -> {
 
-				if (modelRenderer.performOutside == outside) {
+				if (modelRenderer.performOutside() == outside) {
 
 					if (builtChunk.getData().renderedBuffers.containsKey(modelRenderer)) {
 
