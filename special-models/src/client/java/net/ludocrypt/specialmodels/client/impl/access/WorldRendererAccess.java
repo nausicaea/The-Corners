@@ -7,6 +7,6 @@ import net.minecraft.client.util.math.MatrixStack;
 
 public interface WorldRendererAccess {
 
-	public void specialmodels$render(MatrixStack matrices, Matrix4f positionMatrix, float tickDelta, Camera camera, boolean outside);
+	void specialmodels$render(MatrixStack matrices, Matrix4f positionMatrix, float tickDelta, Camera camera, boolean outside);
 
 }
