@@ -26,7 +26,7 @@ public class GeneralBakedModelMixin implements BakedModelAccess {
 	@Unique
 	private final Map<BlockState, List<Pair<SpecialModelRenderer, BakedModel>>> modelsMap = Maps.newHashMap();
 	@Unique
-	private final List<Pair<SpecialModelRenderer, BakedModel>> defaultModels = Lists.newArrayList();
+	private List<Pair<SpecialModelRenderer, BakedModel>> defaultModels = Lists.newArrayList();
 
 	@Override
 	public List<Pair<SpecialModelRenderer, BakedModel>> specialmodels$getModels(@Nullable BlockState state) {
@@ -39,7 +39,12 @@ public class GeneralBakedModelMixin implements BakedModelAccess {
 		if (state == null) {
 			defaultModels.add(Pair.of(modelRenderer, model));
 		} else {
-			List<Pair<SpecialModelRenderer, BakedModel>> list = modelsMap.computeIfAbsent(state, k -> Lists.newArrayList());
+			List<Pair<SpecialModelRenderer, BakedModel>> list = modelsMap.get(state);
+
+			if (list == null) {
+				list = Lists.newArrayList();
+				modelsMap.put(state, list);
+			}
 
 			list.add(Pair.of(modelRenderer, model));
 		}
