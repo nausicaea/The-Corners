@@ -8,10 +8,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.ludocrypt.specialmodels.client.impl.chunk.*;
+import net.ludocrypt.specialmodels.client.impl.chunk.BuiltChunk;
 import org.jetbrains.annotations.Nullable;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBufferBuilderStorage;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialBuiltChunkStorage;
+import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.world.ClientWorld;
@@ -27,9 +30,9 @@ public interface WorldChunkBuilderAccess {
 
 	BlockingQueue<BuiltChunk> specialmodels$getRecentlyCompiledSpecialChunks();
 
-	AtomicReference<RenderableChunks> specialmodels$getRenderableSpecialChunks();
+	AtomicReference<SpecialChunkBuilder.RenderableChunks> specialmodels$getRenderableSpecialChunks();
 
-	ObjectArrayList<ChunkInfo> specialmodels$getSpecialChunkInfoList();
+	ObjectArrayList<SpecialChunkBuilder.ChunkInfo> specialmodels$getSpecialChunkInfoList();
 
 	SpecialBuiltChunkStorage specialmodels$getSpecialChunks();
 
@@ -47,13 +50,13 @@ public interface WorldChunkBuilderAccess {
 
 	void specialmodels$setupSpecialTerrain(Camera camera, Frustum frustum, boolean hasForcedFrustum, boolean spectator);
 
-	void specialmodels$addSpecialChunksToBuild(Camera camera, Queue<ChunkInfo> chunkInfoQueue);
+	void specialmodels$addSpecialChunksToBuild(Camera camera, Queue<SpecialChunkBuilder.ChunkInfo> chunkInfoQueue);
 
 	void specialmodels$addSpecialBuiltChunk(BuiltChunk builtChunk);
 
-	void specialmodels$updateSpecialBuiltChunks(LinkedHashSet<ChunkInfo> builtChunks,
-												ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
-												Queue<ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
+	void specialmodels$updateSpecialBuiltChunks(LinkedHashSet<SpecialChunkBuilder.ChunkInfo> builtChunks,
+												SpecialChunkBuilder.ChunkInfoListMap builtChunkMap, Vec3d cameraPos,
+												Queue<SpecialChunkBuilder.ChunkInfo> chunksToBuild, boolean chunkCullingEnabled);
 
 	@Nullable
 	BuiltChunk specialmodels$getAdjacentSpecialChunk(BlockPos pos, BuiltChunk chunk,
