@@ -10,6 +10,10 @@ base {
 	archivesName = project.archives_base_name
 }
 
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+
 repositories {
 	maven {
 		url = 'https://maven.shedaniel.me/'
@@ -17,6 +21,17 @@ repositories {
 	maven {
 		url = 'https://maven.terraformersmc.com/'
 	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+
+	withSourcesJar()
 }
 
 loom {
@@ -38,9 +53,9 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "com.terraformersmc:modmenu:${project.terraformersmc_menu_version}"
-    modImplementation include("net.ludocrypt:limlib:${project.limlib_version}")
-    modImplementation include("net.ludocrypt:specialmodels:${project.specialmodels_version}")
     modImplementation include("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}")
+    implementation include(project(path: ":limlib", configuration: "namedElements"))
+    implementation include(project(path: ":special-models", configuration: "namedElements"))
 }
 
 processResources {
@@ -49,18 +64,6 @@ processResources {
 	filesMatching('fabric.mod.json') {
 		expand "version": version
 	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 21
-}
-
-java {
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
-
-	withSourcesJar()
 }
 
 jar {
