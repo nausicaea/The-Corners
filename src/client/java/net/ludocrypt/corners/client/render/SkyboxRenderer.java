@@ -62,10 +62,10 @@ public class SkyboxRenderer extends SpecialModelRenderer {
 	@Override
 	public MutableQuad modifyQuad(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			BakedQuad quadIn, long modelSeed, MutableQuad quad) {
-		quad.getV1().setUv(new Vec2f(0.0F, 0.0F));
-		quad.getV2().setUv(new Vec2f(0.0F, 1.0F));
-		quad.getV3().setUv(new Vec2f(1.0F, 1.0F));
-		quad.getV4().setUv(new Vec2f(1.0F, 0.0F));
+		quad.v1().setUv(new Vec2f(0.0F, 0.0F));
+		quad.v2().setUv(new Vec2f(0.0F, 1.0F));
+		quad.v3().setUv(new Vec2f(1.0F, 1.0F));
+		quad.v4().setUv(new Vec2f(1.0F, 0.0F));
 		return quad;
 	}
 
