@@ -7,19 +7,18 @@ import java.util.function.Consumer;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.ludocrypt.specialmodels.client.impl.SpecialModelsClient;
+import net.ludocrypt.specialmodels.impl.SpecialModelsRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import com.mojang.datafixers.util.Pair;
 
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
 import net.ludocrypt.specialmodels.impl.SpecialModels;
 import net.ludocrypt.specialmodels.client.impl.render.SpecialVertexFormats;
 import net.minecraft.client.gl.ShaderProgram;
-import net.minecraft.client.gl.ShaderStage;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.resource.ResourceFactory;
@@ -31,14 +30,14 @@ public class GameRendererMixin {
 	private void specialModels$loadShaders(ResourceFactory manager, CallbackInfo ci,
 										   @Local(ordinal = 1) List<Pair<ShaderProgram, Consumer<ShaderProgram>>> list2) {
 		SpecialModelsClient.LOADED_SHADERS.clear();
-		SpecialModelRenderer.SPECIAL_MODEL_RENDERER
+		SpecialModelsRegistries.Renderer.REGISTRY
 			.getEntrySet()
 			.stream()
 			.map(Entry::getKey)
 			.map(RegistryKey::getValue)
 			.forEach((id) -> {
 
-				SpecialModelRenderer renderer = SpecialModelRenderer.SPECIAL_MODEL_RENDERER.get(id);
+				SpecialModelRenderer renderer = SpecialModelsRegistries.Renderer.REGISTRY.get(id);
 
 				if (renderer == null || !renderer.performOutside) {
 					return;

@@ -2,7 +2,9 @@ package net.ludocrypt.specialmodels.client.impl;
 
 import com.google.common.collect.Maps;
 import net.fabricmc.api.ClientModInitializer;
+import net.ludocrypt.specialmodels.api.TexturedSpecialModelRendererDto;
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
+import net.ludocrypt.specialmodels.client.api.SpecialModelRendererFactories;
 import net.ludocrypt.specialmodels.client.api.TexturedSpecialModelRenderer;
 import net.minecraft.client.gl.ShaderProgram;
 
@@ -13,6 +15,6 @@ public class SpecialModelsClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		TexturedSpecialModelRenderer.init();
+		SpecialModelRendererFactories.register(TexturedSpecialModelRendererDto.ID, dto -> new TexturedSpecialModelRenderer(dto));
 	}
 }
