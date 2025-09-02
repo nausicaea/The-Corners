@@ -2,10 +2,12 @@ package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import org.jetbrains.annotations.Nullable;
 
-public record ChunkInfoListMap(ChunkInfo[] current) {
+public class ChunkInfoListMap {
 
-	public ChunkInfoListMap(int current) {
-		this(new ChunkInfo[current]);
+	private final ChunkInfo[] current;
+
+	ChunkInfoListMap(int size) {
+		this.current = new ChunkInfo[size];
 	}
 
 	public void setInfo(BuiltChunk chunk, ChunkInfo info) {
