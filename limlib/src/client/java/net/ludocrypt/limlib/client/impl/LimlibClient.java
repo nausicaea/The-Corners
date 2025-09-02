@@ -25,6 +25,7 @@ public class LimlibClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		ClientSharedMutableState.init();
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(PostProcesserManager.INSTANCE);
 		DistortionEffectFactories.register(StaticDistortionEffectDto.ID, dto -> new StaticDistortionEffect((StaticDistortionEffectDto) dto));
 		ReverbEffectFactories.register(StaticReverbEffectDto.ID, dto -> new StaticReverbEffect((StaticReverbEffectDto) dto));
@@ -33,5 +34,4 @@ public class LimlibClient implements ClientModInitializer {
 		DimensionEffectsFactories.register(EmptyDimensionEffectsDto.ID, DimensionEffectsHelper::createDefault);
 		DimensionEffectsFactories.register(StaticDimensionEffectsDto.ID, DimensionEffectsHelper::createDefault);
 	}
-
 }
