@@ -1,11 +1,10 @@
 package net.ludocrypt.specialmodels.client.api;
 
-import net.ludocrypt.specialmodels.client.impl.SpecialModelsClient;
+import net.ludocrypt.specialmodels.client.impl.ClientSharedMutableState;
 import org.joml.Matrix4f;
 
 import com.mojang.serialization.Lifecycle;
 
-import net.ludocrypt.specialmodels.impl.SpecialModels;
 import net.ludocrypt.specialmodels.impl.mixin.registry.RegistriesAccessor;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
@@ -60,7 +59,7 @@ public abstract class SpecialModelRenderer {
 	}
 
 	public ShaderProgram getShaderProgram(MatrixStack matrices, float tickDelta) {
-		return SpecialModelsClient.LOADED_SHADERS.get(this);
+		return ClientSharedMutableState.LOADED_SHADERS.get(this);
 	}
 
 }
