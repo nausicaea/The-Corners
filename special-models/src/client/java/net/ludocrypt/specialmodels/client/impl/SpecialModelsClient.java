@@ -10,6 +10,6 @@ public class SpecialModelsClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		ClientSharedMutableState.init();
-		SpecialModelRendererFactories.register(TexturedSpecialModelRendererDto.ID, dto -> new TexturedSpecialModelRenderer(dto));
+		SpecialModelRendererFactories.register(TexturedSpecialModelRendererDto.ID, dto -> new TexturedSpecialModelRenderer((TexturedSpecialModelRendererDto) dto));
 	}
 }
