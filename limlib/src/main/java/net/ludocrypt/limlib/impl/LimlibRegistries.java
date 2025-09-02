@@ -118,8 +118,8 @@ public abstract class LimlibRegistries {
 
 	public static void init() {
 		Limlib.LOGGER.info("Declaring custom registries");
-		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "static"), StaticPostEffect.CODEC);
-		Registry.register(PostFx.REGISTRY, new Identifier("limlib", "empty"), EmptyPostEffect.CODEC);
+		Registry.register(PostFx.REGISTRY, StaticPostEffect.ID, StaticPostEffect.CODEC);
+		Registry.register(PostFx.REGISTRY, EmptyPostEffect.ID, EmptyPostEffect.CODEC);
 		Registry.register(DistFx.REGISTRY, StaticDistortionEffectDto.ID, StaticDistortionEffectDto.CODEC);
 		Registry.register(RevFx.REGISTRY, StaticReverbEffectDto.ID, StaticReverbEffectDto.CODEC);
 		Registry.register(Skyboxes.REGISTRY, EmptySkyboxDto.ID, EmptySkyboxDto.CODEC);
