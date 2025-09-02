@@ -4,12 +4,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.impl.SpecialModelsRegistries;
 import net.minecraft.client.render.RenderLayer;
 
 public class SpecialBufferBuilderStorage {
 
-	private final Map<SpecialModelRenderer, SpecialBufferBuilder> specialModelBuffers = SpecialModelsRegistries.Renderer.REGISTRY
+	private final Map<SpecialModelRenderer, SpecialBufferBuilder> specialModelBuffers = SpecialModelRenderer.SPECIAL_MODEL_RENDERER
 		.getEntrySet()
 		.stream()
 		.collect(Collectors
