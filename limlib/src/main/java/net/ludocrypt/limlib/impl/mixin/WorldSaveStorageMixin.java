@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.ludocrypt.limlib.impl.LimlibRegistries;
+import net.ludocrypt.limlib.impl.SharedMutableState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +16,6 @@ import com.mojang.serialization.Dynamic;
 
 import net.ludocrypt.limlib.api.LimlibWorld;
 import net.ludocrypt.limlib.api.LimlibRegistryProvider;
-import net.ludocrypt.limlib.impl.SaveStorageSupplier;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
@@ -48,7 +48,7 @@ public class WorldSaveStorageMixin {
 		if (!dimensions.get(key.getValue().toString()).result().isPresent()) {
 			Map<Dynamic<T>, Dynamic<T>> dimensionsMap = Maps.newHashMap(dimensions.getMapValues().result().get());
 
-			DynamicRegistryManager registryManager = SaveStorageSupplier.LOADED_REGISTRY.get();
+			DynamicRegistryManager registryManager = SharedMutableState.LOADED_REGISTRY.get();
 
 			dimensionsMap
 				.put(dimensions.createString(key.getValue().toString()),
