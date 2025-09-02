@@ -5,19 +5,12 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.client.rendering.EntityRendererRegistryImpl;
-import net.ludocrypt.corners.client.render.ChristmasRenderer;
-import net.ludocrypt.corners.client.render.DeepBookshelfRenderer;
-import net.ludocrypt.corners.client.render.SkyboxRenderer;
-import net.ludocrypt.corners.init.CornerModelRenderers;
+import net.ludocrypt.corners.client.init.CornerModelRenderers;
 import net.ludocrypt.corners.client.render.CornerBoatEntityRenderer;
 import net.ludocrypt.corners.entity.CornerBoatEntity;
 import net.ludocrypt.corners.init.CornerBlocks;
 import net.ludocrypt.corners.init.CornerEntities;
 import net.ludocrypt.corners.client.packet.ServerToClientPackets;
-import net.ludocrypt.corners.render.ChristmasRendererDto;
-import net.ludocrypt.corners.render.DeepBookshelfRendererDto;
-import net.ludocrypt.corners.render.SkyboxRendererDto;
-import net.ludocrypt.specialmodels.client.api.SpecialModelRendererFactories;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.PaintingEntityRenderer;
 import net.minecraft.client.render.entity.model.BoatEntityModel;
@@ -26,11 +19,7 @@ import net.minecraft.client.render.entity.model.ChestBoatEntityModel;
 public class TheCornersClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        SpecialModelRendererFactories.register(CornerModelRenderers.OFFICE_SKYBOX_RENDERER.getId(), dto -> new SkyboxRenderer((SkyboxRendererDto) dto));
-        SpecialModelRendererFactories.register(CornerModelRenderers.SUNBEACH_SKYBOX_RENDERER.getId(), dto -> new SkyboxRenderer((SkyboxRendererDto) dto));
-        SpecialModelRendererFactories.register(CornerModelRenderers.DEEP_BOOKSHELF.getId(), dto -> new DeepBookshelfRenderer((DeepBookshelfRendererDto) dto));
-        SpecialModelRendererFactories.register(CornerModelRenderers.SNOWY_SKYBOX_RENDERER.getId(), dto -> new ChristmasRenderer((ChristmasRendererDto) dto));
-
+        CornerModelRenderers.init();
         ServerToClientPackets.manageServerToClientPackets();
         BlockRenderLayerMap.INSTANCE
                 .putBlocks(RenderLayer.getCutout(), CornerBlocks.SNOWY_GLASS_PANE, CornerBlocks.SNOWY_GLASS,

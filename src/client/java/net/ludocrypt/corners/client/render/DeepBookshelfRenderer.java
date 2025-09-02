@@ -1,10 +1,10 @@
 package net.ludocrypt.corners.client.render;
 
-import net.ludocrypt.corners.render.DeepBookshelfRendererDto;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.init.CornerBlocks;
 import net.ludocrypt.corners.client.mixin.GameRendererAccessor;
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
@@ -18,17 +18,20 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
-public record DeepBookshelfRenderer(DeepBookshelfRendererDto dto) implements SpecialModelRenderer {
+public class DeepBookshelfRenderer extends SpecialModelRenderer {
 
-    @Override
+	public static final Identifier DEEP_BOOKSHELF_ATLAS_TEXTURE = TheCorners.id("textures/atlas/deep.png");
+
+	@Override
 	public void setup(MatrixStack matrices, Matrix4f viewMatrix, Matrix4f positionMatrix, float tickDelta,
 			ShaderProgram shader, BlockPos origin) {
 		RenderSystem.enablePolygonOffset();
 		RenderSystem.polygonOffset(-3.0F, -3.0F);
 		RenderSystem.setShaderTexture(0, PlayerScreenHandler.BLOCK_ATLAS_TEXTURE);
-		RenderSystem.setShaderTexture(1, DeepBookshelfRendererDto.DEEP_BOOKSHELF_ATLAS_TEXTURE);
+		RenderSystem.setShaderTexture(1, DEEP_BOOKSHELF_ATLAS_TEXTURE);
 		MinecraftClient client = MinecraftClient.getInstance();
 		Camera camera = client.gameRenderer.getCamera();
 		MatrixStack matrixStack = new MatrixStack();
@@ -59,12 +62,7 @@ public record DeepBookshelfRenderer(DeepBookshelfRendererDto dto) implements Spe
 
 	}
 
-    @Override
-    public boolean performOutside() {
-        return dto.performOutside();
-    }
-
-    @Override
+	@Override
 	public Vec4b appendState(ChunkRendererRegion chunkRenderRegion, BlockPos pos, BlockState state, BakedModel model,
 			long modelSeed) {
 
@@ -101,7 +99,7 @@ public record DeepBookshelfRenderer(DeepBookshelfRendererDto dto) implements Spe
 			return new Vec4b(b1, b2, b3, b4);
 		}
 
-		return SpecialModelRenderer.super.appendState(chunkRenderRegion, pos, state, model, modelSeed);
+		return super.appendState(chunkRenderRegion, pos, state, model, modelSeed);
 	}
 
 }
