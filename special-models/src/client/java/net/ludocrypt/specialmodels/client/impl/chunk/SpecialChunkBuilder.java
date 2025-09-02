@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import net.ludocrypt.specialmodels.impl.SpecialModelsRegistries;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.MemoryStack;
 import org.slf4j.Logger;
@@ -107,7 +108,7 @@ public class SpecialChunkBuilder {
 			.max(1,
 				(int) (Runtime.getRuntime().maxMemory() * 0.3) / (RenderLayer
 					.getSolid()
-					.getExpectedBufferSize() * SpecialModelRenderer.SPECIAL_MODEL_RENDERER.size() * 4) - 1);
+					.getExpectedBufferSize() * SpecialModelsRegistries.Renderer.REGISTRY.size() * 4) - 1);
 
 		int avaliable = Runtime.getRuntime().availableProcessors();
 		int minThreads = useMaxThreads ? avaliable : Math.min(avaliable, 4);
@@ -338,7 +339,7 @@ public class SpecialChunkBuilder {
 
 		});
 
-		private final Map<SpecialModelRenderer, VertexBuffer> specialModelBuffers = SpecialModelRenderer.SPECIAL_MODEL_RENDERER
+		private final Map<SpecialModelRenderer, VertexBuffer> specialModelBuffers = SpecialModelsRegistries.Renderer.REGISTRY
 			.getEntrySet()
 			.stream()
 			.collect(Collectors.toMap(entry -> entry.getValue(), entry -> new VertexBuffer(VertexBuffer.Usage.STATIC)));
