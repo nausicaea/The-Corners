@@ -5,6 +5,7 @@ import org.joml.Matrix4f;
 
 import com.mojang.serialization.Lifecycle;
 
+import net.ludocrypt.specialmodels.impl.SpecialModels;
 import net.ludocrypt.specialmodels.impl.mixin.registry.RegistriesAccessor;
 import net.ludocrypt.specialmodels.impl.render.MutableQuad;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
@@ -20,6 +21,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
 public abstract class SpecialModelRenderer {
+
+	public static final RegistryKey<Registry<SpecialModelRenderer>> SPECIAL_MODEL_RENDERER_KEY = RegistryKey
+		.ofRegistry(new Identifier("limlib/special_model_renderer"));
+	public static final Registry<SpecialModelRenderer> SPECIAL_MODEL_RENDERER = RegistriesAccessor
+		.callCreate(SPECIAL_MODEL_RENDERER_KEY, Lifecycle.stable(),
+			registry -> TexturedSpecialModelRenderer.TEXTURED);
 
 	public final boolean performOutside;
 
