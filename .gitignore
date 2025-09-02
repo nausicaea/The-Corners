@@ -35,3 +35,4 @@ lines.txt
 *.hprof
 subpatch
 *.log
+/contrib/fabric-api-docs/

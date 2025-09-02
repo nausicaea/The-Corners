@@ -10,13 +10,5 @@ pluginManagement {
 }
 
 rootProject.name = 'corners'
-includeBuild('special-models') {
-    dependencySubstitution {
-        substitute module('net.ludocrypt:specialmodels') using project(':')
-    }
-}
-includeBuild('limlib') {
-    dependencySubstitution {
-        substitute module('net.ludocrypt:limlib') using project(':')
-    }
-}
+include('special-models')
+include('limlib')
