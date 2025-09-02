@@ -34,3 +34,4 @@ run/
 lines.txt
 *.hprof
 subpatch
+*.log
