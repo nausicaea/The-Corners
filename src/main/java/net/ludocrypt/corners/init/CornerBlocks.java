@@ -140,6 +140,7 @@ public class CornerBlocks {
 	public static final Item GAIA_DOOR_ITEM = get("gaia_door", new TallBlockItem(GAIA_DOOR, new Item.Settings()));
 
 	public static void init() {
+        TheCorners.LOGGER.debug("Registering custom blocks");
 		DispenserBlock.registerBehavior(GAIA_BOAT, new CornerBoatDispensorBehavior(CornerBoat.GAIA, false));
 		DispenserBlock.registerBehavior(GAIA_CHEST_BOAT, new CornerBoatDispensorBehavior(CornerBoat.GAIA, true));
 

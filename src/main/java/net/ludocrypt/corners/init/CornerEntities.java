@@ -39,6 +39,7 @@ public class CornerEntities {
 			.build());
 
 	public static void init() {
+        TheCorners.LOGGER.debug("Registering custom entities");
 	}
 
 	public static <E extends Entity, T extends EntityType<E>> T get(String id, T entity) {

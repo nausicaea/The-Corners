@@ -32,7 +32,7 @@ public class TexturedSpecialModelRenderer extends SpecialModelRenderer {
 	}
 
 	public static void init() {
-		SpecialModels.LOGGER.info("TexturedSpecialModelRenderer::init");
+		SpecialModels.LOGGER.debug("Initializing the textured special model renderer");
 	}
 
 }

@@ -19,12 +19,14 @@ import net.ludocrypt.limlib.client.impl.skybox.EmptySkybox;
 import net.ludocrypt.limlib.client.api.skybox.SkyboxFactories;
 import net.ludocrypt.limlib.client.impl.skybox.TexturedSkybox;
 import net.ludocrypt.limlib.client.impl.shader.PostProcesserManager;
+import net.ludocrypt.limlib.impl.Limlib;
 import net.minecraft.resource.ResourceType;
 
 public class LimlibClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		Limlib.LOGGER.debug("Initializing liminal library client-side");
 		ClientSharedMutableState.init();
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(PostProcesserManager.INSTANCE);
 		DistortionEffectFactories.register(StaticDistortionEffectDto.ID, dto -> new StaticDistortionEffect((StaticDistortionEffectDto) dto));

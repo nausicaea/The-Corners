@@ -33,7 +33,8 @@ public class CornerSoundEvents {
 	public static final RegistryEntry.Reference<SoundEvent> BIOME_LOOP_HOARY_CROSSROADS = get("biome.hoary_crossroads.loop");
 
 	public static void init() {
-	}
+        TheCorners.LOGGER.debug("Registering custom sound events");
+    }
 
 	public static RegistryEntry.Reference<SoundEvent> get(String id) {
 		return Registry
