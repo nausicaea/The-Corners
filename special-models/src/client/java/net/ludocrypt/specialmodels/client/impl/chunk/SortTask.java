@@ -10,21 +10,9 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class SortTask implements Task {
-
-	private final BuiltChunk builtChunk;
-	private final ChunkData data;
-	private final SpecialModelRenderer renderer;
-	private final double distance;
-	private final AtomicBoolean cancelled = new AtomicBoolean(false);
-	private final boolean highPriority;
-
+public record SortTask(BuiltChunk builtChunk, ChunkData data, SpecialModelRenderer renderer, double distance, AtomicBoolean cancelled, boolean highPriority) implements Task {
 	public SortTask(BuiltChunk builtChunk, double distance, ChunkData data, SpecialModelRenderer renderer) {
-		this.distance = distance;
-		this.highPriority = true;
-		this.builtChunk = builtChunk;
-		this.data = data;
-		this.renderer = renderer;
+		this(builtChunk, data, renderer, distance, new AtomicBoolean(false), true);
 	}
 
 	@Override
