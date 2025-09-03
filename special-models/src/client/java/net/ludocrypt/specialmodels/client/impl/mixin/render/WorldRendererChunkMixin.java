@@ -332,7 +332,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 					RenderableChunks renderableChunksx = new RenderableChunks(
 						this.specialChunks.chunks.length);
 					this
-						.specialmodels$updateSpecialBuiltChunks(renderableChunksx.builtChunks, renderableChunksx.builtChunkMap, vec3d,
+						.specialmodels$updateSpecialBuiltChunks(renderableChunksx.builtChunks(), renderableChunksx.builtChunkMap(), vec3d,
 							queue, bl2);
 					this.renderableSpecialChunks.set(renderableChunksx);
 					this.needsSpecialFrustumUpdate.set(true);
@@ -350,7 +350,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 				while (!this.recentlyCompiledSpecialChunks.isEmpty()) {
 					BuiltChunk builtChunk = (BuiltChunk) this.recentlyCompiledSpecialChunks
 						.poll();
-					ChunkInfo chunkInfo = renderableChunks.builtChunkMap.getInfo(builtChunk);
+					ChunkInfo chunkInfo = renderableChunks.builtChunkMap().getInfo(builtChunk);
 
 					if (chunkInfo != null && chunkInfo.chunk == builtChunk) {
 						queue.add(chunkInfo);
@@ -359,7 +359,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 				}
 
 				this
-					.specialmodels$updateSpecialBuiltChunks(renderableChunks.builtChunks, renderableChunks.builtChunkMap, vec3d, queue,
+					.specialmodels$updateSpecialBuiltChunks(renderableChunks.builtChunks(), renderableChunks.builtChunkMap(), vec3d, queue,
 						bl);
 				this.needsSpecialFrustumUpdate.set(true);
 				this.client.getProfiler().pop();
@@ -633,7 +633,7 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 			this.specialChunkInfoList.clear();
 
 			for (ChunkInfo chunkInfo : ((RenderableChunks) this.renderableSpecialChunks
-				.get()).builtChunks) {
+				.get()).builtChunks()) {
 
 				if (frustum.isVisible(chunkInfo.chunk.getBoundingBox())) {
 					this.specialChunkInfoList.add(chunkInfo);
