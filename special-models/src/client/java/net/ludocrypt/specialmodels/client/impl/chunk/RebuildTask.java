@@ -37,21 +37,41 @@ import java.nio.IntBuffer;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class RebuildTask extends Task {
+public class RebuildTask implements Task {
 
 	private final BuiltChunk builtChunk;
 	@Nullable
 	protected ChunkRendererRegion region;
+	private final double distance;
+	private final AtomicBoolean cancelled = new AtomicBoolean(false);
+	private final boolean highPriority;
 
 	public RebuildTask(BuiltChunk builtChunk, double distance, @Nullable ChunkRendererRegion region, boolean highPriority) {
-		super(distance, highPriority);
+		this.distance = distance;
+		this.highPriority = highPriority;
 		this.builtChunk = builtChunk;
 		this.region = region;
 	}
 
 	@Override
-	protected String name() {
+	public double getDistance() {
+		return this.distance;
+	}
+
+	@Override
+	public AtomicBoolean getCancelled() {
+		return this.cancelled;
+	}
+
+	@Override
+	public boolean isHighPriority() {
+		return this.highPriority;
+	}
+
+	@Override
+	public String name() {
 		return "rend_chk_rebuild";
 	}
 

@@ -206,7 +206,7 @@ public class SpecialChunkBuilder {
 	public void send(Task task) {
 		this.mailbox.send(() -> {
 
-			if (task.highPriority) {
+			if (task.isHighPriority()) {
 				this.highPriorityChunksToBuild.offer(task);
 			} else {
 				this.chunksToBuild.offer(task);
