@@ -277,7 +277,7 @@ public class BuiltChunk {
 				RebuildTask.RenderedChunkData renderedChunkData = this.render(x, y, z, buffers);
 
 				if (this.cancelled.get()) {
-					renderedChunkData.renderedBuffers.values().forEach(SpecialBufferBuilder.RenderedBuffer::release);
+					renderedChunkData.renderedBuffers.values().forEach(RenderedBuffer::release);
 					return CompletableFuture.completedFuture(Result.CANCELLED);
 				} else {
 					ChunkData chunkData = new ChunkData();
@@ -427,7 +427,7 @@ public class BuiltChunk {
 								SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE);
 					}
 
-					SpecialBufferBuilder.RenderedBuffer renderedBuffer = bufferBuilder.end();
+					RenderedBuffer renderedBuffer = bufferBuilder.end();
 
 					if (renderedBuffer != null) {
 						renderedChunkData.renderedBuffers.put(modelRenderer, renderedBuffer);
@@ -546,8 +546,8 @@ public class BuiltChunk {
 
 		public static final class RenderedChunkData {
 
-			public final Map<SpecialModelRenderer, SpecialBufferBuilder.RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
-			public final Map<SpecialModelRenderer, SpecialBufferBuilder.SortState> bufferStates = new Reference2ObjectArrayMap<>();
+			public final Map<SpecialModelRenderer, RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
+			public final Map<SpecialModelRenderer, SortState> bufferStates = new Reference2ObjectArrayMap<>();
 			public ChunkOcclusionData occlusionGraph = new ChunkOcclusionData();
 
 		}
@@ -607,7 +607,7 @@ public class BuiltChunk {
 				float z = (float) cameraPos.z;
 
 				if (this.data.bufferStates.containsKey(renderer) && !this.data.isEmpty(renderer)) {
-					SpecialBufferBuilder.SortState sortState = this.data.bufferStates.get(renderer);
+					SortState sortState = this.data.bufferStates.get(renderer);
 					SpecialBufferBuilder bufferBuilder = buffers.get(renderer);
 
 					BuiltChunk.this.beginBufferBuilding(bufferBuilder);
@@ -620,7 +620,7 @@ public class BuiltChunk {
 
 					this.data.bufferStates.put(renderer, bufferBuilder.popState());
 
-					SpecialBufferBuilder.RenderedBuffer renderedBuffer = bufferBuilder.end();
+					RenderedBuffer renderedBuffer = bufferBuilder.end();
 
 					if (this.cancelled.get()) {
 						renderedBuffer.release();

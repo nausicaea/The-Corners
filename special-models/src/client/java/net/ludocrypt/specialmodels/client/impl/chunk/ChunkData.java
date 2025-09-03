@@ -18,8 +18,8 @@ public class ChunkData {
 
 	};
 
-	public final Map<SpecialModelRenderer, SpecialBufferBuilder.RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
-	public final Map<SpecialModelRenderer, SpecialBufferBuilder.SortState> bufferStates = new Reference2ObjectArrayMap<>();
+	public final Map<SpecialModelRenderer, RenderedBuffer> renderedBuffers = new Reference2ObjectArrayMap<>();
+	public final Map<SpecialModelRenderer, SortState> bufferStates = new Reference2ObjectArrayMap<>();
 
 	public ChunkOcclusionData occlusionGraph = new ChunkOcclusionData();
 
