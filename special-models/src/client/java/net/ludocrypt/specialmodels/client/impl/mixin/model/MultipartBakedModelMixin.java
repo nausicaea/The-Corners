@@ -27,7 +27,6 @@ public class MultipartBakedModelMixin implements BakedModelAccess {
 	@Shadow
 	@Final
 	private List<org.apache.commons.lang3.tuple.Pair<Predicate<BlockState>, BakedModel>> components;
-	@Unique
 	private final Map<BlockState, List<Pair<SpecialModelRenderer, BakedModel>>> subModelCache = new Reference2ReferenceOpenHashMap<>();
 
 	@Override

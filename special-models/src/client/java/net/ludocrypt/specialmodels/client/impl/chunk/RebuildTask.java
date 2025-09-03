@@ -167,9 +167,8 @@ public record RebuildTask(BuiltChunk builtChunk, AtomicReference<ChunkRendererRe
 					matrixStack.push();
 					matrixStack
 						.translate((float) (pos.getX() & 15), (float) (pos.getY() & 15), (float) (pos.getZ() & 15));
-					SpecialModels.LOGGER.debug("pos={}, state={}", pos, state);
-					List<Pair<SpecialModelRenderer, BakedModel>> models = ((BakedModelAccess) blockRenderManager
-						.getModel(state)).specialmodels$getModels(state);
+					BakedModel bakedModel = blockRenderManager.getModel(state);
+					List<Pair<SpecialModelRenderer, BakedModel>> models = ((BakedModelAccess) bakedModel).specialmodels$getModels(state);
 
 					BakedModel forward = blockRenderManager.getModel(state);
 
