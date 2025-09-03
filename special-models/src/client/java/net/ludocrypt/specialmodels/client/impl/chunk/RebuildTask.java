@@ -38,21 +38,12 @@ import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class RebuildTask implements Task {
-
-	private final BuiltChunk builtChunk;
-	@Nullable
-	protected ChunkRendererRegion region;
-	private final double distance;
-	private final AtomicBoolean cancelled = new AtomicBoolean(false);
-	private final boolean highPriority;
+public record RebuildTask(BuiltChunk builtChunk, AtomicReference<ChunkRendererRegion> region, double distance, AtomicBoolean cancelled, boolean highPriority) implements Task {
 
 	public RebuildTask(BuiltChunk builtChunk, double distance, @Nullable ChunkRendererRegion region, boolean highPriority) {
-		this.distance = distance;
-		this.highPriority = highPriority;
-		this.builtChunk = builtChunk;
-		this.region = region;
+		this(builtChunk, new AtomicReference<>(region), distance, new AtomicBoolean(false), highPriority);
 	}
 
 	@Override
@@ -81,7 +72,7 @@ public class RebuildTask implements Task {
 		if (this.cancelled.get()) {
 			return CompletableFuture.completedFuture(Result.CANCELLED);
 		} else if (!builtChunk.shouldBuild()) {
-			this.region = null;
+			this.region.set(null);
 			builtChunk.scheduleRebuild(false);
 			this.cancelled.set(true);
 			return CompletableFuture.completedFuture(Result.CANCELLED);
@@ -155,8 +146,8 @@ public class RebuildTask implements Task {
 		BlockPos boundingPos = originPos.add(15, 15, 15);
 
 		ChunkOcclusionDataBuilder chunkOcclusionDataBuilder = new ChunkOcclusionDataBuilder();
-		ChunkRendererRegion chunkRenderRegion = this.region;
-		this.region = null;
+		ChunkRendererRegion chunkRenderRegion = this.region.get();
+		this.region.set(null);
 
 		MatrixStack matrixStack = new MatrixStack();
 
@@ -355,7 +346,7 @@ public class RebuildTask implements Task {
 
 	@Override
 	public void cancel() {
-		this.region = null;
+		this.region.set(null);
 
 		if (this.cancelled.compareAndSet(false, true)) {
 			builtChunk.scheduleRebuild(false);
