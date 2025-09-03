@@ -1,8 +1,10 @@
 package net.ludocrypt.specialmodels.client.impl.mixin.model;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import net.ludocrypt.specialmodels.impl.SpecialModels;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,24 +31,24 @@ import net.minecraft.util.Identifier;
 @Mixin(JsonUnbakedModel.class)
 public abstract class JsonUnbakedModelMixin implements UnbakedModelAccess {
 
-	@Shadow
-	@Final
-	private static Logger LOGGER;
-	@Unique
-	private Map<SpecialModelRenderer, Identifier> subModels = Maps.newHashMap();
+	private Map<SpecialModelRenderer, Identifier> subModels = new HashMap<>();
 
 	@Inject(method = "bake(Lnet/minecraft/client/render/model/Baker;Lnet/minecraft/client/render/model/json/JsonUnbakedModel;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;Z)Lnet/minecraft/client/render/model/BakedModel;", at = @At("RETURN"))
 	private void specialModels$bake(Baker loader, JsonUnbakedModel parent, Function<SpriteIdentifier, Sprite> textureGetter,
 			ModelBakeSettings settings, Identifier id, boolean hasDepth, CallbackInfoReturnable<BakedModel> ci) {
-		this.specialmodels$getSubModels().forEach((modelRenderer, modelId) -> {
+		SpecialModels.LOGGER.debug("Processing identifier {}", id);
 
+		this.specialmodels$getSubModels().forEach((modelRenderer, modelId) -> {
+			SpecialModels.LOGGER.debug("Processing submodel {}", modelId);
 			if (!modelId.equals(id)) {
 				UnbakedModel model = loader.getOrLoadModel(modelId);
 				model.setParents(loader::getOrLoadModel);
 				BakedModel bakedModel = model.bake(loader, textureGetter, settings, modelId);
+
+				SpecialModels.LOGGER.debug("Adding model({}) {} as baked model {} to model renderer {} with settings {}", modelId, model, bakedModel, modelRenderer, settings);
 				((BakedModelAccess) ci.getReturnValue()).specialmodels$addModel(modelRenderer, null, bakedModel);
 			} else {
-				LOGGER.warn("Model '{}' caught in chain! Renderer '{}' caught model '{}'", id, modelRenderer, modelId);
+				SpecialModels.LOGGER.warn("Model '{}' caught in chain! Renderer '{}' caught model '{}'", id, modelRenderer, modelId);
 			}
 
 		});

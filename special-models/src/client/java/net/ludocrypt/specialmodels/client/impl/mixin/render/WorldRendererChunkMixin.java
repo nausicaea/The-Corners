@@ -64,37 +64,22 @@ public class WorldRendererChunkMixin implements WorldChunkBuilderAccess {
 	private SpecialChunkBuilder specialChunkBuilder;
 	@Unique
 	private Future<?> lastFullSpecialBuiltChunkUpdate;
-	@Unique
 	private final BlockingQueue<BuiltChunk> recentlyCompiledSpecialChunks = new LinkedBlockingQueue<BuiltChunk>();
-	@Unique
 	private final AtomicReference<RenderableChunks> renderableSpecialChunks = new AtomicReference<RenderableChunks>();
-	@Unique
 	private final ObjectArrayList<ChunkInfo> specialChunkInfoList = new ObjectArrayList<>(10000);
 	@Unique
 	private SpecialBuiltChunkStorage specialChunks;
-	@Unique
 	private SpecialBufferBuilderStorage specialBufferBuilderStorage = new SpecialBufferBuilderStorage();
-	@Unique
 	private boolean needsFullSpecialBuiltChunkUpdate = true;
-	@Unique
 	private final AtomicBoolean needsSpecialFrustumUpdate = new AtomicBoolean(false);
-	@Unique
 	private final AtomicLong nextFullSpecialUpdateMilliseconds = new AtomicLong(0L);
-	@Unique
 	private int cameraSpecialChunkX = Integer.MIN_VALUE;
-	@Unique
 	private int cameraSpecialChunkY = Integer.MIN_VALUE;
-	@Unique
 	private int cameraSpecialChunkZ = Integer.MIN_VALUE;
-	@Unique
 	private double lastSpecialCameraX = Double.MIN_VALUE;
-	@Unique
 	private double lastSpecialCameraY = Double.MIN_VALUE;
-	@Unique
 	private double lastSpecialCameraZ = Double.MIN_VALUE;
-	@Unique
 	private double lastSpecialCameraPitch = Double.MIN_VALUE;
-	@Unique
 	private double lastSpecialCameraYaw = Double.MIN_VALUE;
 
 	@Inject(method = "setWorld", at = @At("TAIL"))
