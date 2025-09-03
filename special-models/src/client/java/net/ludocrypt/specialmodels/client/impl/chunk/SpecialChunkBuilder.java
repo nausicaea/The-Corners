@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import net.ludocrypt.specialmodels.impl.SpecialModels;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.system.MemoryStack;
 import org.slf4j.Logger;
@@ -72,9 +73,6 @@ import net.minecraft.util.thread.TaskExecutor;
 import net.minecraft.world.chunk.ChunkStatus;
 
 public class SpecialChunkBuilder {
-
-	private static final Logger LOGGER = LogUtils.getLogger();
-
 	private final PriorityBlockingQueue<Task> highPriorityChunksToBuild = Queues.newPriorityBlockingQueue();
 	private final Queue<Task> chunksToBuild = Queues.<Task>newLinkedBlockingDeque();
 
@@ -122,7 +120,7 @@ public class SpecialChunkBuilder {
 			}
 
 		} catch (OutOfMemoryError e) {
-			LOGGER.warn("Allocated only {}/{} buffers", storage.size(), maxThreads);
+			SpecialModels.LOGGER.warn("Allocated only {}/{} buffers", storage.size(), maxThreads);
 
 			int size = Math.min(storage.size() * 2 / 3, storage.size() - 1);
 

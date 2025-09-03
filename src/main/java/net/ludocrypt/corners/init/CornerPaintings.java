@@ -61,7 +61,8 @@ public class CornerPaintings {
 					.add(4.0D, 0, 4.0D)));
 
 	public static void init() {
-	}
+        TheCorners.LOGGER.debug("Registering custom paintings");
+    }
 
 	public static <T extends PaintingVariant> T get(String id, T painting) {
 		return Registry.register(Registries.PAINTING_VARIANT, TheCorners.id(id), painting);

@@ -18,12 +18,16 @@ public class Limlib implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		LOGGER.info("Initializing liminal library");
 		SharedMutableState.init();
 		LimlibRegistries.init();
 
-		Registry
-			.register(Registries.CHUNK_GENERATOR, new Identifier("limlib", "debug_nbt_chunk_generator"),
+		LOGGER.debug("Registering the debug chunk generator");
+		Registry.register(Registries.CHUNK_GENERATOR,
+			new Identifier("limlib", "debug_nbt_chunk_generator"),
 				DebugNbtChunkGenerator.CODEC);
+
+		LOGGER.debug("Registering the custom mod entrypoint");
 		FabricLoader.getInstance()
 			.getEntrypoints(LimlibRegistrar.ENTRYPOINT_KEY, LimlibRegistrar.class)
 			.forEach(LimlibRegistrar::registerHooks);
