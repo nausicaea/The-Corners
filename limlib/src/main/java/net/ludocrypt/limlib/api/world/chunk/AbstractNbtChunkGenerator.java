@@ -50,8 +50,7 @@ public abstract class AbstractNbtChunkGenerator extends LiminalChunkGenerator {
 				.generateNbt(region, at, (pos, state, nbt) -> this.modifyStructure(region, pos, state, nbt))
 				.spawnEntities(region, at, manipulation);
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new NullPointerException("Attempted to load undefined structure \'" + id + "\'");
+			throw new IllegalStateException("Attempted to load undefined structure '%s'".formatted(id), e);
 		}
 
 	}
@@ -70,8 +69,7 @@ public abstract class AbstractNbtChunkGenerator extends LiminalChunkGenerator {
 				.generateNbt(region, offset, from, to, (pos, state, nbt) -> this.modifyStructure(region, pos, state, nbt))
 				.spawnEntities(region, offset, from, to, manipulation);
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new NullPointerException("Attempted to load undefined structure \'" + id + "\'");
+			throw new IllegalStateException("Attempted to load undefined structure '%s'".formatted(id), e);
 		}
 
 	}

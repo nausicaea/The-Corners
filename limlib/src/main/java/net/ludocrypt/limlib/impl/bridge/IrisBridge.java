@@ -1,6 +1,7 @@
 package net.ludocrypt.limlib.impl.bridge;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.ludocrypt.limlib.impl.Limlib;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -24,7 +25,7 @@ public class IrisBridge {
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				Limlib.LOGGER.error("Could not determine if Iris shaders is used", e);
 				return false;
 			}
 
