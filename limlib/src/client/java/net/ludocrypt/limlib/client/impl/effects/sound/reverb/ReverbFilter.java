@@ -2,6 +2,7 @@ package net.ludocrypt.limlib.client.impl.effects.sound.reverb;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.ludocrypt.limlib.client.impl.effects.sound.OpenAlUtil;
 import net.ludocrypt.limlib.impl.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.api.effects.sound.reverb.ReverbEffectDto;
 import net.ludocrypt.limlib.client.api.effects.sound.reverb.ReverbEffect;
@@ -143,17 +144,13 @@ public class ReverbFilter {
 			.ifPresent(r -> {
 				for (int i = 0; i < 2; i++) {
 					AL11.alSourcei(sourceID, EXTEfx.AL_DIRECT_FILTER, 0);
+					int localSlot = slot.get();
 					AL11
 						.alSource3i(sourceID, EXTEfx.AL_AUXILIARY_SEND_FILTER,
-							update(soundInstance, r) ? slot.get() : 0, 0, 0);
-					int error = AL11.alGetError();
-
-					if (error == AL11.AL_NO_ERROR) {
-						break;
-					} else {
-						LOGGER.warn("OpenAl Error {}", error);
-					}
-
+							update(soundInstance, r) ? localSlot : 0, 0, 0);
+					int finalI = i;
+					OpenAlUtil.toHumanReadableError(AL11.alGetError())
+						.ifPresent(err -> { throw new IllegalStateException("ReverbFilter sourceId=%s worldId=%s reverbEffect=%s slot=%d iter=%d: %s".formatted(sourceID, effect, r, localSlot, finalI, err)); });
 				}
 			});
 
