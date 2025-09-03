@@ -16,6 +16,7 @@ public class CornerModelRenderers {
 	public static final SpecialModelRenderer DEEP_BOOKSHELF = get("deep_bookshelf", new DeepBookshelfRenderer());
 
 	public static void init() {
+        TheCorners.LOGGER.debug("Initializing the custom renderers");
 	}
 
 	public static <S extends SpecialModelRenderer> S get(String id, S modelRenderer) {

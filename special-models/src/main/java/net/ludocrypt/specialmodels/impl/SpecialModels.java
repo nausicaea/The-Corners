@@ -9,6 +9,6 @@ public class SpecialModels implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		LOGGER.info("Initializing special models");
 	}
 }

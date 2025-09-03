@@ -29,6 +29,7 @@ public class TheCorners implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        LOGGER.info("Initializing the corners mod");
         AutoConfig.register(CornerConfig.class, GsonConfigSerializer::new);
         Registry.register(LimlibRegistries.PostFx.REGISTRY, TheCorners.id("strong_shader"), StrongPostEffect.CODEC);
         CornerBlocks.init();

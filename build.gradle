@@ -27,6 +27,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 }
 
+
 java {
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
@@ -37,6 +38,7 @@ java {
 loom {
 	accessWidenerPath = file("src/main/resources/corners.accesswidener")
 	splitEnvironmentSourceSets()
+    log4jConfigs.from(file("log4j2.xml"))
 
 	mods {
 		"corners" {

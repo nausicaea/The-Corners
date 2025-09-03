@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.packet.ClientToServerPackets;
 
 import net.ludocrypt.corners.access.MusicTrackerAccess;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.random.Random;
 public class ServerToClientPackets {
 
 	public static void manageServerToClientPackets() {
+        TheCorners.LOGGER.debug("Initializing S2C packet handlers on client");
 		ClientPlayNetworking
 			.registerGlobalReceiver(ClientToServerPackets.PLAY_RADIO, (client, handler, buf, responseSender) -> {
 				BlockPos pos = buf.readBlockPos();
