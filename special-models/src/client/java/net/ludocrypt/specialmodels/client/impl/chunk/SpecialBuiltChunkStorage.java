@@ -1,7 +1,6 @@
 package net.ludocrypt.specialmodels.client.impl.chunk;
 
 import org.jetbrains.annotations.Nullable;
-import net.ludocrypt.specialmodels.client.impl.chunk.SpecialChunkBuilder.BuiltChunk;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +14,7 @@ public class SpecialBuiltChunkStorage {
 	protected int sizeY;
 	protected int sizeX;
 	protected int sizeZ;
-	public SpecialChunkBuilder.BuiltChunk[] chunks;
+	public BuiltChunk[] chunks;
 
 	public SpecialBuiltChunkStorage(SpecialChunkBuilder SpecialChunkBuilder, World world, int viewDistance,
 			WorldRenderer worldRenderer) {
@@ -31,7 +30,7 @@ public class SpecialBuiltChunkStorage {
 			throw new IllegalStateException("createChunks called from wrong thread: " + Thread.currentThread().getName());
 		} else {
 			int i = this.sizeX * this.sizeY * this.sizeZ;
-			this.chunks = new SpecialChunkBuilder.BuiltChunk[i];
+			this.chunks = new BuiltChunk[i];
 
 			for (int j = 0; j < this.sizeX; ++j) {
 
@@ -39,7 +38,7 @@ public class SpecialBuiltChunkStorage {
 
 					for (int l = 0; l < this.sizeZ; ++l) {
 						int m = this.getChunkIndex(j, k, l);
-						this.chunks[m] = SpecialChunkBuilder.new BuiltChunk(m, j * 16, k * 16, l * 16);
+						this.chunks[m] = new BuiltChunk(SpecialChunkBuilder, m, j * 16, k * 16, l * 16);
 					}
 
 				}
@@ -52,7 +51,7 @@ public class SpecialBuiltChunkStorage {
 
 	public void clear() {
 
-		for (SpecialChunkBuilder.BuiltChunk builtChunk : this.chunks) {
+		for (BuiltChunk builtChunk : this.chunks) {
 			builtChunk.delete();
 		}
 
@@ -85,7 +84,7 @@ public class SpecialBuiltChunkStorage {
 
 				for (int s = 0; s < this.sizeY; ++s) {
 					int t = this.world.getBottomY() + s * 16;
-					SpecialChunkBuilder.BuiltChunk builtChunk = this.chunks[this.getChunkIndex(k, s, o)];
+					BuiltChunk builtChunk = this.chunks[this.getChunkIndex(k, s, o)];
 					BlockPos blockPos = builtChunk.getOrigin().toImmutable();
 
 					if (n != blockPos.getX() || t != blockPos.getY() || r != blockPos.getZ()) {
@@ -104,12 +103,12 @@ public class SpecialBuiltChunkStorage {
 		int i = Math.floorMod(x, this.sizeX);
 		int j = Math.floorMod(y - this.world.getBottomSectionCoord(), this.sizeY);
 		int k = Math.floorMod(z, this.sizeZ);
-		SpecialChunkBuilder.BuiltChunk builtChunk = this.chunks[this.getChunkIndex(i, j, k)];
+		BuiltChunk builtChunk = this.chunks[this.getChunkIndex(i, j, k)];
 		builtChunk.scheduleRebuild(important);
 	}
 
 	@Nullable
-	public SpecialChunkBuilder.BuiltChunk getRenderedChunk(BlockPos pos) {
+	public BuiltChunk getRenderedChunk(BlockPos pos) {
 		int i = MathHelper.floorDiv(pos.getX(), 16);
 		int j = MathHelper.floorDiv(pos.getY() - this.world.getBottomY(), 16);
 		int k = MathHelper.floorDiv(pos.getZ(), 16);
