@@ -14,7 +14,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 
 import net.ludocrypt.specialmodels.client.api.SpecialModelRenderer;
-import net.ludocrypt.specialmodels.client.impl.chunk.BuiltChunk.Task;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.RenderLayer;
