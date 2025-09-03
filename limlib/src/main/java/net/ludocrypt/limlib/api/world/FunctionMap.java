@@ -39,7 +39,7 @@ public class FunctionMap<K, V, A> {
 		if (this.functionMap.containsKey(key)) {
 			return this.cache.computeIfAbsent(key, (k) -> this.functionMap.get(k).apply(arg));
 		} else {
-			throw new NullPointerException("Map does not contain key: " + key);
+			throw new NullPointerException("functionMap %s does not contain key %s".formatted(functionMap, key));
 		}
 
 	}

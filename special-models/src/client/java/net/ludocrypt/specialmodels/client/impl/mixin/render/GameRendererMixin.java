@@ -49,8 +49,7 @@ public class GameRendererMixin {
 								SpecialVertexFormats.POSITION_COLOR_TEXTURE_LIGHT_NORMAL_STATE),
 								(shader) -> ClientSharedMutableState.LOADED_SHADERS.put(renderer, shader)));
 				} catch (IOException e) {
-					SpecialModels.LOGGER.error("Could not reload shader: {}", id);
-					e.printStackTrace();
+					SpecialModels.LOGGER.warn("Could not reload shader: %s".formatted(id), e);
 
 					try {
 						list2
@@ -60,8 +59,7 @@ public class GameRendererMixin {
 									(shader) -> ClientSharedMutableState.LOADED_SHADERS.put(renderer, shader)));
 					} catch (IOException e2) {
 						list2.forEach((pair) -> pair.getFirst().close());
-						e2.printStackTrace();
-						throw new RuntimeException();
+						throw new RuntimeException("Could not load fallback shader 'rendertype_specialmodels_textured' while handling the exception: %s".formatted(e), e2);
 					}
 
 				}
