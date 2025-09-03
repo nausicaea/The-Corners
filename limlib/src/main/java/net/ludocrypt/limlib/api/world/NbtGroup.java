@@ -38,7 +38,7 @@ public class NbtGroup {
 	public Identifier pick(String key, Random random) {
 
 		if (!groups.containsKey(key)) {
-			throw new NullPointerException();
+			throw new NullPointerException("NbtGroup %s does not contain key %s".formatted(groups, key));
 		}
 
 		List<String> group = groups.get(key);

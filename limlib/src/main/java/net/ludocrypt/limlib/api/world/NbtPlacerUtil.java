@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import net.ludocrypt.limlib.impl.Limlib;
 import org.apache.logging.log4j.util.TriConsumer;
 
 import com.mojang.datafixers.util.Pair;
@@ -175,7 +176,7 @@ public class NbtPlacerUtil {
 
 			throw new NullPointerException();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Limlib.LOGGER.error("FIXME: understand why line 177 unconditionally throws an NPE", e);
 			return Optional.empty();
 		}
 
@@ -190,7 +191,7 @@ public class NbtPlacerUtil {
 		try {
 			return Optional.ofNullable(readStructure(manager.getResource(id).get()));
 		} catch (Exception e) {
-			e.printStackTrace();
+			Limlib.LOGGER.error("Unable to get resource with ID '%s'".formatted(id), e);
 			return Optional.empty();
 		}
 
