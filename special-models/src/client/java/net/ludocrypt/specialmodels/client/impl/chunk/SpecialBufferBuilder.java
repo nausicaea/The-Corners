@@ -9,20 +9,12 @@ import net.ludocrypt.specialmodels.impl.SpecialModels;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import org.lwjgl.opengl.GL15;
 import org.lwjgl.system.MemoryUtil;
-import org.slf4j.Logger;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.systems.VertexSorter;
-import com.mojang.logging.LogUtils;
 
 import it.unimi.dsi.fastutil.ints.IntConsumer;
-import net.ludocrypt.specialmodels.client.impl.mixin.render.UsageAccessor;
-import net.ludocrypt.specialmodels.client.impl.mixin.render.VertexBufferAccessor;
 import net.ludocrypt.specialmodels.client.impl.render.SpecialVertexFormats;
 import net.ludocrypt.specialmodels.impl.render.Vec4b;
-import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferVertexConsumer;
 import net.minecraft.client.render.FixedColorVertexConsumer;
 import net.minecraft.client.render.VertexConsumer;
@@ -120,16 +112,16 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 	}
 
 	public SortState popState() {
-		return new SpecialBufferBuilder.SortState(this.drawMode, this.vertexCount, this.sortingPoints, this.quadSorting);
+		return new SortState(this.drawMode, this.vertexCount, this.sortingPoints, this.quadSorting);
 	}
 
 	public void restoreState(SortState state) {
 		this.buffer.rewind();
-		this.drawMode = state.drawMode;
-		this.vertexCount = state.vertexCount;
+		this.drawMode = state.drawMode();
+		this.vertexCount = state.vertexCount();
 		this.elementOffset = this.renderedBufferPointer;
-		this.sortingPoints = state.sortingPoints;
-		this.quadSorting = state.quadSorting;
+		this.sortingPoints = state.sortingPoints();
+		this.quadSorting = state.quadSorting();
 		this.indexOnly = true;
 	}
 
@@ -273,7 +265,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 		DrawArrayParameters params = new DrawArrayParameters(this.format, this.vertexCount, drawCount, this.drawMode, type,
 			this.indexOnly, textured);
 
-		return new RenderedBuffer(pointer, params);
+		return new RenderedBuffer(this, pointer, params);
 	}
 
 	private void reset() {
@@ -400,7 +392,7 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 
 	}
 
-	private void popBatch() {
+	void popBatch() {
 
 		if (this.renderedBufferCount > 0 && --this.renderedBufferCount == 0) {
 			this.clear();
@@ -448,186 +440,6 @@ public class SpecialBufferBuilder extends FixedColorVertexConsumer implements Bu
 
 	public void setState(Supplier<Vec4b> state) {
 		this.state = state;
-	}
-
-	public static record DrawArrayParameters(VertexFormat vertexFormat, int vertexCount, int indexCount, DrawMode mode,
-			IndexType indexType, boolean indexOnly, boolean textured) {
-
-		public int getVertexBufferSize() {
-			return this.vertexCount * this.vertexFormat.getVertexSizeByte();
-		}
-
-		public int getVertexBufferEnd() {
-			return this.getVertexBufferSize();
-		}
-
-		public int getIndexBufferStart() {
-			return this.indexOnly ? 0 : this.getVertexBufferEnd();
-		}
-
-		public int getIndexBufferEnd() {
-			return this.getIndexBufferStart() + this.getIndexBufferSize();
-		}
-
-		private int getIndexBufferSize() {
-			return this.textured ? 0 : this.indexCount * this.indexType.size;
-		}
-
-		public int getTotalBufferSize() {
-			return this.getIndexBufferEnd();
-		}
-
-		public VertexFormat getVertexFormat() {
-			return this.vertexFormat;
-		}
-
-		public int getVertexCount() {
-			return this.vertexCount;
-		}
-
-		public int getIndexCount() {
-			return this.indexCount;
-		}
-
-		public DrawMode getMode() {
-			return this.mode;
-		}
-
-		public IndexType getIndexType() {
-			return this.indexType;
-		}
-
-		public boolean getIndexOnly() {
-			return this.indexOnly;
-		}
-
-		public boolean isTextured() {
-			return this.textured;
-		}
-
-	}
-
-	public class RenderedBuffer {
-
-		private final int pointer;
-		private final DrawArrayParameters parameters;
-		private boolean released;
-
-		RenderedBuffer(int pointer, DrawArrayParameters parameters) {
-			this.pointer = pointer;
-			this.parameters = parameters;
-		}
-
-		public ByteBuffer getVertexBuffer() {
-			int start = this.pointer;
-			int end = this.pointer + this.parameters.getVertexBufferEnd();
-			return SpecialBufferBuilder.this.getBuffer(start, end);
-		}
-
-		public ByteBuffer getIndexBuffer() {
-			int start = this.pointer + this.parameters.getIndexBufferStart();
-			int end = this.pointer + this.parameters.getIndexBufferEnd();
-			return SpecialBufferBuilder.this.getBuffer(start, end);
-		}
-
-		public DrawArrayParameters getParameters() {
-			return this.parameters;
-		}
-
-		public boolean isEmpty() {
-			return this.parameters.vertexCount == 0;
-		}
-
-		public void release() {
-
-			if (this.released) {
-				throw new IllegalStateException("Buffer has already been released!");
-			} else {
-				SpecialBufferBuilder.this.popBatch();
-				this.released = true;
-			}
-
-		}
-
-		public void upload(VertexBuffer buffer) {
-
-			if (!buffer.isClosed()) {
-				RenderSystem.assertOnRenderThread();
-
-				try {
-					DrawArrayParameters params = this.getParameters();
-					((VertexBufferAccessor) buffer)
-						.setVertexFormat(this.uploadAndBindFormat(buffer, params, this.getVertexBuffer()));
-					((VertexBufferAccessor) buffer)
-						.setSharedSequentialIndexBuffer(this.uploadIndexBuffer(buffer, params, this.getIndexBuffer()));
-					((VertexBufferAccessor) buffer).setIndexCount(params.getIndexCount());
-					((VertexBufferAccessor) buffer).setIndexType(params.getIndexType());
-					((VertexBufferAccessor) buffer).setDrawMode(params.getMode());
-				} finally {
-					this.release();
-				}
-
-			}
-
-		}
-
-		private VertexFormat uploadAndBindFormat(VertexBuffer buffer, DrawArrayParameters parameters, ByteBuffer bytes) {
-			boolean rebind = false;
-
-			if (!parameters.getVertexFormat().equals(((VertexBufferAccessor) buffer).getVertexFormat())) {
-
-				if (((VertexBufferAccessor) buffer).getVertexFormat() != null) {
-					((VertexBufferAccessor) buffer).getVertexFormat().clearState();
-				}
-
-				GlStateManager._glBindBuffer(GL15.GL_ARRAY_BUFFER, ((VertexBufferAccessor) buffer).getVertexBufferId());
-				parameters.getVertexFormat().setupState();
-				rebind = true;
-			}
-
-			if (!parameters.getIndexOnly()) {
-
-				if (!rebind) {
-					GlStateManager._glBindBuffer(GL15.GL_ARRAY_BUFFER, ((VertexBufferAccessor) buffer).getVertexBufferId());
-				}
-
-				RenderSystem
-					.glBufferData(34962, bytes,
-						((UsageAccessor) (Object) ((VertexBufferAccessor) buffer).getUsage()).getId());
-			}
-
-			return parameters.getVertexFormat();
-		}
-
-		@Nullable
-		private RenderSystem.ShapeIndexBuffer uploadIndexBuffer(VertexBuffer buffer, DrawArrayParameters parameters,
-				ByteBuffer bytes) {
-
-			if (!parameters.isTextured()) {
-				GlStateManager
-					._glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, ((VertexBufferAccessor) buffer).getIndexBufferId());
-				RenderSystem
-					.glBufferData(34963, bytes,
-						((UsageAccessor) (Object) ((VertexBufferAccessor) buffer).getUsage()).getId());
-				return null;
-			} else {
-				RenderSystem.ShapeIndexBuffer indexBuffer = RenderSystem.getSequentialBuffer(parameters.getMode());
-
-				if (indexBuffer != ((VertexBufferAccessor) buffer).getSharedSequentialIndexBuffer() || !indexBuffer
-					.isLargeEnough(parameters.getIndexCount())) {
-					indexBuffer.bindAndGrow(parameters.getIndexCount());
-				}
-
-				return indexBuffer;
-			}
-
-		}
-
-	}
-
-	public static record SortState(DrawMode drawMode, int vertexCount, @Nullable Vector3f[] sortingPoints,
-			@Nullable VertexSorter quadSorting) {
-
 	}
 
 }
