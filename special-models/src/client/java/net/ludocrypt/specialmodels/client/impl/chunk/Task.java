@@ -5,25 +5,22 @@ import com.google.common.primitives.Doubles;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public abstract class Task implements Comparable<Task> {
+public interface Task extends Comparable<Task> {
 
-	protected final double distance;
-	protected final AtomicBoolean cancelled = new AtomicBoolean(false);
-	protected final boolean highPriority;
+	double getDistance();
 
-	public Task(double distance, boolean highPriority) {
-		this.distance = distance;
-		this.highPriority = highPriority;
-	}
+	AtomicBoolean getCancelled();
 
-	public abstract CompletableFuture<Result> run(SpecialBufferBuilderStorage buffers);
+	boolean isHighPriority();
 
-	public abstract void cancel();
+	CompletableFuture<Result> run(SpecialBufferBuilderStorage buffers);
 
-	protected abstract String name();
+	void cancel();
 
-	public int compareTo(Task task) {
-		return Doubles.compare(this.distance, task.distance);
+	String name();
+
+	default int compareTo(Task task) {
+		return Doubles.compare(this.getDistance(), task.getDistance());
 	}
 
 }

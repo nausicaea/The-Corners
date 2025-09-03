@@ -8,23 +8,43 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class SortTask extends Task {
+public class SortTask implements Task {
 
 	private final BuiltChunk builtChunk;
 	private final ChunkData data;
 	private final SpecialModelRenderer renderer;
+	private final double distance;
+	private final AtomicBoolean cancelled = new AtomicBoolean(false);
+	private final boolean highPriority;
 
 	public SortTask(BuiltChunk builtChunk, double distance, ChunkData data, SpecialModelRenderer renderer) {
-		super(distance, true);
+		this.distance = distance;
+		this.highPriority = true;
 		this.builtChunk = builtChunk;
 		this.data = data;
 		this.renderer = renderer;
 	}
 
 	@Override
-	protected String name() {
+	public String name() {
 		return "rend_chk_sort";
+	}
+
+	@Override
+	public double getDistance() {
+		return this.distance;
+	}
+
+	@Override
+	public AtomicBoolean getCancelled() {
+		return this.cancelled;
+	}
+
+	@Override
+	public boolean isHighPriority() {
+		return this.highPriority;
 	}
 
 	@Override
