@@ -1,24 +1,19 @@
 package net.ludocrypt.limlib.api.world;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import com.google.common.collect.Maps;
-
-public class FunctionMap<K, V, A> {
-
-	private final Optional<BiFunction<K, A, V>> defaultMapper;
-	private Map<K, Function<A, V>> functionMap = Maps.newHashMap();
-	private Map<K, V> cache = Maps.newHashMap();
+public record FunctionMap<K, V, A>(Optional<BiFunction<K, A, V>> defaultMapper, Map<K, Function<A, V>> functionMap, Map<K, V> cache) {
 
 	public FunctionMap(BiFunction<K, A, V> defaultMapper) {
-		this.defaultMapper = Optional.of(defaultMapper);
+		this(Optional.of(defaultMapper), new HashMap<>(), new HashMap<>());
 	}
 
 	public FunctionMap() {
-		this.defaultMapper = Optional.empty();
+		this(Optional.empty(), new HashMap<>(), new HashMap<>());
 	}
 
 	public Function<A, V> put(K key, Function<A, V> compute) {
