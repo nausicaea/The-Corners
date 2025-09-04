@@ -7,6 +7,7 @@ import net.ludocrypt.limlib.api.world.LimlibHelper;
 import net.ludocrypt.limlib.api.world.Manipulation;
 import net.ludocrypt.limlib.api.world.NbtGroup;
 import net.ludocrypt.limlib.api.world.NbtPlacerUtil;
+import net.ludocrypt.limlib.impl.util.DebugUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -27,7 +28,7 @@ public abstract class AbstractNbtChunkGenerator extends LiminalChunkGenerator {
 
 	public AbstractNbtChunkGenerator(BiomeSource biomeSource, NbtGroup nbtGroup) {
 		this(biomeSource, nbtGroup, new FunctionMap<>((k, a) -> NbtPlacerUtil.loadSafe(k, a)
-			.orElseThrow(() -> new RuntimeException("Could not load resource %s associated with biomeSource=%s, nbtGroup=%s, resourceManager=%s".formatted(k, biomeSource, nbtGroup, a)))));
+			.orElseThrow(() -> new RuntimeException("Could not load resource %s associated with nbtGroupId=%s, nbtGroupMembers=\n%s".formatted(k, nbtGroup.getId(), DebugUtil.toDebugString(nbtGroup.getGroups()))))));
 	}
 
 	public AbstractNbtChunkGenerator(BiomeSource biomeSource, NbtGroup nbtGroup,
