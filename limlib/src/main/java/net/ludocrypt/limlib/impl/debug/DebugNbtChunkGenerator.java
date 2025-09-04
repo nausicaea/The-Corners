@@ -89,8 +89,8 @@ public class DebugNbtChunkGenerator extends AbstractNbtChunkGenerator {
 			Map<Identifier, NbtPlacerUtil> nbts = new LinkedHashMap<>();
 
 			for (Identifier id : ids.keySet()) {
-				NbtPlacerUtil nbt = NbtPlacerUtil.load(id, resourceManager);
-				nbts.put(id, nbt);
+				NbtPlacerUtil.loadSafe(id, resourceManager)
+						.ifPresent(npu -> nbts.put(id, npu));
 			}
 
 			List<Map.Entry<Identifier, NbtPlacerUtil>> sortedNbts = new ArrayList<>(nbts.entrySet());
