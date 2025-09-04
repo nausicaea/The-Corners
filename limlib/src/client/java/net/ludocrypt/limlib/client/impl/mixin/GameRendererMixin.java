@@ -30,9 +30,8 @@ public class GameRendererMixin {
 	@Final
 	private MinecraftClient client;
 
-	@Unique
 	private final Function<Identifier, PostProcesser> memoizedShaders = Util
-		.memoize(id -> PostProcesserManager.INSTANCE.find(id));
+		.memoize(PostProcesserManager.INSTANCE::find);
 
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/WorldRenderer;drawEntityOutlinesFramebuffer()V", shift = Shift.AFTER))
 	private void limlib$render(float tickDelta, long nanoTime, boolean renderLevel, CallbackInfo info) {
