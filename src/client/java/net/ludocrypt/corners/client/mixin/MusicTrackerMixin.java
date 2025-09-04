@@ -24,8 +24,7 @@ public class MusicTrackerMixin implements MusicTrackerAccess {
 	@Shadow
 	@Final
 	private MinecraftClient client;
-	@Unique
-	private List<BlockPos> radioPositions = Lists.newArrayList();
+	private final List<BlockPos> radioPositions = Lists.newArrayList();
 
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Ljava/lang/Math;min(II)I", ordinal = 1))
 	private int corners$tick$preventMusic(int time, int max) {
