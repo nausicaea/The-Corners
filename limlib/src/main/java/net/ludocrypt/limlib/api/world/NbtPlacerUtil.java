@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import net.ludocrypt.limlib.impl.Limlib;
+import com.google.gson.JsonObject;
+import net.ludocrypt.limlib.impl.mixin.ResourceMetadataAccessor;
 import org.apache.logging.log4j.util.TriConsumer;
 
 import com.mojang.datafixers.util.Pair;
@@ -121,79 +122,74 @@ public class NbtPlacerUtil {
 	}
 
 	public static Optional<NbtPlacerUtil> loadSafe(Identifier id, ResourceManager manager) {
+		return loadStructure(id, manager)
+			.map(nbt -> {
+				NbtList paletteList = nbt.getList("palette", 10);
+				HashMap<Integer, BlockState> palette = new HashMap<>(paletteList.size());
+				List<NbtCompound> paletteCompoundList = paletteList
+					.stream()
+					.filter(nbtElement -> nbtElement instanceof NbtCompound)
+					.map(element -> (NbtCompound) element)
+					.toList();
 
-		try {
-			NbtCompound nbt = loadNbtSafe(id, manager)
-				.orElseThrow();
+				for (int i = 0; i < paletteCompoundList.size(); i++) {
+					palette.put(i, NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), paletteCompoundList.get(i)));
+				}
 
-			NbtList paletteList = nbt.getList("palette", 10);
-			HashMap<Integer, BlockState> palette = new HashMap<Integer, BlockState>(paletteList.size());
-			List<NbtCompound> paletteCompoundList = paletteList
-				.stream()
-				.filter(nbtElement -> nbtElement instanceof NbtCompound)
-				.map(element -> (NbtCompound) element)
-				.toList();
-
-			for (int i = 0; i < paletteCompoundList.size(); i++) {
-				palette.put(i, NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), paletteCompoundList.get(i)));
-			}
-
-			NbtList sizeList = nbt.getList("size", 3);
-			BlockPos sizeVectorRotated = new BlockPos(sizeList.getInt(0), sizeList.getInt(1), sizeList.getInt(2));
-			BlockPos sizeVector = new BlockPos(Math.abs(sizeVectorRotated.getX()), Math.abs(sizeVectorRotated.getY()),
-				Math.abs(sizeVectorRotated.getZ()));
-			NbtList positionsList = nbt.getList("blocks", 10);
-			HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>> positions = new HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>>(
-				positionsList.size());
-			List<Pair<BlockPos, Pair<BlockState, Optional<NbtCompound>>>> positionsPairList = positionsList
-				.stream()
-				.filter(nbtElement -> nbtElement instanceof NbtCompound)
-				.map(element -> (NbtCompound) element)
-				.map((nbtCompound) -> Pair
-					.of(new BlockPos(nbtCompound.getList("pos", 3).getInt(0), nbtCompound.getList("pos", 3).getInt(1),
-						nbtCompound.getList("pos", 3).getInt(2)),
-						Pair
-							.of(palette.get(nbtCompound.getInt("state")),
-								nbtCompound.contains("nbt", NbtElement.COMPOUND_TYPE)
+				NbtList sizeList = nbt.getList("size", 3);
+				BlockPos sizeVectorRotated = new BlockPos(sizeList.getInt(0), sizeList.getInt(1), sizeList.getInt(2));
+				BlockPos sizeVector = new BlockPos(Math.abs(sizeVectorRotated.getX()), Math.abs(sizeVectorRotated.getY()),
+					Math.abs(sizeVectorRotated.getZ()));
+				NbtList positionsList = nbt.getList("blocks", 10);
+				HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>> positions = new HashMap<BlockPos, Pair<BlockState, Optional<NbtCompound>>>(
+					positionsList.size());
+				List<Pair<BlockPos, Pair<BlockState, Optional<NbtCompound>>>> positionsPairList = positionsList
+					.stream()
+					.filter(nbtElement -> nbtElement instanceof NbtCompound)
+					.map(element -> (NbtCompound) element)
+					.map((nbtCompound) -> Pair
+						.of(new BlockPos(nbtCompound.getList("pos", 3).getInt(0), nbtCompound.getList("pos", 3).getInt(1),
+								nbtCompound.getList("pos", 3).getInt(2)),
+							Pair
+								.of(palette.get(nbtCompound.getInt("state")),
+									nbtCompound.contains("nbt", NbtElement.COMPOUND_TYPE)
 										? Optional.of(nbtCompound.getCompound("nbt"))
 										: emptyNbt())))
-				.sorted(Comparator.comparing((pair) -> pair.getFirst().getX()))
-				.sorted(Comparator.comparing((pair) -> pair.getFirst().getY()))
-				.sorted(Comparator.comparing((pair) -> pair.getFirst().getZ()))
-				.toList();
-			positionsPairList
-				.forEach((pair) -> positions
-					.put(pair.getFirst().subtract(positionsPairList.get(0).getFirst()), pair.getSecond()));
-			return Optional
-				.of(new NbtPlacerUtil(nbt, positions, nbt.getList("entities", 10), positionsPairList.get(0).getFirst(),
-					sizeVector));
-		} catch (Exception e) {
-			Limlib.LOGGER.error("FIXME: understand why line 177 unconditionally throws an NPE", e);
-			return Optional.empty();
-		}
+					.sorted(Comparator.comparing((pair) -> pair.getFirst().getX()))
+					.sorted(Comparator.comparing((pair) -> pair.getFirst().getY()))
+					.sorted(Comparator.comparing((pair) -> pair.getFirst().getZ()))
+					.toList();
+				positionsPairList
+					.forEach((pair) -> positions
+						.put(pair.getFirst().subtract(positionsPairList.getFirst().getFirst()), pair.getSecond()));
 
+				return new NbtPlacerUtil(nbt, positions, nbt.getList("entities", 10), positionsPairList.getFirst().getFirst(), sizeVector);
+			});
 	}
 
 	private static Optional<NbtCompound> emptyNbt() {
 		return Optional.empty();
 	}
 
-	public static Optional<NbtCompound> loadNbtSafe(Identifier id, ResourceManager manager) {
-
-		try {
-			return Optional.ofNullable(readStructure(manager.getResource(id).get()));
-		} catch (Exception e) {
-			Limlib.LOGGER.error("Unable to get resource with ID '%s'".formatted(id), e);
-			return Optional.empty();
-		}
-
+	private static Optional<NbtCompound> loadStructure(Identifier id, ResourceManager manager) {
+		return manager.getResource(id)
+			.map(NbtPlacerUtil::loadCompressedNbt);
 	}
 
-	public static NbtCompound readStructure(Resource resource) throws IOException {
-		InputStream stream = resource.getInputStream();
-		NbtCompound nbt = NbtIo.readCompressed(stream);
-		stream.close();
-		return nbt;
+	private static NbtCompound loadCompressedNbt(Resource resource) {
+		try (InputStream in = resource.getInputStream()) {
+			return NbtIo.readCompressed(in);
+		} catch (IOException e) {
+			try {
+				var metadata = new JsonObject();
+				if (resource.getMetadata() instanceof ResourceMetadataAccessor mda) {
+					metadata = mda.getJsonObject();
+				}
+				throw new RuntimeException("Unable to read compressed NBT data from resource pack '%s' (metadata=%s)".formatted(resource.getResourcePackName(), metadata), e);
+			} catch (IOException e2) {
+				throw new RuntimeException("Error while gathering debug information", e2);
+			}
+		}
 	}
 
 	public NbtPlacerUtil generateNbt(ChunkRegion region, BlockPos at,
