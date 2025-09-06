@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" -eq "-f" ]; then
+if [ "$1" = "-f" ]; then
     rm -rf special-models/build special-models/.gradle limlib/build limlib/.gradle build .gradle $HOME/.gradle
 fi
 
