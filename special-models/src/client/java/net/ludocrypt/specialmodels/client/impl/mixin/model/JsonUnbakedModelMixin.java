@@ -31,15 +31,13 @@ import net.minecraft.util.Identifier;
 @Mixin(JsonUnbakedModel.class)
 public abstract class JsonUnbakedModelMixin implements UnbakedModelAccess {
 
-	private Map<SpecialModelRenderer, Identifier> subModels = new HashMap<>();
+	private final Map<SpecialModelRenderer, Identifier> subModels = new HashMap<>();
 
 	@Inject(method = "bake(Lnet/minecraft/client/render/model/Baker;Lnet/minecraft/client/render/model/json/JsonUnbakedModel;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;Z)Lnet/minecraft/client/render/model/BakedModel;", at = @At("RETURN"))
 	private void specialModels$bake(Baker loader, JsonUnbakedModel parent, Function<SpriteIdentifier, Sprite> textureGetter,
 			ModelBakeSettings settings, Identifier id, boolean hasDepth, CallbackInfoReturnable<BakedModel> ci) {
-		SpecialModels.LOGGER.debug("Processing identifier {}", id);
-
 		this.specialmodels$getSubModels().forEach((modelRenderer, modelId) -> {
-			SpecialModels.LOGGER.debug("Processing submodel {}", modelId);
+			SpecialModels.LOGGER.debug("Processing identifier {}, submodel {}", id, modelId);
 			if (!modelId.equals(id)) {
 				UnbakedModel model = loader.getOrLoadModel(modelId);
 				model.setParents(loader::getOrLoadModel);
