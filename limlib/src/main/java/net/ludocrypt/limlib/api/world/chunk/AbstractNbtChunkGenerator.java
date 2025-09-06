@@ -28,7 +28,7 @@ public abstract class AbstractNbtChunkGenerator extends LiminalChunkGenerator {
 
 	public AbstractNbtChunkGenerator(BiomeSource biomeSource, NbtGroup nbtGroup) {
 		this(biomeSource, nbtGroup, new FunctionMap<>((k, a) -> NbtPlacerUtil.loadSafe(k, a)
-			.orElseThrow(() -> new RuntimeException("Could not load resource %s associated with nbtGroupId=%s, nbtGroupMembers=\n%s".formatted(k, nbtGroup.getId(), DebugUtil.toDebugString(nbtGroup.getGroups()))))));
+			.orElseThrow(() -> new RuntimeException("Could not load resource %s associated with nbtGroupId=%s".formatted(k, nbtGroup.getId())))));
 	}
 
 	public AbstractNbtChunkGenerator(BiomeSource biomeSource, NbtGroup nbtGroup,
