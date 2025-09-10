@@ -1,11 +1,12 @@
-package net.ludocrypt.limlib.client.impl.effects.sound;
+package net.ludocrypt.limlib.client.impl.effects.sound.openal;
 
 import org.lwjgl.openal.AL11;
+import org.lwjgl.openal.EXTEfx;
 
 import java.util.Optional;
 
-public class OpenAlUtil {
-	private OpenAlUtil() {}
+public class OpenAl {
+	private OpenAl() {}
 
 	public static Optional<String> toHumanReadableError(int al11ErrorCode) {
 		return switch (al11ErrorCode) {

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import net.ludocrypt.limlib.client.impl.effects.sound.openal.Source;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -57,14 +58,14 @@ public abstract class SoundSystemMixin implements SoundSystemAccess {
 	@Inject(method = "tick()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/GameOptions;getSoundVolume(Lnet/minecraft/sound/SoundCategory;)F", shift = Shift.BEFORE))
 	public void limlib$tick(CallbackInfo ci,
 							@Local Channel.SourceManager sourceManager, @Local SoundInstance soundInstance) {
-		sourceManager.run(source -> ReverbFilter.update(soundInstance, ((SourceAccessor) source).getPointer()));
+		sourceManager.run(source -> ReverbFilter.update(soundInstance, new Source(source)));
 		sourceManager.run(source -> DistortionFilter.update(soundInstance, ((SourceAccessor) source).getPointer()));
 	}
 
 	@Inject(method = "play(Lnet/minecraft/client/sound/SoundInstance;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/Channel$SourceManager;run(Ljava/util/function/Consumer;)V", ordinal = 0, shift = Shift.AFTER))
 	public void limlib$play(SoundInstance soundInstance, CallbackInfo ci,
 							@Local Channel.SourceManager sourceManager) {
-		sourceManager.run(source -> ReverbFilter.update(soundInstance, ((SourceAccessor) source).getPointer()));
+		sourceManager.run(source -> ReverbFilter.update(soundInstance, new Source(source)));
 		sourceManager.run(source -> DistortionFilter.update(soundInstance, ((SourceAccessor) source).getPointer()));
 	}
 
