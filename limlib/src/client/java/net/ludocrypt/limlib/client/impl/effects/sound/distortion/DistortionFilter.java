@@ -2,7 +2,7 @@ package net.ludocrypt.limlib.client.impl.effects.sound.distortion;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.ludocrypt.limlib.client.impl.effects.sound.OpenAlUtil;
+import net.ludocrypt.limlib.client.impl.effects.sound.openal.OpenAl;
 import net.ludocrypt.limlib.impl.effects.sound.SoundEffectsDto;
 import net.ludocrypt.limlib.api.effects.sound.distortion.DistortionEffectDto;
 import net.ludocrypt.limlib.client.api.effects.sound.distortion.DistortionEffect;
@@ -40,43 +40,44 @@ public class DistortionFilter {
 		MinecraftClient client = MinecraftClient.getInstance();
 		DistortionEffect data = DistortionEffectFactories.resolve(dto);
 
-		if (data.isEnabled(client, soundInstance)) {
-			int currentId = id.get();
-			int currentSlot = slot.get();
-			EXTEfx.alAuxiliaryEffectSlotf(currentSlot, EXTEfx.AL_EFFECTSLOT_GAIN, 0);
-			EXTEfx.alEffecti(currentId, EXTEfx.AL_EFFECT_TYPE, EXTEfx.AL_EFFECT_DISTORTION);
-			EXTEfx
-				.alEffectf(currentId, EXTEfx.AL_DISTORTION_EDGE,
-					MathHelper
-						.clamp(data.getEdge(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_EDGE,
-							EXTEfx.AL_DISTORTION_MAX_EDGE));
-			EXTEfx
-				.alEffectf(currentId, EXTEfx.AL_DISTORTION_GAIN,
-					MathHelper
-						.clamp(data.getGain(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_GAIN,
-							EXTEfx.AL_DISTORTION_MAX_GAIN));
-			EXTEfx
-				.alEffectf(currentId, EXTEfx.AL_DISTORTION_LOWPASS_CUTOFF,
-					MathHelper
-						.clamp(data.getLowpassCutoff(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_LOWPASS_CUTOFF,
-							EXTEfx.AL_DISTORTION_MAX_LOWPASS_CUTOFF));
-			EXTEfx
-				.alEffectf(currentId, EXTEfx.AL_DISTORTION_EQCENTER,
-					MathHelper
-						.clamp(data.getEQCenter(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_EQCENTER,
-							EXTEfx.AL_DISTORTION_MAX_EQCENTER));
-			EXTEfx
-				.alEffectf(currentId, EXTEfx.AL_DISTORTION_EQBANDWIDTH,
-					MathHelper
-						.clamp(data.getEQBandWidth(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_EQBANDWIDTH,
-							EXTEfx.AL_DISTORTION_MAX_EQBANDWIDTH));
-			EXTEfx.alAuxiliaryEffectSloti(currentSlot, EXTEfx.AL_EFFECTSLOT_EFFECT, currentId);
-			EXTEfx.alAuxiliaryEffectSlotf(currentSlot, EXTEfx.AL_EFFECTSLOT_GAIN, 1);
-
-			return true;
+		if (!data.isEnabled(client, soundInstance)) {
+			return false;
 		}
 
-		return false;
+		int currentId = id.get();
+		int currentSlot = slot.get();
+		EXTEfx.alAuxiliaryEffectSlotf(currentSlot, EXTEfx.AL_EFFECTSLOT_GAIN, 0);
+		EXTEfx.alEffecti(currentId, EXTEfx.AL_EFFECT_TYPE, EXTEfx.AL_EFFECT_DISTORTION);
+		EXTEfx
+			.alEffectf(currentId, EXTEfx.AL_DISTORTION_EDGE,
+				MathHelper
+					.clamp(data.getEdge(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_EDGE,
+						EXTEfx.AL_DISTORTION_MAX_EDGE));
+		EXTEfx
+			.alEffectf(currentId, EXTEfx.AL_DISTORTION_GAIN,
+				MathHelper
+					.clamp(data.getGain(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_GAIN,
+						EXTEfx.AL_DISTORTION_MAX_GAIN));
+		EXTEfx
+			.alEffectf(currentId, EXTEfx.AL_DISTORTION_LOWPASS_CUTOFF,
+				MathHelper
+					.clamp(data.getLowpassCutoff(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_LOWPASS_CUTOFF,
+						EXTEfx.AL_DISTORTION_MAX_LOWPASS_CUTOFF));
+		EXTEfx
+			.alEffectf(currentId, EXTEfx.AL_DISTORTION_EQCENTER,
+				MathHelper
+					.clamp(data.getEQCenter(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_EQCENTER,
+						EXTEfx.AL_DISTORTION_MAX_EQCENTER));
+		EXTEfx
+			.alEffectf(currentId, EXTEfx.AL_DISTORTION_EQBANDWIDTH,
+				MathHelper
+					.clamp(data.getEQBandWidth(client, soundInstance), EXTEfx.AL_DISTORTION_MIN_EQBANDWIDTH,
+						EXTEfx.AL_DISTORTION_MAX_EQBANDWIDTH));
+		EXTEfx.alAuxiliaryEffectSloti(currentSlot, EXTEfx.AL_EFFECTSLOT_EFFECT, currentId);
+		EXTEfx.alAuxiliaryEffectSlotf(currentSlot, EXTEfx.AL_EFFECTSLOT_GAIN, 1);
+
+		return true;
+
 	}
 
 	public static void update(SoundInstance soundInstance, int sourceID) {
@@ -109,8 +110,8 @@ public class DistortionFilter {
 						.alSource3i(sourceID, EXTEfx.AL_AUXILIARY_SEND_FILTER,
 							update(soundInstance, d) ? localSlot : 0, 0, 0);
 					int finalI = i;
-					OpenAlUtil.toHumanReadableError(AL11.alGetError())
-						.ifPresent(err -> { throw new IllegalStateException("DistortionFilter sourceId=%s worldId=%s distortionEffect=%s slot=%d iter=%d: %s".formatted(sourceID, effect, d, localSlot, finalI, err)); });
+					OpenAl.toHumanReadableError(AL11.alGetError())
+						.ifPresent(err -> { throw new IllegalStateException("DistortionFilter id=%s worldId=%s distortionEffect=%s slot=%d iter=%d: %s".formatted(sourceID, effect, d, localSlot, finalI, err)); });
 				}
 			});
 	}
