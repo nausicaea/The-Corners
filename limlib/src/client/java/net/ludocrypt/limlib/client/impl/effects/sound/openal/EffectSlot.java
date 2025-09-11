@@ -1,9 +1,13 @@
 package net.ludocrypt.limlib.client.impl.effects.sound.openal;
 
+import net.ludocrypt.limlib.impl.Limlib;
 import org.lwjgl.openal.EXTEfx;
+
+import java.util.Arrays;
 
 public record EffectSlot(int id) implements AutoCloseable {
 	public static EffectSlot generate() throws OpenAlException {
+		Limlib.LOGGER.warn("Generating a new auxiliary effect slot");
 		int slotId = EXTEfx.alGenAuxiliaryEffectSlots();
 		EffectsExtensionException.expect("Generating a new auxiliary effect slot");
 		if (slotId < 0) {
@@ -39,7 +43,7 @@ public record EffectSlot(int id) implements AutoCloseable {
 
 	void setUnchecked(EffectSlotProperty property, int value) {
 		int propertyId = property.id();
-		EXTEfx.alAuxiliaryEffectSlotf(id, propertyId, value);
+		EXTEfx.alAuxiliaryEffectSloti(id, propertyId, value);
 	}
 
 	void setUnchecked(EffectSlotProperty property, float value) {
@@ -48,7 +52,9 @@ public record EffectSlot(int id) implements AutoCloseable {
 	}
 
 	@Override
-	public void close() {
+	public void close() throws EffectsExtensionException {
 		EXTEfx.alDeleteAuxiliaryEffectSlots(id);
+		EffectsExtensionException.expect("Deleting the auxiliary effect slot %s".formatted(this));
+		Limlib.LOGGER.warn("Deleting the auxiliary effect slot {}\n{}", this, Arrays.toString(Thread.currentThread().getStackTrace()));
 	}
 }

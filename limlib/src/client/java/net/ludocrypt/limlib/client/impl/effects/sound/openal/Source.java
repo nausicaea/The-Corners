@@ -9,6 +9,10 @@ public record Source(int id) {
 		this(((SourceAccessor) source).getPointer());
 	}
 
+	public boolean isLoaded() {
+		return AL11.alIsSource(id);
+	}
+
 	public void setDirectFilter(FilterId filterId) throws OpenAlException {
 		if (filterId == null) {
 			setUnchecked(SourceProperty.DIRECT_FILTER, EXTEfx.AL_FILTER_NULL);
