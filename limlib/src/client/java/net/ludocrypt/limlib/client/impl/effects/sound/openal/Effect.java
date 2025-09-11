@@ -1,9 +1,13 @@
 package net.ludocrypt.limlib.client.impl.effects.sound.openal;
 
+import net.ludocrypt.limlib.impl.Limlib;
 import org.lwjgl.openal.EXTEfx;
+
+import java.util.Arrays;
 
 public record Effect(int id) implements AutoCloseable {
 	public static Effect generate() throws OpenAlException {
+		Limlib.LOGGER.warn("Generating a new effect");
 		int effectId = EXTEfx.alGenEffects();
 		EffectsExtensionException.expect("Generating a new effect");
 		if (effectId < 0) {
@@ -43,7 +47,9 @@ public record Effect(int id) implements AutoCloseable {
 	}
 
 	@Override
-	public void close() {
+	public void close() throws EffectsExtensionException {
 		EXTEfx.alDeleteEffects(id);
+		EffectsExtensionException.expect("Deleting the effect %s".formatted(this));
+		Limlib.LOGGER.warn("Deleting the effect {}\n{}", this, Arrays.toString(Thread.currentThread().getStackTrace()));
 	}
 }
