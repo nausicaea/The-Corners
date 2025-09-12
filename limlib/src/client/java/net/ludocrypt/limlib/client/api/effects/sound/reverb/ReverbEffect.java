@@ -29,7 +29,7 @@ public interface ReverbEffect {
 
 	float getReflectionsGainBase(MinecraftClient client, SoundInstance soundInstance);
 
-	int getDecayHFLimit(MinecraftClient client, SoundInstance soundInstance);
+	boolean getDecayHFLimit(MinecraftClient client, SoundInstance soundInstance);
 
 	float getLateReverbDelay(MinecraftClient client, SoundInstance soundInstance);
 

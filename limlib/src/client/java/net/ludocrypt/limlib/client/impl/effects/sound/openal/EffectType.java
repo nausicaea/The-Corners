@@ -3,6 +3,7 @@ package net.ludocrypt.limlib.client.impl.effects.sound.openal;
 import org.lwjgl.openal.EXTEfx;
 
 public enum EffectType {
+	None(EXTEfx.AL_EFFECT_NULL),
 	EaxReverb(EXTEfx.AL_EFFECT_EAXREVERB),
 	Reverb(EXTEfx.AL_EFFECT_REVERB),
 	Chorus(EXTEfx.AL_EFFECT_CHORUS),
@@ -17,13 +18,13 @@ public enum EffectType {
 	Compressor(EXTEfx.AL_EFFECT_COMPRESSOR),
 	Equalizer(EXTEfx.AL_EFFECT_EQUALIZER);
 
-	public static EffectType fromId(int id) {
+	public static EffectType fromId(int id) throws OpenAlException {
 		for (EffectType type : EffectType.values()) {
 			if (type.id == id) {
 				return type;
 			}
 		}
-		return null;
+		throw new OpenAlException("Unknown effect type: %d".formatted(id));
 	}
 
 	EffectType(int id) {
