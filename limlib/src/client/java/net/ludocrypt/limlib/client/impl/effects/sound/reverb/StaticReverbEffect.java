@@ -64,7 +64,7 @@ public record StaticReverbEffect(StaticReverbEffectDto dto) implements ReverbEff
 	}
 
 	@Override
-	public int getDecayHFLimit(MinecraftClient client, SoundInstance soundInstance) {
+	public boolean getDecayHFLimit(MinecraftClient client, SoundInstance soundInstance) {
 		return this.dto.decayHFLimit();
 	}
 
