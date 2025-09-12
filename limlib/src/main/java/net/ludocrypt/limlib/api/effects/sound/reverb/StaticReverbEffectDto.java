@@ -9,7 +9,7 @@ import org.lwjgl.openal.EXTEfx;
 public record StaticReverbEffectDto(boolean enabled, float density, float diffusion, float gain, float gainHF,
 									float decayTime, float decayHFRatio, float airAbsorptionGainHF,
 									float reflectionsGainBase, float lateReverbGainBase, float reflectionsDelay,
-									float lateReverbDelay, int decayHFLimit) implements ReverbEffectDto {
+									float lateReverbDelay, boolean decayHFLimit) implements ReverbEffectDto {
 	public static final Identifier ID = new Identifier("limlib", "static");
 	public static final Codec<StaticReverbEffectDto> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(Codec.BOOL.optionalFieldOf("enabled", true).stable().forGetter((reverb) -> {
@@ -92,8 +92,8 @@ public record StaticReverbEffectDto(boolean enabled, float density, float diffus
 						return reverb.lateReverbDelay;
 					}),
 				Codec
-					.intRange(EXTEfx.AL_REVERB_MIN_DECAY_HFLIMIT, EXTEfx.AL_REVERB_MAX_DECAY_HFLIMIT)
-					.optionalFieldOf("decay_hf_limit", EXTEfx.AL_REVERB_DEFAULT_DECAY_HFLIMIT)
+					.BOOL
+					.optionalFieldOf("decay_hf_limit", true)
 					.stable()
 					.forGetter((reverb) -> {
 						return reverb.decayHFLimit;
@@ -134,7 +134,7 @@ public record StaticReverbEffectDto(boolean enabled, float density, float diffus
 		private float lateReverbGainBase = EXTEfx.AL_REVERB_DEFAULT_LATE_REVERB_GAIN;
 		private float reflectionsDelay = EXTEfx.AL_REVERB_DEFAULT_REFLECTIONS_DELAY;
 		private float lateReverbDelay = EXTEfx.AL_REVERB_DEFAULT_LATE_REVERB_DELAY;
-		private int decayHFLimit = EXTEfx.AL_REVERB_DEFAULT_DECAY_HFLIMIT;
+		private boolean decayHFLimit = true;
 
 		public Builder setAirAbsorptionGainHF(float airAbsorptionGainHF) {
 			this.airAbsorptionGainHF = airAbsorptionGainHF;
@@ -186,7 +186,7 @@ public record StaticReverbEffectDto(boolean enabled, float density, float diffus
 			return this;
 		}
 
-		public Builder setDecayHFLimit(int decayHFLimit) {
+		public Builder setDecayHFLimit(boolean decayHFLimit) {
 			this.decayHFLimit = decayHFLimit;
 			return this;
 		}

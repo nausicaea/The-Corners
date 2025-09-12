@@ -22,12 +22,12 @@ public class ReverbFilter {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("%s.%s".formatted(Limlib.LOGGER.getName(), ReverbFilter.class.getSimpleName()));
 
-	private static final ThreadLocal<Effect> effect = new ThreadLocal<>();
+	private static final ThreadLocal<Reverb> effect = new ThreadLocal<>();
 	private static final ThreadLocal<EffectSlot> effectSlot = new ThreadLocal<>();
 
-	private static Effect reloadEffect() throws OpenAlException {
+	private static Reverb reloadEffect() throws OpenAlException {
 		var gammel = effect.get();
-		var ny = Effect.generate();
+		var ny = Reverb.generate();
 		effect.set(ny);
 		if (gammel != null) {
 			gammel.close();
@@ -63,7 +63,7 @@ public class ReverbFilter {
 			return false;
 		}
 
-		Effect cfx = effect.get();
+		Reverb cfx = effect.get();
 		if (cfx == null) {
 			cfx = reloadEffect();
 		}
@@ -71,55 +71,19 @@ public class ReverbFilter {
 			Limlib.LOGGER.warn("Effect {} not loaded", cfx);
 			return false;
 		}
-		cfx.setType(EffectType.Reverb);
-		cfx.setUnchecked(EffectProperty.REVERB_DENSITY,
-			MathHelper
-				.clamp(data.getDensity(client, soundInstance), EXTEfx.AL_REVERB_MIN_DENSITY,
-					EXTEfx.AL_REVERB_MAX_DENSITY)
-		);
-		cfx.setUnchecked(EffectProperty.REVERB_DIFFUSION,
-			MathHelper
-				.clamp(data.getDiffusion(client, soundInstance), EXTEfx.AL_REVERB_MIN_DIFFUSION,
-					EXTEfx.AL_REVERB_MAX_DIFFUSION)
-		);
-		cfx.setUnchecked(EffectProperty.REVERB_GAIN, MathHelper
-			.clamp(data.getGain(client, soundInstance), EXTEfx.AL_REVERB_MIN_GAIN, EXTEfx.AL_REVERB_MAX_GAIN));
-		cfx.setUnchecked(EffectProperty.REVERB_GAINHF, MathHelper
-			.clamp(data.getGainHF(client, soundInstance), EXTEfx.AL_REVERB_MIN_GAINHF, EXTEfx.AL_REVERB_MAX_GAINHF));
-		cfx.setUnchecked(EffectProperty.REVERB_DECAY_TIME, MathHelper
-			.clamp(data.getDecayTime(client, soundInstance), EXTEfx.AL_REVERB_MIN_DECAY_TIME,
-				EXTEfx.AL_REVERB_MAX_DECAY_TIME));
-		cfx.setUnchecked(EffectProperty.REVERB_DECAY_HFRATIO, MathHelper
-			.clamp(data.getDecayHFRatio(client, soundInstance), EXTEfx.AL_REVERB_MIN_DECAY_HFRATIO,
-				EXTEfx.AL_REVERB_MAX_DECAY_HFRATIO));
-		cfx.setUnchecked(EffectProperty.REVERB_REFLECTIONS_GAIN, MathHelper
-			.clamp(data.getReflectionsGainBase(client, soundInstance), EXTEfx.AL_REVERB_MIN_REFLECTIONS_GAIN,
-				EXTEfx.AL_REVERB_MAX_REFLECTIONS_GAIN));
-		cfx.setUnchecked(EffectProperty.REVERB_REFLECTIONS_DELAY, MathHelper
-			.clamp(data.getReflectionsDelay(client, soundInstance), EXTEfx.AL_REVERB_MIN_REFLECTIONS_DELAY,
-				EXTEfx.AL_REVERB_MAX_REFLECTIONS_DELAY));
-		cfx.setUnchecked(EffectProperty.REVERB_LATE_REVERB_GAIN, MathHelper
-			.clamp(data.getLateReverbGainBase(client, soundInstance), EXTEfx.AL_REVERB_MIN_LATE_REVERB_GAIN,
-				EXTEfx.AL_REVERB_MAX_LATE_REVERB_GAIN));
-		cfx.setUnchecked(EffectProperty.REVERB_LATE_REVERB_DELAY,
-				MathHelper
-					.clamp(data.getLateReverbDelay(client, soundInstance), EXTEfx.AL_REVERB_MIN_LATE_REVERB_DELAY,
-						EXTEfx.AL_REVERB_MAX_LATE_REVERB_DELAY));
-		cfx.setUnchecked(EffectProperty.REVERB_AIR_ABSORPTION_GAINHF,
-				MathHelper
-					.clamp(data.getAirAbsorptionGainHF(client, soundInstance),
-						EXTEfx.AL_REVERB_MIN_AIR_ABSORPTION_GAINHF, EXTEfx.AL_REVERB_MAX_AIR_ABSORPTION_GAINHF));
-		cfx.setUnchecked(EffectProperty.REVERB_ROOM_ROLLOFF_FACTOR,
-				MathHelper
-					.clamp(
-						soundInstance.getAttenuationType() == SoundInstance.AttenuationType.LINEAR
-								? 2.0F / (Math.max(soundInstance.getVolume(), 1.0F) + 2.0F)
-								: 0.0F,
-						EXTEfx.AL_REVERB_MIN_ROOM_ROLLOFF_FACTOR, EXTEfx.AL_REVERB_MAX_ROOM_ROLLOFF_FACTOR));
-		cfx.setUnchecked(EffectProperty.REVERB_DECAY_HFLIMIT,
-				MathHelper
-					.clamp(data.getDecayHFLimit(client, soundInstance), EXTEfx.AL_REVERB_MIN_DECAY_HFLIMIT,
-						EXTEfx.AL_REVERB_MAX_DECAY_HFLIMIT));
+		cfx.setDensity(data.getDensity(client, soundInstance));
+		cfx.setDiffusion(data.getDiffusion(client, soundInstance));
+		cfx.setGain(data.getGain(client, soundInstance));
+		cfx.setGainHF(data.getGainHF(client, soundInstance));
+		cfx.setDecayTime(data.getDecayTime(client, soundInstance));
+		cfx.setDecayHFRatio(data.getDecayHFRatio(client, soundInstance));
+		cfx.setReflectionsGain(data.getReflectionsGainBase(client, soundInstance));
+		cfx.setReflectionsDelay(data.getReflectionsDelay(client, soundInstance));
+		cfx.setLateReverbGain(data.getLateReverbGainBase(client, soundInstance));
+		cfx.setLateReverbDelay(data.getLateReverbDelay(client, soundInstance));
+		cfx.setAirAbsorptionGainHF(data.getAirAbsorptionGainHF(client, soundInstance));
+		cfx.setRoomRolloffFactor(soundInstance.getAttenuationType() == SoundInstance.AttenuationType.LINEAR ? 2.0F / (Math.max(soundInstance.getVolume(), 1.0F) + 2.0F) : 0.0F);
+		cfx.setDecayHFLimit(data.getDecayHFLimit(client, soundInstance));
 
 		EffectSlot cslot = effectSlot.get();
 		if (cslot == null) {

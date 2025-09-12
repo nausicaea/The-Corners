@@ -5,18 +5,18 @@ import org.lwjgl.openal.EXTEfx;
 
 import java.util.Arrays;
 
-public record Effect(int id) implements AutoCloseable {
-	public static Effect generate() throws OpenAlException {
-		Limlib.LOGGER.warn("Generating a new effect");
-		int effectId = EXTEfx.alGenEffects();
-		EffectsExtensionException.expect("Generating a new effect");
-		if (effectId < 0) {
-			throw new EffectsExtensionException("Invalid effect ID: %d".formatted(effectId));
-		}
-		if (!EXTEfx.alIsEffect(effectId)) {
-			throw new EffectsExtensionException("Effect ID %d is not an effect!?".formatted(effectId));
-		}
-		return new Effect(effectId);
+public sealed abstract class Effect implements AutoCloseable permits Reverb {
+	final int id;
+
+	Effect(int id) {
+		this.id = id;
+	}
+
+	public int id() { return id; }
+
+	@Override
+	public String toString() {
+		return "%s(%d)".formatted(getClass().getSimpleName(), id);
 	}
 
 	public boolean isLoaded() {
@@ -25,31 +25,30 @@ public record Effect(int id) implements AutoCloseable {
 
 	public EffectType getType() throws OpenAlException {
 		int effectTypeId = EXTEfx.alGetEffecti(id, EffectProperty.EFFECT_TYPE.id());
-		EffectsExtensionException.expect("Effect %s: retrieving type".formatted(id));
+		EffectsExtensionException.expect("%s: retrieving type".formatted(id));
 		return EffectType.fromId(effectTypeId);
 	}
 
-	public void setType(EffectType t) throws OpenAlException {
-		EXTEfx.alEffecti(id, EffectProperty.EFFECT_TYPE.id(), t.id());
-		EffectsExtensionException.expect("Effect %s: assigning type %s(%d)".formatted(id, t.name(), t.id()));
+	void setType(EffectType t) throws OpenAlException {
+		// TODO(maybe this assertion is necessary): assert getType() == EffectType.None : "effect types cannot be changed";
+		setUnchecked(EffectProperty.EFFECT_TYPE, t.id());
+		EffectsExtensionException.expect("%s: assigning type %s(%d)".formatted(id, t.name(), t.id()));
 	}
 
-	public void setUnchecked(EffectProperty property, int value) throws OpenAlException {
+	public void setUnchecked(EffectProperty property, int value) {
 		int propertyId = property.id();
 		EXTEfx.alEffecti(id, propertyId, value);
-		EffectsExtensionException.expect("Effect %s: error setting effect property %s=%d".formatted(id, property, value));
 	}
 
-	public void setUnchecked(EffectProperty property, float value) throws OpenAlException {
+	public void setUnchecked(EffectProperty property, float value) {
 		int propertyId = property.id();
 		EXTEfx.alEffectf(id, propertyId, value);
-		EffectsExtensionException.expect("Effect %s: error setting effect property %s=%f".formatted(id, property, value));
 	}
 
 	@Override
 	public void close() throws EffectsExtensionException {
 		EXTEfx.alDeleteEffects(id);
 		EffectsExtensionException.expect("Deleting the effect %s".formatted(this));
-		Limlib.LOGGER.warn("Deleting the effect {}\n{}", this, Arrays.toString(Thread.currentThread().getStackTrace()));
+		Limlib.LOGGER.debug("Deleting the effect {}\n{}", this, Arrays.toString(Thread.currentThread().getStackTrace()));
 	}
 }
