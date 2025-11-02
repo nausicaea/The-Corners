@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.ludocrypt.corners.TheCorners;
 import net.ludocrypt.corners.util.RadioSoundTable;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SimpleRegistry;
@@ -22,7 +21,8 @@ public class CornerRadioRegistry {
 		CornerSoundEvents.RADIO_DEFAULT_STATIC, CornerSoundEvents.RADIO_DEFAULT_STATIC);
 
 	public static void init() {
-		Registry.register(RADIO_REGISTRY, TheCorners.id("default_radio"), DEFAULT);
+        TheCorners.LOGGER.debug("Registering radios");
+        Registry.register(RADIO_REGISTRY, TheCorners.id("default_radio"), DEFAULT);
 		getRadio("yearning_canal", new RadioSoundTable(CornerSoundEvents.RADIO_YEARNING_CANAL_MUSIC,
 			CornerSoundEvents.RADIO_YEARNING_CANAL_STATIC, CornerSoundEvents.RADIO_YEARNING_CANAL));
 		getRadio("communal_corridors", new RadioSoundTable(CornerSoundEvents.RADIO_COMMUNAL_CORRIDORS_MUSIC,
@@ -33,10 +33,6 @@ public class CornerRadioRegistry {
 
 	public static RadioSoundTable register(RegistryKey<World> world, RadioSoundTable sound) {
 		return Registry.register(RADIO_REGISTRY, world.getValue(), sound);
-	}
-
-	public static RadioSoundTable getCurrent(MinecraftClient client) {
-		return getCurrent(client.world.getRegistryKey());
 	}
 
 	public static RadioSoundTable getCurrent(RegistryKey<World> key) {

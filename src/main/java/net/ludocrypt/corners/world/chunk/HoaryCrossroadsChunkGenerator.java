@@ -36,19 +36,19 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructureTemplateManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.gen.RandomState;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.noise.NoiseConfig;
 
 public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 
 	public static final Codec<HoaryCrossroadsChunkGenerator> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(BiomeSource.CODEC.fieldOf("biome_source").stable().forGetter((chunkGenerator) -> {
-			return chunkGenerator.populationSource;
+			return chunkGenerator.biomeSource;
 		}), NbtGroup.CODEC.fieldOf("group").stable().forGetter((chunkGenerator) -> {
 			return chunkGenerator.nbtGroup;
 		}), Codec.INT.fieldOf("maze_width").stable().forGetter((chunkGenerator) -> {
@@ -132,7 +132,7 @@ public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 	 * @param random  generator
 	 * @return MazeComponent
 	 */
-	public MazeComponent newMaze(ChunkRegion region, Vec2i mazePos, int width, int height, RandomGenerator random) {
+	public MazeComponent newMaze(ChunkRegion region, Vec2i mazePos, int width, int height, Random random) {
 		// Find the position of the grandMaze that contains the current maze
 		BlockPos grandMazePos = new BlockPos(
 			mazePos.getX() - Math
@@ -147,8 +147,8 @@ public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 		} else {
 			grandMaze = new DepthFirstMaze(mazeGenerator.width / mazeGenerator.dilation,
 				mazeGenerator.height / mazeGenerator.dilation,
-				RandomGenerator
-					.createLegacy(
+				Random
+					.create(
 						LimlibHelper.blockSeed(grandMazePos.getX(), mazeGenerator.seedModifier, grandMazePos.getZ())));
 			grandMaze.generateMaze();
 			mazeGenerator.grandMazeMap.put(grandMazePos, grandMaze);
@@ -260,10 +260,10 @@ public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 	}
 
 	public void decorateCell(ChunkRegion region, Vec2i cellPos, Vec2i mazePos, MazeComponent maze, CellState state,
-			Vec2i thickness, RandomGenerator cellRandom) {
+			Vec2i thickness, Random cellRandom) {
 		BlockPos pos = cellPos.toBlock();
-		RandomGenerator random = RandomGenerator
-			.createLegacy(LimlibHelper
+		Random random = Random
+			.create(LimlibHelper
 				.blockSeed(pos.getX(), LimlibHelper.blockSeed(mazePos.getY(), region.getSeed(), mazePos.getX()),
 					pos.getZ()));
 		Pair<MazePiece, Manipulation> mazeSegment = MazePiece.getFromCell(state, random);
@@ -298,7 +298,7 @@ public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 
 	}
 
-	public Identifier getPiece(MazePiece piece, RandomGenerator random) {
+	public Identifier getPiece(MazePiece piece, Random random) {
 		String group = switch (piece) {
 			case F -> "hoary_crossroads_f";
 			case I -> "hoary_crossroads_i";
@@ -320,7 +320,7 @@ public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 		return nbtGroup.pick(group, random);
 	}
 
-	public Identifier getPieceAsBottom(MazePiece piece, RandomGenerator random) {
+	public Identifier getPieceAsBottom(MazePiece piece, Random random) {
 
 		switch (piece) {
 			case F:
@@ -365,7 +365,7 @@ public class HoaryCrossroadsChunkGenerator extends AbstractNbtChunkGenerator {
 	}
 
 	@Override
-	public void method_40450(List<String> list, RandomState randomState, BlockPos pos) {
+	public void getDebugHudText(List<String> list, NoiseConfig randomState, BlockPos pos) {
 	}
 
 }

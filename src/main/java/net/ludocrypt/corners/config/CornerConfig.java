@@ -11,7 +11,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import net.ludocrypt.corners.client.render.ChristmasRenderer;
+import net.ludocrypt.corners.util.ColorConversion;
 
 @Config(name = "the_corners")
 public class CornerConfig implements ConfigData {
@@ -21,7 +21,7 @@ public class CornerConfig implements ConfigData {
 	@ConfigEntry.Gui.CollapsibleObject
 	public Christmas christmas = new Christmas();
 
-	public static class Christmas {
+    public static class Christmas {
 
 		public boolean christmas = false;
 		public List<String> leftColors = Lists.newArrayList("#30FF99", "#FE515C", "#FFFFFF");
@@ -52,7 +52,7 @@ public class CornerConfig implements ConfigData {
 		for (String color : config.christmas.leftColors) {
 
 			try {
-				ChristmasRenderer.hexToRGBA(color);
+				ColorConversion.hexToRGBA(color);
 			} catch (IllegalArgumentException e) {
 				config.christmas.leftColors.remove(color);
 			}
@@ -62,7 +62,7 @@ public class CornerConfig implements ConfigData {
 		for (String color : config.christmas.rightColors) {
 
 			try {
-				ChristmasRenderer.hexToRGBA(color);
+				ColorConversion.hexToRGBA(color);
 			} catch (IllegalArgumentException e) {
 				config.christmas.rightColors.remove(color);
 			}

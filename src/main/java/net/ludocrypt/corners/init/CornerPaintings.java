@@ -27,7 +27,7 @@ public class CornerPaintings {
 			if (pos != null) {
 				ServerWorld serverWorld = player.getServer().getOverworld();
 				return PlayerEntity
-					.findRespawnPosition(serverWorld, pos, player.getSpawnAngle(), player.isSpawnPointSet(), true)
+					.findRespawnPosition(serverWorld, pos, player.getSpawnAngle(), player.isSpawnForced(), true)
 					.orElse(Vec3d.ofCenter(player.getServer().getOverworld().getSpawnPos()));
 			}
 
@@ -61,7 +61,8 @@ public class CornerPaintings {
 					.add(4.0D, 0, 4.0D)));
 
 	public static void init() {
-	}
+        TheCorners.LOGGER.debug("Registering custom paintings");
+    }
 
 	public static <T extends PaintingVariant> T get(String id, T painting) {
 		return Registry.register(Registries.PAINTING_VARIANT, TheCorners.id(id), painting);

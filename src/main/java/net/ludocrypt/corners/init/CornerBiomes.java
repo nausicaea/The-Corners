@@ -31,6 +31,7 @@ public class CornerBiomes {
 		.of(RegistryKeys.CONFIGURED_FEATURE, TheCorners.id("gaia_sapling"));
 
 	public static void init() {
+        TheCorners.LOGGER.debug("Registering custom biomes");
 		get("yearning_canal_chunk_generator", YearningCanalChunkGenerator.CODEC);
 		get("communal_corridors_chunk_generator", CommunalCorridorsChunkGenerator.CODEC);
 		get("hoary_crossroads_chunk_generator", HoaryCrossroadsChunkGenerator.CODEC);

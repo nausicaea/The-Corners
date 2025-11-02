@@ -1,0 +1,10 @@
+accessWidener v2 named
+# Main
+accessible class net/minecraft/registry/Registries$Initializer
+
+# Client
+accessible class net/minecraft/client/render/WorldRenderer$ChunkInfo
+accessible field net/minecraft/client/render/WorldRenderer$ChunkInfo chunk Lnet/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk;
+accessible class net/minecraft/client/render/chunk/ChunkBuilder$Result
+accessible class net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask
+accessible class net/minecraft/client/render/chunk/ChunkBuilder$BuiltChunk$RebuildTask$RenderData

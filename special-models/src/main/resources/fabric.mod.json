@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "specialmodels",
+  "version": "${version}",
+  "name": "Special Models",
+  "description": "Render models with custom shaders!",
+  "authors": [
+    "LudoCrypt (Developer)",
+    "ImXR24 (Icon Artist)"
+  ],
+  "contact": {
+    "homepage": "https://github.com/LudoCrypt/Special-Models",
+    "issues": "https://github.com/LudoCrypt/Special-Models/issues",
+    "sources": "https://github.com/LudoCrypt/Special-Models"
+  },
+  "icon": "assets/specialmodels/icon.png",
+  "entrypoints": {
+    "main": [
+      "net.ludocrypt.specialmodels.impl.SpecialModels"
+    ],
+    "client": [
+      "net.ludocrypt.specialmodels.client.impl.SpecialModelsClient"
+    ]
+  },
+  "depends": {},
+  "mixins": ["specialmodels.mixins.json", { "config": "specialmodels.client.mixins.json", "environment":  "client" }],
+  "modmenu": {
+    "badges": [
+      "library"
+    ]
+  }
+}

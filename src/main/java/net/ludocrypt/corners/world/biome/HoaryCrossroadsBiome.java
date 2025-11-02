@@ -1,7 +1,7 @@
 package net.ludocrypt.corners.world.biome;
 
 import net.ludocrypt.corners.init.CornerSoundEvents;
-import net.minecraft.registry.HolderProvider;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
@@ -11,11 +11,11 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 
 public class HoaryCrossroadsBiome {
 
-	public static Biome create(HolderProvider<PlacedFeature> features, HolderProvider<ConfiguredCarver<?>> carvers) {
+	public static Biome create(RegistryEntryLookup<PlacedFeature> features, RegistryEntryLookup<ConfiguredCarver<?>> carvers) {
 		Biome.Builder biome = new Biome.Builder();
 
 		SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
-		GenerationSettings.Builder generationSettings = new GenerationSettings.Builder(features, carvers);
+		GenerationSettings.LookupBackedBuilder generationSettings = new GenerationSettings.LookupBackedBuilder(features, carvers);
 
 		BiomeEffects.Builder biomeEffects = new BiomeEffects.Builder();
 		biomeEffects.skyColor(16777215);
@@ -30,7 +30,7 @@ public class HoaryCrossroadsBiome {
 		biome.spawnSettings(spawnSettings.build());
 		biome.generationSettings(generationSettings.build());
 		biome.effects(effects);
-		biome.hasPrecipitation(true);
+		biome.precipitation(true);
 		biome.temperature(-1.0F);
 		biome.downfall(1.0F);
 

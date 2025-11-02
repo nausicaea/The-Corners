@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.ludocrypt.corners.init.CornerWorlds;
-import net.minecraft.network.packet.s2c.play.GameStateUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.ServerWorldProperties;
+import net.minecraft.world.level.ServerWorldProperties;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
@@ -19,7 +19,7 @@ public class ServerWorldMixin {
 	@Final
 	private ServerWorldProperties worldProperties;
 
-	@Inject(method = "Lnet/minecraft/server/world/ServerWorld;tickWeather()V", at = @At("HEAD"))
+	@Inject(method = "tickWeather()V", at = @At("HEAD"))
 	private void corners$tickWeather(CallbackInfo ci) {
 
 		ServerWorld world = ((ServerWorld) (Object) this);
@@ -37,12 +37,12 @@ public class ServerWorldMixin {
 				world
 					.getServer()
 					.getPlayerManager()
-					.sendToDimension(new GameStateUpdateS2CPacket(GameStateUpdateS2CPacket.RAIN_GRADIENT_CHANGED, 2.0F),
+					.sendToDimension(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.RAIN_GRADIENT_CHANGED, 2.0F),
 						world.getRegistryKey());
 				world
 					.getServer()
 					.getPlayerManager()
-					.sendToDimension(new GameStateUpdateS2CPacket(GameStateUpdateS2CPacket.RAIN_STARTED, 0.0F),
+					.sendToDimension(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.RAIN_STARTED, 0.0F),
 						world.getRegistryKey());
 			}
 
@@ -59,12 +59,12 @@ public class ServerWorldMixin {
 				world
 					.getServer()
 					.getPlayerManager()
-					.sendToDimension(new GameStateUpdateS2CPacket(GameStateUpdateS2CPacket.RAIN_GRADIENT_CHANGED, 0.0F),
+					.sendToDimension(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.RAIN_GRADIENT_CHANGED, 0.0F),
 						((ServerWorld) (Object) this).getRegistryKey());
 				world
 					.getServer()
 					.getPlayerManager()
-					.sendToDimension(new GameStateUpdateS2CPacket(GameStateUpdateS2CPacket.RAIN_STOPPED, 0.0F),
+					.sendToDimension(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.RAIN_STOPPED, 0.0F),
 						world.getRegistryKey());
 			}
 
