@@ -29,4 +29,4 @@ shedaniel_cloth = { module = "me.shedaniel.cloth:cloth-config-fabric", version.r
 quilted_fabric_api = ["quilted_fabric_api", "quilted_fabric_api_deprecated"]
 
 [plugins]
-quilt_loom = { id = "org.quiltmc.loom", version = "0.12.+" }
+quilt_loom = { id = "org.quiltmc.loom", version = "0.12.40" }
