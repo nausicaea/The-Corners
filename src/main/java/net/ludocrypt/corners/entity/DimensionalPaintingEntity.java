@@ -38,7 +38,7 @@ public class DimensionalPaintingEntity extends PaintingEntity {
 			DimensionalPaintingEntity entity = create(world, pos);
 			((PaintingEntityAccessor) entity)
 				.callSetVariant(
-					Registries.PAINTING_VARIANT.getHolder(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
+					Registries.PAINTING_VARIANT.getEntry(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
 			entity.setFacing(direction);
 			return entity;
 		}
@@ -51,7 +51,7 @@ public class DimensionalPaintingEntity extends PaintingEntity {
 		PaintingEntity entity = new PaintingEntity(EntityType.PAINTING, world);
 		entity.setPosition(pos.getX(), pos.getY(), pos.getZ());
 		((PaintingEntityAccessor) entity)
-			.callSetVariant(Registries.PAINTING_VARIANT.getHolder(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
+			.callSetVariant(Registries.PAINTING_VARIANT.getEntry(Registries.PAINTING_VARIANT.getKey(variant).get()).get());
 		((AbstractDecorationEntityAccessor) entity).callSetFacing(direction);
 		return entity;
 	}

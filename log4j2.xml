@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="development">
+    <Appenders>
+        <Console direct="true" name="SysOut" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{DEFAULT}] [%level] [%logger{1}] [%class{1.}] %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="SysOut" level="warn"/>
+        </Root>
+    </Loggers>
+</Configuration>

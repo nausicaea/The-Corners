@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "net.ludocrypt.limlib.impl.debug.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+    "WorldPresetsMixin",
+      "WorldPresetsRegistrarMixin",
+    "VanillaWorldPresetTagProviderMixin",
+    "DimensionOptionsRegistryHolderMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

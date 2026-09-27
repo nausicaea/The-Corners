@@ -1,0 +1,46 @@
+package net.ludocrypt.limlib.client.impl.mixin;
+
+import java.util.function.Supplier;
+
+import net.ludocrypt.limlib.client.impl.ClientSharedMutableState;
+import net.ludocrypt.limlib.impl.LimlibRegistries;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.world.MutableWorldProperties;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
+
+@Mixin(ClientWorld.class)
+public abstract class ClientWorldMixin extends World {
+
+	protected ClientWorldMixin(MutableWorldProperties worldProperties, RegistryKey<World> registryKey,
+			DynamicRegistryManager registryManager, RegistryEntry<DimensionType> dimension, Supplier<Profiler> profiler,
+			boolean client, boolean debug, long seed, int maxChainedNeighborUpdates) {
+		super(worldProperties, registryKey, registryManager, dimension, profiler, client, debug, seed,
+			maxChainedNeighborUpdates);
+	}
+
+	@Inject(method = "<init>(Lnet/minecraft/client/network/ClientPlayNetworkHandler;Lnet/minecraft/client/world/ClientWorld$Properties;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/registry/entry/RegistryEntry;IILjava/util/function/Supplier;Lnet/minecraft/client/render/WorldRenderer;ZJ)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/DimensionEffects;byDimensionType(Lnet/minecraft/world/dimension/DimensionType;)Lnet/minecraft/client/render/DimensionEffects;", shift = Shift.BEFORE))
+	private void limlib$init(ClientPlayNetworkHandler netHandler, ClientWorld.Properties clientWorldProperties,
+			RegistryKey<World> registryKey, RegistryEntry<DimensionType> dimensionType, int chunkManager, int simulationDistance,
+			Supplier<Profiler> profiler, WorldRenderer worldRenderer, boolean debugWorld, long seed, CallbackInfo ci) {
+		var dynamicRegistries = this.getRegistryManager();
+		var dimensionEffectsRegistry = dynamicRegistries
+			.getOptionalWrapper(LimlibRegistries.DimFx.REGISTRY_KEY)
+			.orElseThrow(() -> new IllegalStateException("Client: Cannot find dimension effects registry (key: %s)".formatted(LimlibRegistries.DimFx.REGISTRY_KEY)));
+
+		ClientSharedMutableState.MIXIN_WORLD_LOOKUP.set(dimensionEffectsRegistry);
+	}
+
+}

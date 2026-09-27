@@ -14,7 +14,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
@@ -27,8 +27,8 @@ public class GaiaTreeFeature extends Feature<DefaultFeatureConfig> {
 	}
 
 	@Override
-	public boolean place(FeatureContext<DefaultFeatureConfig> context) {
-		RandomGenerator random = context.getRandom();
+	public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+		Random random = context.getRandom();
 		StructureWorldAccess world = context.getWorld();
 		BlockPos pos = context.getOrigin().toImmutable();
 		BlockState stump = CornerBlocks.STRIPPED_GAIA_LOG.getDefaultState();

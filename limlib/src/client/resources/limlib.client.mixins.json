@@ -1,0 +1,21 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "net.ludocrypt.limlib.client.impl.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [],
+	"client": [
+		"BackgroundRendererMixin",
+		"ClientWorldMixin",
+    "DimensionEffectsMixin",
+		"GameRendererMixin",
+		"MinecraftClientMixin",
+		"SoundSystemMixin",
+		"SourceAccessor",
+		"WorldRendererAfterMixin",
+		"WorldRendererBeforeMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

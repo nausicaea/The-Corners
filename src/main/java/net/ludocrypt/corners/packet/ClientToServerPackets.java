@@ -9,6 +9,7 @@ public class ClientToServerPackets {
 	public static final Identifier PLAY_RADIO = TheCorners.id("play_radio");
 
 	public static void manageClientToServerPackets() {
-	}
+        TheCorners.LOGGER.debug("Registering custom S2C packets");
+    }
 
 }
