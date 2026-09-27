@@ -8,7 +8,7 @@ terraformersmc_modmenu = "7.2.2"
 limlib = "11.0.0"
 specialmodels = "1.4.9"
 
-cloth = "11.1.106"
+cloth = "11.1.136"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
