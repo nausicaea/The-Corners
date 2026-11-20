@@ -4,6 +4,7 @@
         "config:best-practices"
     ],
     "assignees": ["nausicaea"],
+    "baseBranchPatterns": ["refactor/fabric"],
     "minimumReleaseAge": "7d",
     "rangeStrategy": "pin",
     "lockFileMaintenance": {
